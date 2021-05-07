@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>TinderZooApp</title>
+</head>
+<body>
+<h1>User List</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Specie</th>
+        <th>Breed</th>
+        <th>Age</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.specie}">Specie</td>
+        <td th:text="${user.breed}">Breed</td>
+        <td th:text="${user.age}">4</td>
+    </tr>
+</table>
+
+</body>
+</html>
