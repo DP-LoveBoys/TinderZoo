@@ -21,8 +21,8 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        //User cutu=new User("Daisy","dog","labrador",10,"Romania","Timisoara",50);
-        //userRepository.save(cutu);
+        User cutu=new User("Daisy","dog","labrador",10,"Romania","Timisoara",50, 'F');
+        userRepository.save(cutu);
 
         System.out.println("There are "+userRepository.count()+"users.");
     }
