@@ -28,12 +28,14 @@ public class User{
     private String city;
     private int height; // in cm
     private char gender;
-
+    private String eyeColor;
+    private String description;
     public User(){
     }
 
 
-    public User(String name, String specie, String breed, int age, String country, String city, int height, char gender) {
+
+    public User(String name, String specie, String breed, int age, String country, String city, int height, char gender, String eyeColor) {
         this.name = name;
         this.specie = specie;
         this.breed = breed;
@@ -42,6 +44,7 @@ public class User{
         this.city = city;
         this.height = height;
         this.gender = gender;
+        this.eyeColor = eyeColor;
     }
 
     @Override
@@ -144,5 +147,22 @@ public class User{
 
     public void setGender(char gender) {
         this.gender = gender;
+    }
+
+
+    public String getEyeColor() {
+        return eyeColor;
+    }
+
+    public void setEyeColor(String eyeColor) {
+        this.eyeColor = eyeColor;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
