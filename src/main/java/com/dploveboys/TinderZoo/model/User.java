@@ -27,11 +27,13 @@ public class User{
     private String country;
     private String city;
     private int height; // in cm
+    private char gender;
 
     public User(){
     }
 
-    public User(String name, String specie, String breed, int age, String country, String city, int height) {
+
+    public User(String name, String specie, String breed, int age, String country, String city, int height, char gender) {
         this.name = name;
         this.specie = specie;
         this.breed = breed;
@@ -39,6 +41,7 @@ public class User{
         this.country = country;
         this.city = city;
         this.height = height;
+        this.gender = gender;
     }
 
     @Override
@@ -69,6 +72,7 @@ public class User{
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
     }
+
 
     public long getId() {
         return id;
@@ -132,5 +136,13 @@ public class User{
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public char getGender() {
+        return gender;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
     }
 }
