@@ -1,8 +1,6 @@
 package com.dploveboys.TinderZoo.model;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +16,7 @@ public class User{
             name = "native",
             strategy = "native"
     )
-    private long id;
+    private Long id;
 
     private String name;
     private String specie;
@@ -29,7 +27,7 @@ public class User{
     private int height; // in cm
     private char gender;
     private String eyeColor;
-    private String description;
+    //private String description;
     public User(){
     }
 
@@ -158,6 +156,7 @@ public class User{
         this.eyeColor = eyeColor;
     }
 
+    /*
     public String getDescription() {
         return description;
     }
@@ -165,4 +164,5 @@ public class User{
     public void setDescription(String description) {
         this.description = description;
     }
+    */
 }
