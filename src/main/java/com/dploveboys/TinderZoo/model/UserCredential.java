@@ -1,5 +1,7 @@
 package com.dploveboys.TinderZoo.model;
 
+import com.dploveboys.TinderZoo.service.encryption;
+import org.apache.tomcat.util.net.openssl.ciphers.Encryption;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Objects;
@@ -21,11 +23,13 @@ public class UserCredential {
     private String email;
     private String password;
     public UserCredential(String email, String password) { //needs hashing
-        this.id = id;
         this.email = email;
 
-        //Encryption encyrptor = new Encryption();
-        this.password = password;
+        encryption x = new encryption();
+        this.password = x.encrypt(password);
+    }
+
+    public UserCredential() {
     }
 
     @Override
