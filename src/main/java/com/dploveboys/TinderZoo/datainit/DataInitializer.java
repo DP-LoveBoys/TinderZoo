@@ -34,11 +34,5 @@ public class DataInitializer implements CommandLineRunner {
         UserCredential userCred = new UserCredential("andrei@andrei.com", "asdasd1212");
         userCredentialRepository.save(userCred);
         System.out.println("New user " + userCred);
-
-        Long id1 = Long.valueOf(1);
-        userService.findById(id1).ifPresent(System.out::println);
-
-        Long id2 = Long.valueOf(2);
-        userService.findById(id2).ifPresent(System.out::println);
     }
 }

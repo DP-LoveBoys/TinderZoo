@@ -33,7 +33,7 @@ public class User{
 
 
 
-    public User(String name, String specie, String breed, int age, String country, String city, int height, char gender, String eyeColor) {
+    public User(String name, String specie, String breed, int age, String country, String city, int height, char gender) {
         this.name = name;
         this.specie = specie;
         this.breed = breed;
@@ -42,7 +42,6 @@ public class User{
         this.city = city;
         this.height = height;
         this.gender = gender;
-        this.eyeColor = eyeColor;
     }
 
     @Override
@@ -147,14 +146,6 @@ public class User{
         this.gender = gender;
     }
 
-
-    public String getEyeColor() {
-        return eyeColor;
-    }
-
-    public void setEyeColor(String eyeColor) {
-        this.eyeColor = eyeColor;
-    }
 
     /*
     public String getDescription() {
