@@ -30,10 +30,10 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("There are "+userRepository.count()+"users.");
 
-        Long id1 = Long.valueOf(1);
+        /*Long id1 = Long.valueOf(1);
         userService.findById(id1).ifPresent(System.out::println);
 
         Long id2 = Long.valueOf(2);
-        userService.findById(id2).ifPresent(System.out::println);
+        userService.findById(id2).ifPresent(System.out::println);*/
     }
 }
