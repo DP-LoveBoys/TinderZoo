@@ -22,6 +22,7 @@ public class UserCredential {
     private Long id;
     private String email;
     private String password;
+
     public UserCredential(String email, String password) { //needs hashing
         this.email = email;
 
