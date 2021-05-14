@@ -1,14 +1,17 @@
 package com.dploveboys.TinderZoo.controllers;
 
+import com.dploveboys.TinderZoo.model.UserCredential;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class IndexController {
+public class RegistrationController {
 
-    @RequestMapping({"","/","/index"})
-    public String getIndexPage(){
-        return "index";
+    @GetMapping("/register")
+    public String getRegisterPage(Model model){
+        model.addAttribute("credentials", new UserCredential());
+        return "signup";
     }
 
 }
