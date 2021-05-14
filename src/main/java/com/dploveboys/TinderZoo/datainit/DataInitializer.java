@@ -1,6 +1,8 @@
 package com.dploveboys.TinderZoo.datainit;
 
 import com.dploveboys.TinderZoo.model.User;
+import com.dploveboys.TinderZoo.model.UserCredential;
+import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.repositories.UserRepository;
 import com.dploveboys.TinderZoo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
+    private final UserCredentialRepository userCredentialRepository;
     @Autowired
     private UserService userService;
 
-    public DataInitializer(UserRepository userRepository) {
+    public DataInitializer(UserRepository userRepository, UserCredentialRepository userCredentialRepository) {
         this.userRepository = userRepository;
+        this.userCredentialRepository = userCredentialRepository;
     }
 
     @Override
@@ -28,12 +32,8 @@ public class DataInitializer implements CommandLineRunner {
         //User cutu=new User("Bella","cat","siamese",7,"Romania","Oravita",40, 'M', "blue");
         //userRepository.save(cutu);
 
-        System.out.println("There are "+userRepository.count()+"users.");
-
-        /*Long id1 = Long.valueOf(1);
-        userService.findById(id1).ifPresent(System.out::println);
-
-        Long id2 = Long.valueOf(2);
-        userService.findById(id2).ifPresent(System.out::println);*/
+        UserCredential userCred = new UserCredential("andrei@andrei.com", "asdasd1212");
+        userCredentialRepository.save(userCred);
+        System.out.println("New user " + userCred);
     }
 }
