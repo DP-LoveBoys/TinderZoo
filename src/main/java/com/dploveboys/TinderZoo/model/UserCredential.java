@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="credentials")
-public class UserCredential {
+public class UserCredential{
 
     @Id
     @GeneratedValue(
@@ -30,7 +30,7 @@ public class UserCredential {
     //@Column(nullable = false, unique = false, length = 50)
     private String password;
 
-    public UserCredential(String email, String name, String password) { //needs hashing
+    public UserCredential(String email, String name, String password) {
         this.email = email;
         this.name = name;
         encryption x = new encryption();
