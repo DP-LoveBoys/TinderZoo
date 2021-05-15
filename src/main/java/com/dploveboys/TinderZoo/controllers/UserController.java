@@ -26,27 +26,4 @@ public class UserController {
         return "users/user_list";
     }
 
-
-    @RequestMapping("/users/{id}")
-    /*
-    public String getUser(Long id){
-        Optional<User> user = userRepository.findById(id);
-        System.out.println("In getUser: " + user);
-        if(user.isPresent())
-            return user;
-        else
-        {
-          return Optional.empty();
-        }
-
-        //model.addAttribute("user",userRepository.findById(id));
-        System.out.println("ID is " + id);
-        System.out.println("In getUser: " + userRepository.findById(id));
-        return "/users/{id}";
-    }
-    */
-
-    public Optional<UserData> findById(Long id) {
-
-
 }
