@@ -26,6 +26,7 @@ public class UserController {
         return "users/user_list";
     }
 
+
     @RequestMapping("/users/{id}")
     /*
     public String getUser(Long id){
@@ -47,6 +48,5 @@ public class UserController {
 
     public Optional<UserData> findById(Long id) {
 
-        return userService.findById(id);
-    }
+
 }
