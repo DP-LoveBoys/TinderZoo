@@ -11,9 +11,10 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan( { "it.myapplication.controllers" } )   //added to bypass the spring boot security redirect to login page
 @EnableCaching
  */
-@SpringBootApplication( exclude = { SecurityAutoConfiguration.class}, //exclude = { SecurityAutoConfiguration.class, DataSourceAutoConfiguration.class}
+@SpringBootApplication /*( exclude = { SecurityAutoConfiguration.class}, //exclude = { SecurityAutoConfiguration.class, DataSourceAutoConfiguration.class}
 		scanBasePackages={ "com.dploveboys.TinderZoo"}
 						)
+						*/
 public class TinderZooApplication {
 
 	public static void main(String[] args) {

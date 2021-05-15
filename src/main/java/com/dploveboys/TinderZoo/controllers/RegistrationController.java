@@ -4,6 +4,7 @@ import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,12 @@ public class RegistrationController {
 
     @PostMapping("/process_register")
     public String processRegistration(UserCredential userCredential) {
-        System.out.println("Name is: " + userCredential.getName());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        userCredential.setPassword(encoder.encode(userCredential.getPassword()));
         userCredentialRepository.save(userCredential);
         return "register_success";
     }
+
+
 
 }
