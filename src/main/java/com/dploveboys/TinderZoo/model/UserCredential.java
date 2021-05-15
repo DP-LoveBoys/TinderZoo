@@ -20,12 +20,19 @@ public class UserCredential {
             strategy = "native"
     )
     private Long id;
+
+    //@Column(nullable = false, unique = true, length = 50)     //uncomment these to have them autocreated by spring (no need)
     private String email;
+
+    //@Column(nullable = false, unique = false, length = 50)
+    private String name;
+
+    //@Column(nullable = false, unique = false, length = 50)
     private String password;
 
-    public UserCredential(String email, String password) { //needs hashing
+    public UserCredential(String email, String name, String password) { //needs hashing
         this.email = email;
-
+        this.name = name;
         encryption x = new encryption();
         this.password = x.encrypt(password);
     }
@@ -78,5 +85,13 @@ public class UserCredential {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

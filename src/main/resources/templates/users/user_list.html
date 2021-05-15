@@ -15,12 +15,12 @@
         <th>Breed</th>
         <th>Age</th>
     </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}">1</td>
-        <td th:text="${user.name}">Name</td>
-        <td th:text="${user.specie}">Specie</td>
-        <td th:text="${user.breed}">Breed</td>
-        <td th:text="${user.age}">4</td>
+    <tr th:each="userData : ${users}">
+        <td th:text="${userData.id}">1</td>
+        <td th:text="${userData.name}">Name</td>
+        <td th:text="${userData.specie}">Specie</td>
+        <td th:text="${userData.breed}">Breed</td>
+        <td th:text="${userData.age}">4</td>
     </tr>
 </table>
 

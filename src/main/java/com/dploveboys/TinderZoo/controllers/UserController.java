@@ -1,6 +1,6 @@
 package com.dploveboys.TinderZoo.controllers;
 
-import com.dploveboys.TinderZoo.model.User;
+import com.dploveboys.TinderZoo.model.UserData;
 import com.dploveboys.TinderZoo.repositories.UserRepository;
 import com.dploveboys.TinderZoo.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -45,7 +45,7 @@ public class UserController {
     }
     */
 
-    public Optional<User> findById(Long id) {
+    public Optional<UserData> findById(Long id) {
 
         return userService.findById(id);
     }

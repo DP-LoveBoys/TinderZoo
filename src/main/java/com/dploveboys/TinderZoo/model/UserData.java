@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="users")
-public class User{
+public class UserData {
 
     @Id
     @GeneratedValue(
@@ -28,12 +28,12 @@ public class User{
     private char gender;
     private String eyeColor;
     //private String description;
-    public User(){
+    public UserData(){
     }
 
 
 
-    public User(String name, String specie, String breed, int age, String country, String city, int height, char gender) {
+    public UserData(String name, String specie, String breed, int age, String country, String city, int height, char gender) {
         this.name = name;
         this.specie = specie;
         this.breed = breed;
@@ -63,9 +63,9 @@ public class User{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        UserData userData = (UserData) o;
 
-        return id == user.id;
+        return id == userData.id;
     }
 
     @Override

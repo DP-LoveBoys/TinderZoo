@@ -1,6 +1,5 @@
 package com.dploveboys.TinderZoo.datainit;
 
-import com.dploveboys.TinderZoo.model.User;
 import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.repositories.UserRepository;
@@ -17,13 +16,14 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
-   // private final UserCredentialRepository userCredentialRepository;
+    private final UserCredentialRepository userCredentialRepository;
+
     @Autowired
     private UserService userService;
 
-    public DataInitializer(UserRepository userRepository){ //UserCredentialRepository userCredentialRepository) {
+    public DataInitializer(UserRepository userRepository, UserCredentialRepository userCredentialRepository){
         this.userRepository = userRepository;
-        //this.userCredentialRepository = userCredentialRepository;
+        this.userCredentialRepository = userCredentialRepository;
     }
 
     @Override
@@ -31,8 +31,8 @@ public class DataInitializer implements CommandLineRunner {
 
         //User cutu=new User("Bella","cat","siamese",7,"Romania","Oravita",40, 'M', "blue");
         //userRepository.save(cutu);
-       // UserCredential userCred = new UserCredential("andrei@andrei.com", "asdasd1212");
-       // userCredentialRepository.save(userCred);
-        //System.out.println("New user " + userCred);
+        UserCredential userCred = new UserCredential("timi@timu.com", "timi", "parola");
+        //userCredentialRepository.save(userCred);
+        System.out.println("New user " + userCred);
     }
 }
