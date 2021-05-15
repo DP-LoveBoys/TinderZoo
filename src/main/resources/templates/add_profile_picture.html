@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TinderZooApp</title>
+</head>
+<body>
+<h1>Profile page!</h1>
+
+<div>
+    <form action="add_picture" method="post" enctype="multipart/form-data">
+        <label for="photo">Add a photo:</label>
+        <input type="file" name="profile_picture" id="photo"/>
+        <input type="hidden" th:value="${user_id}" name="userId">
+        <button type="submit" >Add profile picture</button>
+    </form>
+
+</div>
+
+
+</body>
+</html>

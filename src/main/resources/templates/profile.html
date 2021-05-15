@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>This is the profile page</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div>
+    <h1>Here should be the profile picture</h1>
+    <div class="circular--portrait">
+        <img th:src="'data:image/png;base64,'+${profile.image}" />
+    </div>
+</div>
+</body>
+</html>
