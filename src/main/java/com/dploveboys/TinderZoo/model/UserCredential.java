@@ -45,6 +45,7 @@ public class UserCredential{
         return "UserCredential{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
@@ -79,6 +80,14 @@ public class UserCredential{
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -87,11 +96,5 @@ public class UserCredential{
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

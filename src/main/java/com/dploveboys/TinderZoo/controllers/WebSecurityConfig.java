@@ -51,12 +51,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception { //This means you have to be logged in to access /list_users, else you can navigate freely
         http.authorizeRequests()
-                .antMatchers("/list_usersCredentials")
-                .authenticated()
+                //.antMatchers("/login").permitAll()
+                //.antMatchers("/register").permitAll()
+                .antMatchers("/list_usersCredentials").authenticated() //only need permission to view the full list of users
                 .anyRequest().permitAll()
                 .and()
-                .formLogin().usernameParameter("email").defaultSuccessUrl("/list_usersCredentials") //redirect a successful login to /list_users
-                .permitAll()
+                .formLogin()
+                    .usernameParameter("email")
+                    .defaultSuccessUrl("/list_usersCredentials")
+                    .permitAll() //redirect a successful login to /list_users
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();
     }

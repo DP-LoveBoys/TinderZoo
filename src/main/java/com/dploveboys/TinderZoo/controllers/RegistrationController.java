@@ -25,9 +25,14 @@ public class RegistrationController {
 
     @PostMapping("/process_register")
     public String processRegistration(UserCredential userCredential) {
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        userCredential.setPassword(encoder.encode(userCredential.getPassword()));
+        String password = userCredential.getPassword();
+        password = encoder.encode(password);
+        userCredential.setPassword(password);
+
         userCredentialRepository.save(userCredential);
+
         return "register_success";
     }
 
