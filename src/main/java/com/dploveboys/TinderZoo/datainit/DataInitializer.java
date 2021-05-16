@@ -32,7 +32,7 @@ public class DataInitializer implements CommandLineRunner {
         //User cutu=new User("Bella","cat","siamese",7,"Romania","Oravita",40, 'M', "blue");
         //userRepository.save(cutu);
         UserCredential userCred = new UserCredential("timi@timu.com", "timi", "parola");
-        //userCredentialRepository.save(userCred);
-        System.out.println("New user " + userCred);
+       // userCredentialRepository.save(userCred);
+        //System.out.println("New user " + userCred);
     }
 }
