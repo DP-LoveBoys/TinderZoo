@@ -26,4 +26,10 @@ public class IndexController {
         model.addAttribute("listUsersCredentials", userCredentialRepository.findAll());
         return "list_usersCredentials";
     }
+
+    @RequestMapping({"/login"})
+    public String viewLoginPage(Model model){
+
+        return "login";
+    }
 }
