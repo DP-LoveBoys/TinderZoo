@@ -2,6 +2,7 @@ package com.dploveboys.TinderZoo.controllers;
 
 import com.dploveboys.TinderZoo.service.CustomOAuth2UserService;
 import com.dploveboys.TinderZoo.service.CustomUserDetailsService;
+import com.dploveboys.TinderZoo.service.OAuth2LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -64,12 +65,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                     .loginPage("/login")
-                    .userInfoEndpoint().userService(customOAuth2UserService)
+                    .userInfoEndpoint().userService(OAuth2UserService)
                     .and()
+                    .successHandler(successHandler)
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();
     }
 
     @Autowired
-    private CustomOAuth2UserService customOAuth2UserService;
+    private CustomOAuth2UserService OAuth2UserService;
+
+    @Autowired
+    private OAuth2LoginSuccessHandler successHandler;
 }
