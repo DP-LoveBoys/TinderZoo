@@ -14,7 +14,11 @@
     </div>
     <h2>My photos:</h2>
     <div th:each="photo:${photos}">
-        <img th:src="'data:image/${photo.imageType};base64,'+${photo.image}" src="images/empty_picture.jpeg">
+        <img th:src="'data:image/${photo.imageType};base64,'+${photo.image}" src="images/empty_picture.jpeg"/>
+        <form action="deletePhoto" method="post">
+            <input type="hidden" name="photoId" th:value="${photo.id}"/>
+            <button type="submit">Delete</button>
+        </form>
     </div>
 
     <form action="addPhotos" method="post" enctype="multipart/form-data">

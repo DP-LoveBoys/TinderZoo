@@ -45,4 +45,8 @@ public class PhotoService {
         return photoRepository.findByUserId(userId);
     }
 
+    public void deletePhoto(Long photoId){
+        photoRepository.deleteById(photoId);
+    }
+
 }

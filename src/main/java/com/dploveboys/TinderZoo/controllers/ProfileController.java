@@ -63,6 +63,12 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
+    @PostMapping("/deletePhoto")
+    public String deletePhoto(@RequestParam("photoId") Long photoId){
+        photoService.deletePhoto(photoId);
+        return "redirect:/profile";
+    }
+
     @RequestMapping("/profile")
     public String getUserProfile(Model model){
         model.addAttribute("userId",userId);
