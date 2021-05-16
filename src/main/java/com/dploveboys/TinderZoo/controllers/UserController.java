@@ -26,4 +26,5 @@ public class UserController {
         return "users/user_list";
     }
 
+
 }

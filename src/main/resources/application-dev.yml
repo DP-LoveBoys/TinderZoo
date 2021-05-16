@@ -12,3 +12,14 @@ spring:
     show-sql: true
   resources:
       add-mappings: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: 1149004038908516
+            client-secret: 629e01193ced516125c77580f3b0d2c9
+            scope:
+              - email
+              - public_profile

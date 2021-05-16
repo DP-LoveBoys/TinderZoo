@@ -1,5 +1,6 @@
 package com.dploveboys.TinderZoo.controllers;
 
+import com.dploveboys.TinderZoo.service.CustomOAuth2UserService;
 import com.dploveboys.TinderZoo.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -52,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception { //This means you have to be logged in to access /list_users, else you can navigate freely
         http.authorizeRequests()
                 //.antMatchers("/login").permitAll()
-                //.antMatchers("/register").permitAll()
+                .antMatchers("/oauth2/**").permitAll()
                 .antMatchers("/list_usersCredentials").authenticated() //only need permission to view the full list of users
                 .anyRequest().permitAll()
                 .and()
@@ -61,6 +62,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .defaultSuccessUrl("/list_usersCredentials")
                     .permitAll() //redirect a successful login to /list_users
                 .and()
+                .oauth2Login()
+                    .loginPage("/login")
+                    .userInfoEndpoint().userService(customOAuth2UserService)
+                    .and()
+                .and()
                 .logout().logoutSuccessUrl("/").permitAll();
     }
+
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
 }

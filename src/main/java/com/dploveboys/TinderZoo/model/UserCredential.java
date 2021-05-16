@@ -30,6 +30,9 @@ public class UserCredential{
     //@Column(nullable = false, unique = false, length = 50)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private AuthenticationProvider authenticationProvider;
+
     public UserCredential(String email, String name, String password) {
         this.email = email;
         this.name = name;
@@ -97,4 +100,11 @@ public class UserCredential{
     }
 
 
+    public AuthenticationProvider getAuthenticationProvider() {
+        return authenticationProvider;
+    }
+
+    public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
 }
