@@ -11,7 +11,7 @@ public class RegistrationController {
     @GetMapping("/register")
     public String getRegisterPage(Model model){
         model.addAttribute("credentials", new UserCredential());
-        return "signup";
+        return "/signup";
     }
 
 }

@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan( { "it.myapplication.controllers" } )   //added to bypass the spring boot security redirect to login page
-@EnableCaching
-@SpringBootApplication( exclude = { SecurityAutoConfiguration.class } )
+//@ComponentScan( { "it.myapplication.controllers" } )   //added to bypass the spring boot security redirect to login page
+//@EnableCaching
+@SpringBootApplication//( exclude = { SecurityAutoConfiguration.class } )
 public class TinderZooApplication {
 
 	public static void main(String[] args) {

@@ -5,9 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name="profile_pictures")
-public class ProfilePicture {
-
+@Table(name="photos")
+public class Photo {
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
@@ -24,7 +23,7 @@ public class ProfilePicture {
     private String image;
     private String imageType;
 
-    public ProfilePicture() {
+    public Photo() {
     }
 
     @Override
@@ -32,9 +31,9 @@ public class ProfilePicture {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProfilePicture that = (ProfilePicture) o;
+        Photo photo = (Photo) o;
 
-        return id != null ? id.equals(that.id) : that.id == null;
+        return id != null ? id.equals(photo.id) : photo.id == null;
     }
 
     @Override
