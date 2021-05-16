@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="credentials")
-public class UserCredential {
+public class UserCredential{
 
     @Id
     @GeneratedValue(
@@ -30,7 +30,7 @@ public class UserCredential {
     //@Column(nullable = false, unique = false, length = 50)
     private String password;
 
-    public UserCredential(String email, String name, String password) { //needs hashing
+    public UserCredential(String email, String name, String password) {
         this.email = email;
         this.name = name;
         encryption x = new encryption();
@@ -45,6 +45,7 @@ public class UserCredential {
         return "UserCredential{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
@@ -79,6 +80,14 @@ public class UserCredential {
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -87,11 +96,5 @@ public class UserCredential {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }
