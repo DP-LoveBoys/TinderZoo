@@ -12,10 +12,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserCredentialRepository userCredentialRepository;
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserCredential userCredential = userCredentialRepository.findByEmail(email);
+        System.out.println("User is: " + userCredential);
         if(userCredential == null)
         {
             throw new UsernameNotFoundException("The user was not found");
