@@ -34,5 +34,13 @@ CREATE TABLE `profile_pictures` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int UNIQUE NOT NULL,
   `image` longblob NOT NULL,
+  `image_type` VARCHAR(15) NOT NULL
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `tinderzoo_dev`.`photos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `image` LONGBLOB NOT NULL,
+  `image_type` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`id`));
