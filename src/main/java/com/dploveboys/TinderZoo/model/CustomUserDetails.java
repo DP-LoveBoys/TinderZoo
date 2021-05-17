@@ -48,4 +48,9 @@ public class CustomUserDetails implements UserDetails {  //this class uses the s
     public boolean isEnabled() {
         return true;
     }
+
+    public String getFullName()
+    {
+        return userCredential.getName();
+    }
 }
