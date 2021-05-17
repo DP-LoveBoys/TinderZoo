@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Profile Configuration - TinderZoo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/index">TinderZoo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav ml-auto ">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/register">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container text-center">
+    <div>
+        <h1>Profile Configuration</h1>
+    </div>
+    <form th:action="@{/process_profile_data}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}"> <!-- userCredentials sent by registrationController -->
+        <fieldset>
+            <div class="m-3">
+                <div class="form-group row">
+                    <label for="InputSpecie" class="col-form-label col-4">Specie</label>
+                    <div class="col-8">
+                        <input type="text" name="specie" class="form-control" id="InputSpecie" placeholder="Enter specie" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="InputBreed" class="col-form-label col-4">Breed</label>
+                    <div class="col-8">
+                        <input type="text" name="breed" class="form-control" id="InputBreed" placeholder="Enter breed" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="InputAge" class="col-form-label col-4">Age</label>
+                    <div class="col-8">
+                        <input type="number" name="password" class="form-control" id="InputAge" placeholder="Enter age" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="InputCountry" class="col-form-label col-4">Country</label>
+                    <div class="col-8">
+                        <input type="text" name="country" class="form-control" id="InputCountry" placeholder="Enter country" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="InputCity" class="col-form-label col-4">City</label>
+                    <div class="col-8">
+                        <input type="text" name="city" class="form-control" id="InputCity" placeholder="Enter city" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="InputHeight" class="col-form-label col-4">Height</label>
+                    <div class="col-8">
+                        <input type="number" name="height" class="form-control" id="InputHeight" placeholder="Enter height in cm" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="InputGender" class="col-form-label col-4">Gender</label>
+                    <div class="col-1">
+                        <select class="form-select" id="InputGender">
+                            <option>Female</option>
+                            <option>Male</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="photo" class="col-form-label col-4">Profile photo:</label>
+                    <div class="col-1">
+                        <input type="file" name="profile_picture" id="photo"/>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

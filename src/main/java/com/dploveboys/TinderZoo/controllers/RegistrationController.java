@@ -1,7 +1,9 @@
 package com.dploveboys.TinderZoo.controllers;
 
 import com.dploveboys.TinderZoo.model.UserCredential;
+import com.dploveboys.TinderZoo.model.UserData;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
+import com.dploveboys.TinderZoo.repositories.UserRepository;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +17,8 @@ public class RegistrationController {
 
     @Autowired
     private UserCredentialRepository userCredentialRepository;
+
+    private UserRepository userRepository;
 
     @GetMapping("/register")
     public String getRegisterPage(Model model)
@@ -36,6 +40,12 @@ public class RegistrationController {
         return "register_success";
     }
 
+    @GetMapping("/profile_configuration")
+    public String getProfileConfigurationPage(Model model)
+    {
+        model.addAttribute("user", new UserData());
+        return "profile_configuration";
+    }
 
 
 }
