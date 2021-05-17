@@ -27,13 +27,13 @@ public class UserData {
     private int height; // in cm
     private char gender;
     private String eyeColor;
-    //private String description;
+    private String description;
     public UserData(){
     }
 
 
 
-    public UserData(String name, String specie, String breed, int age, String country, String city, int height, char gender) {
+    public UserData(String name, String specie, String breed, int age, String country, String city, int height, char gender,String eyeColor,String description) {
         this.name = name;
         this.specie = specie;
         this.breed = breed;
@@ -42,6 +42,8 @@ public class UserData {
         this.city = city;
         this.height = height;
         this.gender = gender;
+        this.eyeColor=eyeColor;
+        this.description=description;
     }
 
     @Override
@@ -73,14 +75,6 @@ public class UserData {
         return (int) (id ^ (id >>> 32));
     }
 
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -146,14 +140,29 @@ public class UserData {
         this.gender = gender;
     }
 
+    public Long getId() {
+        return id;
+    }
 
-    /*
-    public String getDescription() {
-        return description;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEyeColor() {
+        return eyeColor;
+    }
+
+    public void setEyeColor(String eyeColor) {
+        this.eyeColor = eyeColor;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
-    */
+
+    public String getDescription() {
+        return description;
+    }
+
+
 }

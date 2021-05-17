@@ -44,3 +44,13 @@ CREATE TABLE `tinderzoo_dev`.`photos` (
   `image` LONGBLOB NOT NULL,
   `image_type` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`id`));
+
+CREATE TABLE `credentials` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `authentication_provider` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
