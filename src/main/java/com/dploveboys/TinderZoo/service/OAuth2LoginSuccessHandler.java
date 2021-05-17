@@ -3,7 +3,6 @@ package com.dploveboys.TinderZoo.service;
 import com.dploveboys.TinderZoo.model.AuthenticationProvider;
 import com.dploveboys.TinderZoo.model.CustomOAuth2User;
 import com.dploveboys.TinderZoo.model.UserCredential;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -26,12 +25,12 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         String email = oAuth2User.getEmail();
 
-        //System.out.println("User email is: " + email);
         UserCredential user = userService.getUserByEmail(email);
         String name = oAuth2User.getFullName();
+
         if(user == null)
         {
-            userService.registerNewCustomerAfterOAuthLoginSuccess(email, name, AuthenticationProvider.FACEBOOK);
+            userService.registerNewUserAfterOAuthLoginSuccess(email, name, AuthenticationProvider.FACEBOOK);
         }
         else
         {

@@ -27,7 +27,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/process_register")
-    public String processRegistration(UserCredential userCredential) {
+    public String processRegistration(Model model, UserCredential userCredential) {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String password = userCredential.getPassword();
@@ -36,12 +36,8 @@ public class RegistrationController {
 
         userCredentialRepository.save(userCredential);
 
-        return "register_success";
-    }
+        model.addAttribute("id", userCredential.getId());
 
-    @GetMapping("/profile_configuration")
-    public String getProfileConfigurationPage(Model model)
-    {
         model.addAttribute("user", new UserData());
         return "profile_configuration";
     }
