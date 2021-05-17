@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Sign Up - TinderZoo</title>
+    <title>Login - TinderZoo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
 </head>
 <body>
@@ -29,33 +29,21 @@
 
 <div class="container text-center">
     <div>
-        <h1>Registration</h1>
+        <h1>Login</h1>
     </div>
-    <form th:action="@{/process_register}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${userCredentials}"> <!-- userCredentials sent by registrationController -->
+    <form th:action="@{/home_page}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${userCredentials}"> <!-- userCredentials sent by registrationController -->
         <fieldset>
             <div class="m-3">
                 <div class="form-group row">
                     <label for="InputEmail" class="col-form-label col-4">Email address</label>
                     <div class="col-8">
-                        <input type="email" name="email" th:field="*{email}" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email" minlength="8" maxlength="100" required>
+                        <input type="email" th:field="*{email}" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email" minlength="8" maxlength="100" required>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="InputName" class="col-form-label col-4">Name</label>
-                    <div class="col-8">
-                        <input type="text" name="name" th:field="*{name}" class="form-control" id="InputName" aria-describedby="nameHelp" placeholder="Enter name" minlength="8" maxlength="100" required>
-                    </div> <!-- had to add field name="name" here in order for the form to send the data... -->
                 </div>
                 <div class="form-group row">
                     <label for="InputPassword" class="col-form-label col-4">Password</label>
                     <div class="col-8">
-                        <input type="password" name="password" th:field="*{password}" class="form-control" id="InputPassword" placeholder="Password" minlength="8" maxlength="24" required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="InputConfirmationPassword" class="col-form-label col-4">Confirmation Password</label>
-                    <div class="col-8">
-                        <input type="password" class="form-control" id="InputConfirmationPassword" placeholder="Enter Password again" minlength="8" maxlength="24" required>
+                        <input type="password" th:field="*{password}" class="form-control" id="InputPassword" placeholder="Password" minlength="8" maxlength="24" required>
                     </div>
                 </div>
 
