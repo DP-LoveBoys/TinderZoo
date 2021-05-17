@@ -19,14 +19,17 @@ public class UserCredentialService {
 
     public UserCredential getUserByEmail(String email) throws UsernameNotFoundException {
         UserCredential userCredential = userCredentialRepository.findByEmail(email);
+        /*
         if (userCredential == null) {
             throw new UsernameNotFoundException("The user was not found");
         }
+        */
+
         return userCredential;
 
     }
 
-    public void registerNewCustomerAfterOAuthLoginSuccess(String email, String name, AuthenticationProvider authenticationProvider) {
+    public void registerNewUserAfterOAuthLoginSuccess(String email, String name, AuthenticationProvider authenticationProvider) {
         UserCredential userCredential = new UserCredential();
         userCredential.setEmail(email);
         userCredential.setName(name);

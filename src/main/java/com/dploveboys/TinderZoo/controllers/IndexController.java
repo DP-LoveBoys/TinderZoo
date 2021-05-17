@@ -16,20 +16,7 @@ public class IndexController {
 
     @RequestMapping({"","/","/index"})
     public String getIndexPage(){
-        return "index";
+        return "/index";
     }
 
-
-    @RequestMapping({"/list_usersCredentials"})
-    public String viewUserCredentialsList(Model model){
-
-        model.addAttribute("listUsersCredentials", userCredentialRepository.findAll());
-        return "list_usersCredentials";
-    }
-
-    @RequestMapping({"/login"})
-    public String viewLoginPage(Model model){
-
-        return "login";
-    }
 }
