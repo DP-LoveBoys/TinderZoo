@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 
+
 /*
 @ComponentScan( { "it.myapplication.controllers" } )   //added to bypass the spring boot security redirect to login page
 @EnableCaching

@@ -2,6 +2,7 @@ package com.dploveboys.TinderZoo.service;
 
 import com.dploveboys.TinderZoo.model.ProfilePicture;
 import com.dploveboys.TinderZoo.repositories.ProfilePictureRepository;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,24 @@ public class ProfilePictureService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        profilePicture.setUser_id(userId);
+        profilePicture.setUserId(userId);
+        profilePicture.setImageType(FilenameUtils.getExtension(fileName));
+
+        profilePictureRepository.save(profilePicture);
+    }
+
+    public void updateProfilePicture(ProfilePicture profilePicture, MultipartFile file){
+        String fileName= StringUtils.cleanPath(file.getOriginalFilename());
+        if(fileName.contains("..")){
+            System.out.println("Not a valid file!");
+        }
+
+        try {
+            profilePicture.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        profilePicture.setImageType(FilenameUtils.getExtension(fileName));
 
         profilePictureRepository.save(profilePicture);
     }
