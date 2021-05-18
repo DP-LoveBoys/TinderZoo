@@ -2,7 +2,7 @@ package com.dploveboys.TinderZoo.datainit;
 
 import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
-import com.dploveboys.TinderZoo.repositories.UserRepository;
+import com.dploveboys.TinderZoo.repositories.UserDataRepository;
 import com.dploveboys.TinderZoo.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,14 +15,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataInitializer implements CommandLineRunner {
 
-    private final UserRepository userRepository;
+    private final UserDataRepository userDataRepository;
     private final UserCredentialRepository userCredentialRepository;
 
     @Autowired
     private UserDataService userDataService;
 
-    public DataInitializer(UserRepository userRepository, UserCredentialRepository userCredentialRepository){
-        this.userRepository = userRepository;
+    public DataInitializer(UserDataRepository userDataRepository, UserCredentialRepository userCredentialRepository){
+        this.userDataRepository = userDataRepository;
         this.userCredentialRepository = userCredentialRepository;
     }
 
