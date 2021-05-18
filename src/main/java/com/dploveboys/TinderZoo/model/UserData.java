@@ -4,21 +4,12 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name="users")
+@Table(name="user_data")
 public class UserData {
 
     @Id
-    @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
-    )
-    @GenericGenerator(
-            name = "native",
-            strategy = "native"
-    )
     private Long id;
 
-    private String name;
     private String specie;
     private String breed;
     private int age;
@@ -33,8 +24,8 @@ public class UserData {
 
 
 
-    public UserData(String name, String specie, String breed, int age, String country, String city, int height, char gender,String eyeColor,String description) {
-        this.name = name;
+    public UserData(Long id, String specie, String breed, int age, String country, String city, int height, char gender,String eyeColor,String description) {
+        this.id=id;
         this.specie = specie;
         this.breed = breed;
         this.age = age;
@@ -48,15 +39,17 @@ public class UserData {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserData{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", specie='" + specie + '\'' +
                 ", breed='" + breed + '\'' +
                 ", age=" + age +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", height=" + height +
+                ", gender=" + gender +
+                ", eyeColor='" + eyeColor + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 
@@ -73,15 +66,6 @@ public class UserData {
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSpecie() {

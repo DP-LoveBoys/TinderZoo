@@ -35,12 +35,13 @@
     <div>
         <h2 style="font-size:28px; margin-bottom: 50px;"><b>The following information is essential for anyone that visits you profile.</br> Make sure you give accurate info:</b></h2>
     </div>
-    <form th:action="@{/process_profile_data}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}"> <!-- userCredentials sent by registrationController -->
+    <form th:action="@{/process_profile_data}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}" enctype="multipart/form-data"> <!-- userCredentials sent by registrationController -->
         <fieldset>
             <div class="m-3">
                 <div class="form-group row">
                     <label style="margin-bottom: 20px;" for="InputSpecie" class="col-form-label col-4">Specie:</label>
                     <div class="col-8">
+                        <input type="hidden" th:value="${userId}" name="userId"/>
                         <input type="text" th:field="*{specie}" name="specie" class="form-control" id="InputSpecie" placeholder="Enter specie" minlength="2" maxlength="25" required>
                     </div>
                 </div>
@@ -86,13 +87,13 @@
                 <div class="form-group row">
                     <label style="margin-bottom: 20px;" for="InputEyeColour" class="col-form-label col-4">Eye colour:</label>
                     <div class="col-8">
-                        <input type="text" name="eye_colour" class="form-control" id="InputEyeColour" placeholder="Enter eye colour" minlength="2" maxlength="25" required>
+                        <input type="text" th:field="*{eyeColor}" name="eyeColor" class="form-control" id="InputEyeColour" placeholder="Enter eye colour" minlength="2" maxlength="25" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label style="margin-top: 20px; margin-bottom: 40px; font-size:28px;"><b>Now add a short description about yourself:</b></label>
                     <div>
-                        <textarea name="editor1"></textarea>
+                        <textarea name="editor1" th:field="*{description}"></textarea>
                         <script>
                             CKEDITOR.replace('editor1');
                         </script>

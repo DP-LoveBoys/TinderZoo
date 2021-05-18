@@ -10,11 +10,16 @@ import java.util.Optional;
 
 @Service
 public class UserDataService {
+
     @Autowired
     private UserDataRepository userDataRepository;
 
     public Optional<UserData> findById(Long id)
     {
         return userDataRepository.findById(id);
+    }
+
+    public void addUserData(UserData userData){
+        userDataRepository.save(userData);
     }
 }
