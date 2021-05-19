@@ -9,7 +9,7 @@ public interface UserCredentialRepository extends CrudRepository<UserCredential,
             value = "select * from credentials where email = ?1", //do a querry on the credentials table to find the user we need, by email
             nativeQuery = true)   // ?1 means first parameter passed to the method (as I understand it)
     UserCredential findByEmail(String email);
-    @Query( //cred ca trebuie sters si din  celelalte tabele
+    @Query(
             value = "DELETE FROM credentials WHERE id = ?1",
             nativeQuery = true)
     void deleteProfile(Long userId);

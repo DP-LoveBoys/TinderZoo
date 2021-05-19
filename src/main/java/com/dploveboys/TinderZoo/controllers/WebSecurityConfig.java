@@ -71,7 +71,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("email")
                     .defaultSuccessUrl("/profile_configuration")
                     .failureUrl("/login.html?error=true")
-                    //.failureHandler(authenticationFailureHandler())
                     .permitAll() //redirect a successful login to /list_users
                 .and()
                 .oauth2Login()

@@ -54,3 +54,10 @@ CREATE TABLE `credentials` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE interests(
+ `id` int NOT NULL AUTO_INCREMENT,
+  `interest_tag` int UNIQUE NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (id) REFERENCES credentials (id) ON DELETE CASCADE
+);
