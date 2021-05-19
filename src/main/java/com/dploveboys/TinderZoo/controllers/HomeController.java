@@ -28,7 +28,7 @@ public class HomeController {
     @Autowired
     UserDataService userDataService;
 
-    @RequestMapping("/{userId}/home_page")
+    @RequestMapping("/home_page/{userId}")
     public String getHomePage(@PathVariable("userId") Long userId,Model model){
 
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
