@@ -11,11 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserCredentialService {
 
     @Autowired
     private UserCredentialRepository userCredentialRepository;
+
+    public Optional<UserCredential> getUserById(Long userId){
+        return userCredentialRepository.findById(userId);
+    }
 
     public UserCredential getUserByEmail(String email) throws UsernameNotFoundException {
         UserCredential userCredential = userCredentialRepository.findByEmail(email);

@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/settings}">Settings</a>
+                    <a class="nav-link active" th:href="@{/settings/(id=${userData.id})}">Settings</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}">Logout</a>
@@ -25,26 +25,26 @@
         </div>
     </div>
 </nav>
+
 <h1 class="container text-center display-1">Tinder Zoo</h1>
 <div class="w3-container">
     <div class="circular--portrait1">
-        <img src="images/empty_picture.jpg" />
+        <img th:src="'data:image/'+${profilePicture.imageType}+';base64,'+${profilePicture.image}" />
     </div>
     <div>
-        <h1 style="text-align: center; width: 15%; height: 15%;">Username</h1>
+        <h1 style="text-align: center; width: 15%; height: 15%;"><span th:text="${username}"></span></h1>
     </div>
 </div>
 <div class="container text-center" style="margin-bottom:150px">
     <div class="card mb-3">
-        <img class="home_page" src="images/fluturi.jpg" alt="...">
+        <img class="home_page" src="../images/fluturi.jpg" alt="...">
     </div>
     <div class="card mb-3">
-        <img class="home_page" src="images/capre.jpg" alt="...">
+        <img class="home_page" src="../images/capre.jpg" alt="...">
     </div>
     <div class="card mb-3">
-            <img class="home_page" src="images/horse.jpg" alt="...">
+            <img class="home_page" src="../images/horse.jpg" alt="...">
     </div>
-
 
 </div>
 

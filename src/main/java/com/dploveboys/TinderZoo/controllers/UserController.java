@@ -42,7 +42,7 @@ public class UserController {
         //System.out.println("SENT PROFILE PICTURE: "+photo.getOriginalFilename()+"\nAnd user id: "+userId);
         profilePictureService.saveProfilePicture(photo,userId);
 
-        return "redirect:/home/"+userId;
+        return "redirect:/login";
     }
 
 }

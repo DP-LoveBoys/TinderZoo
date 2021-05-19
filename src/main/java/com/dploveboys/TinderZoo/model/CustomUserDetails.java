@@ -53,4 +53,8 @@ public class CustomUserDetails implements UserDetails {  //this class uses the s
     {
         return userCredential.getName();
     }
+
+    public String getEmail() {
+        return userCredential.getEmail();
+    }
 }
