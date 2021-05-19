@@ -67,7 +67,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception { //This means you have to be logged in to access /list_users, else you can navigate freely
         http.authorizeRequests()
-                //.antMatchers("/login").permitAll()
                 .antMatchers("/oauth2/**").permitAll()
                 .antMatchers("/list_usersCredentials").authenticated() //only need permission to view the full list of users
                 .anyRequest().permitAll()
@@ -91,9 +90,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .oauth2Login()
                     .userInfoEndpoint().userService(OAuth2UserService)
                     .and()
-                    .successHandler(successHandler)
+                    //.successHandler(successHandler)
+                    .successHandler(new AuthenticationSuccessHandler() {
+
+                        @Override
+                        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                                            Authentication authentication) throws IOException, ServletException {
+
+                            CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+                            String email = oAuth2User.getEmail();
+
+                            UserCredential user = userService.getUserByEmail(email);
+                            String name = oAuth2User.getFullName();
+
+                            if(user == null)
+                            {
+                                userService.registerNewUserAfterOAuthLoginSuccess(email, name, AuthenticationProvider.FACEBOOK);
+                            }
+                            else
+                            {
+                                userService.updateExistingUserAfterOAuthLoginSuccess(user, name, AuthenticationProvider.FACEBOOK);
+                            }
+                            System.out.println("Redirecting");
+                            response.sendRedirect("/profile_configuration");
+                        }
+                    })
                 .and()
-                .logout().logoutSuccessUrl("/").permitAll();
+                .logout()
+                    .logoutSuccessUrl("/").permitAll();
     }
 
     @Autowired
@@ -101,4 +125,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private OAuth2LoginSuccessHandler successHandler;
+
+    @Autowired
+    private UserCredentialService userService;
 }

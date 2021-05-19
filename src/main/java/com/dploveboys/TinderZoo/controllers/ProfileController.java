@@ -1,6 +1,7 @@
 package com.dploveboys.TinderZoo.controllers;
 
 import com.dploveboys.TinderZoo.model.ProfilePicture;
+import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.service.PhotoService;
 import com.dploveboys.TinderZoo.service.ProfilePictureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class ProfileController {
 
     @Autowired
     private PhotoService photoService;
+
+    @Autowired
+    private UserCredentialRepository userCredentialRepository;
 
     @RequestMapping("/add_profile_picture/{userId}")
     public String getProfileProfile(@PathVariable("userId") Long userId, Model model){
@@ -77,6 +81,11 @@ public class ProfileController {
         return "/profile";
     }
 
+    @PostMapping("/deleteProfile")
+    public String deleteProfile(@RequestParam("userId") Long userId){
+        userCredentialRepository.deleteProfile(userId);
+        return "redirect:/index";
+    }
 
 
 
