@@ -1,7 +1,9 @@
 package com.dploveboys.TinderZoo.controllers;
 
+import com.dploveboys.TinderZoo.model.Interest;
 import com.dploveboys.TinderZoo.model.ProfilePicture;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
+import com.dploveboys.TinderZoo.service.InterestService;
 import com.dploveboys.TinderZoo.service.PhotoService;
 import com.dploveboys.TinderZoo.service.ProfilePictureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -28,6 +28,9 @@ public class ProfileController {
 
     @Autowired
     private UserCredentialRepository userCredentialRepository;
+
+    @Autowired
+    private InterestService interestService;
 
     @RequestMapping("/add_profile_picture/{userId}")
     public String getProfileProfile(@PathVariable("userId") Long userId, Model model){
@@ -87,7 +90,21 @@ public class ProfileController {
         return "redirect:/index";
     }
 
+    @RequestMapping("/interests_selection/{userId}")
+    public String getInterestsUser(@PathVariable("userId") Long userId, Model model){
+        Interest interest = new Interest();
 
+        model.addAttribute("interest", interest);
+        return "interests_selection";
+    }
+
+    @PostMapping("/interests_selection_processing")
+    public String addUserInterest(@RequestParam("interest_tag")String interest_tag, @RequestParam("userId") Long userId, @ModelAttribute("interest") Interest interest)
+    {
+        interestService.saveInterest(interest_tag, userId);
+
+        return "redirect:interests_selection/" + userId;
+    }
 
 
 }

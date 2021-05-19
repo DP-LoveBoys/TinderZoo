@@ -8,10 +8,18 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface InterestRepository extends CrudRepository<Interest,Long> {
-    List<Interest> findByUserId(Long userId);
+    @Query(
+            value = "SELECT * FROM interests WHERE user_id = ?1",
+            nativeQuery = true)
+    List<Interest> getInterestsByUserId(Long userId);
 
     @Query(
-            value = "DELETE FROM interests WHERE id = ?1 AND interest_tag = ?2",
+            value = "SELECT user_id FROM interests WHERE interest_tag = ?1",
+            nativeQuery = true)
+    List<Long> getUserIDsByInterests(String interest_tag);
+
+    @Query(
+            value = "DELETE FROM interests WHERE user_id = ?1 AND interest_tag = ?2",
             nativeQuery = true)
     void deleteByTag(Long userId, String interest_tag);
 }

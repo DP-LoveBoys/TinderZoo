@@ -33,9 +33,9 @@
         <h1 style="margin-bottom: 60px;">Interest selection</h1>
     </div>
     <div>
-        <h2 style="font-size:28px; margin-bottom: 50px;"><b>Enter any interest that comes to mind. Keep it one word</b></h2>
+        <h2 style="font-size:28px; margin-bottom: 50px;"><b>Now try again.</b></h2>
     </div>
-    <form th:action="@{/interests_selection_processing}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${interest}" > <!-- userCredentials sent by registrationController -->
+    <form th:action="@{/interest_selection_processing}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${interest}" > <!-- userCredentials sent by registrationController -->
            <fieldset>
                <div class="m-3">
                    <div class="form-group row">

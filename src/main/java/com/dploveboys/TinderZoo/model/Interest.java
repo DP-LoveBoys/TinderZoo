@@ -17,10 +17,21 @@ public class Interest {
             strategy = "native"
     )
     private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    //@Column(name = "user_id")
+    private Long user_id;
     private String interest_tag;
 
-    public Interest(Long id, String interest) {
-        this.id = id;
+    public Interest(Long user_id, String interest) {
+        this.user_id = user_id;
         this.interest_tag = interest;
     }
 
@@ -42,12 +53,12 @@ public class Interest {
         return id != null ? id.hashCode() : 0;
     }
 
-    public Long getId() {
+    public Long getInterest_id() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setInterest_id(Long interest_id) {
+        this.id = interest_id;
     }
 
     public String getInterest_tag() {
@@ -56,6 +67,14 @@ public class Interest {
 
     public void setInterest_tag(String interest_tag) {
         this.interest_tag = interest_tag;
+    }
+
+    public Long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 
     @Override
