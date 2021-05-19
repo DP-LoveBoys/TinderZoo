@@ -30,17 +30,18 @@
 
 <div class="container text-center">
     <div>
-        <h1 style="margin-bottom: 40px;">Profile Configuration</h1>
+        <h1 style="margin-bottom: 60px;">Profile Configuration</h1>
     </div>
     <div>
-        <h2 style="font-size:20px; margin-bottom: 20px;"><b>The following information is essential for anyone that visits you profile. Make sure you give accurate info:</b></h2>
+        <h2 style="font-size:28px; margin-bottom: 50px;"><b>The following information is essential for anyone that visits you profile.</br> Make sure you give accurate info:</b></h2>
     </div>
-    <form th:action="@{/process_profile_data}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}"> <!-- userCredentials sent by registrationController -->
+    <form th:action="@{/process_profile_data}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}" enctype="multipart/form-data"> <!-- userCredentials sent by registrationController -->
         <fieldset>
             <div class="m-3">
                 <div class="form-group row">
                     <label style="margin-bottom: 20px;" for="InputSpecie" class="col-form-label col-4">Specie:</label>
                     <div class="col-8">
+                        <input type="hidden" th:value="${userId}" name="userId"/>
                         <input type="text" th:field="*{specie}" name="specie" class="form-control" id="InputSpecie" placeholder="Enter specie" minlength="2" maxlength="25" required>
                     </div>
                 </div>
@@ -86,26 +87,26 @@
                 <div class="form-group row">
                     <label style="margin-bottom: 20px;" for="InputEyeColour" class="col-form-label col-4">Eye colour:</label>
                     <div class="col-8">
-                        <input type="text" name="eye_colour" class="form-control" id="InputEyeColour" placeholder="Enter eye colour" minlength="2" maxlength="25" required>
+                        <input type="text" th:field="*{eyeColor}" name="eyeColor" class="form-control" id="InputEyeColour" placeholder="Enter eye colour" minlength="2" maxlength="25" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label style="margin-bottom: 20px; font-size:20px;"><b>Now add a short description about yourself:</b></label>
+                    <label style="margin-top: 20px; margin-bottom: 40px; font-size:28px;"><b>Now add a short description about yourself:</b></label>
                     <div>
-                        <textarea name="editor1"></textarea>
+                        <textarea name="editor1" th:field="*{description}"></textarea>
                         <script>
                             CKEDITOR.replace('editor1');
                         </script>
                     </div>
                 </div>
                 <div>
-                    <label style="margin-top: 20px; margin-bottom: 20px; font-size:20px;" for="photo"><b>One last step, choose a profile picture that will make you a possible match for someone:</b></label>
+                    <label style="margin-top: 40px; margin-bottom: 40px; font-size:28px;" for="photo"><b>One last step, choose a profile picture that will make you a possible match for someone:</b></label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
-  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-  <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
-</svg></span>
+                                  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                  <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+                            </svg></span>
 
                         </div>
                         <div class="custom-file">
@@ -115,7 +116,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Submit</button>
             </div>
         </fieldset>
     </form>
