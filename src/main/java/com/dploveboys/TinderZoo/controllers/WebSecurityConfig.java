@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .usernameParameter("email")
-                    .defaultSuccessUrl("/list_usersCredentials")
+                    .defaultSuccessUrl("/profile_configuration")
                     .permitAll() //redirect a successful login to /list_users
                 .and()
                 .oauth2Login()

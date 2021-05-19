@@ -3,5 +3,5 @@ package com.dploveboys.TinderZoo.repositories;
 import com.dploveboys.TinderZoo.model.UserData;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<UserData,Long> {
+public interface UserDataRepository extends CrudRepository<UserData,Long> {
 }

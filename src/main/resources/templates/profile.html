@@ -9,8 +9,25 @@
 <div>
     <h1>Here should be the profile picture</h1>
     <div class="circular--portrait">
-        <img th:src="'data:image/png;base64,'+${profile.image}" />
+        <img th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}" />
+        <a th:href="@{'/add_profile_picture/' + ${userId}}">Change profile picture</a>
     </div>
+    <h2>My photos:</h2>
+    <div th:each="photo:${photos}">
+        <img th:src="'data:image/${photo.imageType};base64,'+${photo.image}" src="images/empty_picture.jpeg"/>
+        <form action="deletePhoto" method="post">
+            <input type="hidden" name="photoId" th:value="${photo.id}"/>
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+
+    <form action="addPhotos" method="post" enctype="multipart/form-data">
+        <input type="file" name="photos" id="photos" multiple><br><br>
+        <input type="hidden" th:value="${userId}" name="userId">
+        <button type="submit" >Add photos</button>
+    </form>
+
+
 </div>
 </body>
 </html>
