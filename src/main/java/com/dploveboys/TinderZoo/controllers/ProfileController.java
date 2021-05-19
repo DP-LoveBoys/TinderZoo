@@ -73,8 +73,8 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
-    @RequestMapping("/profile")
-    public String getUserProfile(Model model){
+    @RequestMapping("/profile/{userId}")
+    public String getUserProfile(@PathVariable("userId") Long userId, Model model){
         model.addAttribute("userId",userId);
         model.addAttribute("profilePicture",profilePictureService.getProfilePicture(userId));
         model.addAttribute("photos",photoService.getPhotos(userId));
