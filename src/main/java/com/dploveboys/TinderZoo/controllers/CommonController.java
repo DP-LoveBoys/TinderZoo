@@ -1,5 +1,6 @@
 package com.dploveboys.TinderZoo.controllers;
 
+import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.SecurityContextProvider;
@@ -24,6 +25,7 @@ public class CommonController {
 
     @RequestMapping("/login") //if you want to go back to login as a logged in user, it takes you back to index
     public String viewLoginPage(Model model){
+        model.addAttribute("userCredentials",new UserCredential());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("Authentication is " +  authentication);
         if(authentication == null || authentication instanceof AnonymousAuthenticationToken)

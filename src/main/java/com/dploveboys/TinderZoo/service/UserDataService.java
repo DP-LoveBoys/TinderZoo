@@ -14,7 +14,7 @@ public class UserDataService {
     @Autowired
     private UserDataRepository userDataRepository;
 
-    public Optional<UserData> findById(Long id)
+    public Optional<UserData> getUserById(Long id)
     {
         return userDataRepository.findById(id);
     }
