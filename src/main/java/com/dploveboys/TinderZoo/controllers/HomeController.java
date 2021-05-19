@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
@@ -36,9 +37,12 @@ public class HomeController {
         ProfilePicture profilePicture = profilePictureService.getProfilePicture(userId);
 
         model.addAttribute("profilePicture",profilePicture);
-        model.addAttribute("username",userCredential.get().getName());
-        model.addAttribute("userData",userData.get());
-
+        try {
+            model.addAttribute("username", userCredential.get().getName());
+            model.addAttribute("userData", userData.get());
+        }catch(NoSuchElementException e){
+            e.printStackTrace();
+        }
         return "/home";
     }
 
