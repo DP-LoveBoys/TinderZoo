@@ -28,16 +28,16 @@ public class HomeController {
     @Autowired
     UserDataService userDataService;
 
-    @RequestMapping("/home_page/{userId}")
+    @RequestMapping("/{userId}/home_page")
     public String getHomePage(@PathVariable("userId") Long userId,Model model){
 
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
-        Optional<UserData> userData=userDataService.findById(userId);
+        Optional<UserData> userData=userDataService.getUserById(userId);
         ProfilePicture profilePicture = profilePictureService.getProfilePicture(userId);
 
         model.addAttribute("profilePicture",profilePicture);
         model.addAttribute("username",userCredential.get().getName());
-        model.addAttribute("userData",userData);
+        model.addAttribute("userData",userData.get());
 
         return "/home";
     }

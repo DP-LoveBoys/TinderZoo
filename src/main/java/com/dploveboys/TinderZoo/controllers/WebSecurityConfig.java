@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                             UserCredential user = userCredentialService.getUserByEmail(email);
 
-                            response.sendRedirect("/home_page/"+user.getId());
+                            response.sendRedirect("/"+user.getId()+"/home_page");
 
                         }})
                     .permitAll() //redirect a successful login to /list_users
