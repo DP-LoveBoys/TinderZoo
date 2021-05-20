@@ -1,7 +1,9 @@
 package com.dploveboys.TinderZoo.controllers;
 
+import com.dploveboys.TinderZoo.model.Interest;
 import com.dploveboys.TinderZoo.model.UserData;
 import com.dploveboys.TinderZoo.repositories.UserDataRepository;
+import com.dploveboys.TinderZoo.service.InterestService;
 import com.dploveboys.TinderZoo.service.ProfilePictureService;
 import com.dploveboys.TinderZoo.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ public class UserController {
 
     @Autowired
     private ProfilePictureService profilePictureService;
+
 
     @RequestMapping("/profile_configuration/{userId}")
     public String getProfileConfiguration(@PathVariable("userId") Long userId, Model model){

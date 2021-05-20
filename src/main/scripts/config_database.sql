@@ -54,3 +54,10 @@ CREATE TABLE `credentials` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE interests(
+`id` int NOT NULL AUTO_INCREMENT,
+`user_id` int NOT NULL,
+`interest_tag` VARCHAR(25) NOT NULL,
+PRIMARY KEY (`id`)
+);
