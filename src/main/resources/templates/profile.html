@@ -3,36 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <title>This is the profile page</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
+    <link rel="stylesheet" th:href="@{/css/styles_profile_page.css}">
 </head>
 <body>
-<div>
-    <h1>Here should be the profile picture</h1>
-    <div class="circular--portrait">
-        <img th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}" />
-        <a th:href="@{'/add_profile_picture/' + ${userId}}">Change profile picture</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home_page">TinderZoo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" >Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">Logout</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <h2>My photos:</h2>
-    <div th:each="photo:${photos}">
-        <img th:src="'data:image/${photo.imageType};base64,'+${photo.image}" src="images/empty_picture.jpeg"/>
-        <form action="deletePhoto" method="post">
-            <input type="hidden" name="photoId" th:value="${photo.id}"/>
-            <button type="submit">Delete</button>
-        </form>
+</nav>
+
+<div class="circular--portrait1 container_left" >
+    <img th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}" />
+    <a th:href="@{'/add_profile_picture/' + ${userId}}">Change profile picture</a>
+</div>
+
+<div class="container_carousel" style="display: block; margin-left: auto; margin-right: auto;">
+    <input type="radio" name="slider" id="item-1" checked>
+    <input type="radio" name="slider" id="item-2">
+    <input type="radio" name="slider" id="item-3">
+    <div class="cards">
+        <label class="card" for="item-1" id="song-1">
+            <img src="../images/capre.jpg" alt="song">
+        </label>
+        <label class="card" for="item-2" id="song-2">
+            <img src="../images/capre.jpg" alt="song">
+        </label>
+        <label class="card" for="item-3" id="song-3">
+            <img src="../images/capre.jpg" alt="song">
+        </label>
+    </div>
+</div>
+
+<div class="container_profile">
+    <div class="row">
+   <div class="col-md-3">
+        <button type="button" class="btn btn-primary ">MATCH</button>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+        <button type="button" class="btn btn-secondary">Not interested</button>
+        </div>
+
+        <div class="rectangle col-md-8" style="height: 800px; margin-bottom: 40px;">
+            <div class="rectangle_bottom">
+                <div class="row">
+                    <button type="button" class="btn btn-primary col-md-3">General</button>
+                    <div class="col-md-1"></div>
+                    <button type="button" class="btn btn-primary col-md-3">Hobbies</button>
+                    <div class="col-md-1"></div>
+                    <button type="button" class="btn btn-primary col-md-4">Preferences</button>
+                </div>
+            </div>
+            <div class="row hidden">
+                <div class="col-md-3 info_profile">Origin:</div>
+                <div class="col-md-9 info_profile">field1</div>
+                <div class="col-md-3 info_profile">Height: </div>
+                <div class="col-md-9 info_profile">field2</div>
+                <div class="col-md-3 info_profile">Eye color: </div>
+                <div class="col-md-9 info_profile">field3</div>
+                <div class="col-md-3 info_profile">Hobbies:</div>
+                <div class="col-md-9 info_profile">field4</div>
+            </div>
+            <!-- Hobbies div -->
+            <div class="row hidden">
+                <div class="col-md-12 info_profile">Hobby1</div>
+                <div class="col-md-12 info_profile">Hobby2</div>
+                <div class="col-md-12 info_profile">Hobby3</div>
+                <div class="col-md-12 info_profile">Hobby4</div>
+                <div class="col-md-12 info_profile">Hobby5</div>
+            </div>
+            <!-- Preferences div -->
+            <div class="row ">
+                <div class="col-md-12 info_profile">Preference1</div>
+                <div class="col-md-12 info_profile">Preference2</div>
+                <div class="col-md-12 info_profile">Preference3</div>
+                <div class="col-md-12 info_profile">Preference4</div>
+                <div class="col-md-12 info_profile">Preference5</div>
+            </div>
+        </div>
+
     </div>
 
-    <form action="addPhotos" method="post" enctype="multipart/form-data">
-        <input type="file" name="photos" id="photos" multiple><br><br>
-        <input type="hidden" th:value="${userId}" name="userId">
-        <button type="submit" >Add photos</button>
-    </form>
-
-    <form action="deleteProfile" method="post" >
-        <input type="submit" th:value="${userId}" name="userId" value="Delete your profile">
-        <!--<button type="submit" >Delete your profile</button> -->
-    </form>
 
 
 </div>
+
+
 </body>
 </html>
