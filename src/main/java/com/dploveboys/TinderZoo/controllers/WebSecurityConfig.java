@@ -73,6 +73,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .usernameParameter("email")
+
+                    .defaultSuccessUrl("/profile_configuration")
+                    .failureUrl("/login.html?error=true")
+
                     .successHandler(new AuthenticationSuccessHandler(){
                         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse
                         response, Authentication authentication) throws IOException, ServletException {
@@ -85,6 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             response.sendRedirect("/home_page/"+user.getId());
 
                         }})
+
                     .permitAll() //redirect a successful login to /list_users
                 .and()
                 .oauth2Login()
