@@ -14,9 +14,9 @@ public interface InterestRepository extends CrudRepository<Interest,Long> {
     List<Interest> getInterestsByUserId(Long userId);
 
     @Query(
-            value = "SELECT user_id FROM interests WHERE interest_tag = ?1",
+            value = "SELECT user_id FROM interests WHERE user_id != ?2 AND interest_tag = ?1",
             nativeQuery = true)
-    List<Long> getUserIDsByInterests(String interest_tag);
+    List<Long> getUserIDsByInterests(String interest_tag, Long exceptId);
 
     @Query(
             value = "DELETE FROM interests WHERE user_id = ?1 AND interest_tag = ?2",

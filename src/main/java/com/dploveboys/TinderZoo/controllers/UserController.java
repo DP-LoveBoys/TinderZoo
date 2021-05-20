@@ -1,6 +1,7 @@
 package com.dploveboys.TinderZoo.controllers;
 
 import com.dploveboys.TinderZoo.model.Interest;
+import com.dploveboys.TinderZoo.model.Match;
 import com.dploveboys.TinderZoo.model.UserData;
 import com.dploveboys.TinderZoo.repositories.UserDataRepository;
 import com.dploveboys.TinderZoo.service.InterestService;
@@ -47,5 +48,21 @@ public class UserController {
 
         return "redirect:/login";
     }
+
+    @RequestMapping("/matches/{userId}")
+    public String showMatches(@PathVariable("userId") Long userId, Model model){
+        Match pseudo_random_match = new Match();
+        //get a match from the UserDataService and display it on matches page -> let user give response -> move to next
+        model.addAttribute("match", pseudo_random_match);
+        return "matches/" + userId;
+    }
+
+    @PostMapping("/matches_processing")
+    public String yesOrNoTheMatch(@RequestParam("interest_tag")String response, @RequestParam("userId") Long userId, @RequestParam("other_userId") Long other_userId)
+    {
+        //do something with the response from the "form" and do something with the accepted or declined match showed
+        return "redirect:matches/" + userId;
+    }
+
 
 }
