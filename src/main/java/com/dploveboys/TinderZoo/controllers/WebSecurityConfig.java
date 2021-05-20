@@ -2,6 +2,7 @@ package com.dploveboys.TinderZoo.controllers;
 
 import com.dploveboys.TinderZoo.model.AuthenticationProvider;
 import com.dploveboys.TinderZoo.model.CustomOAuth2User;
+import com.dploveboys.TinderZoo.model.CustomUserDetails;
 import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.service.CustomOAuth2UserService;
 import com.dploveboys.TinderZoo.service.CustomUserDetailsService;
@@ -32,6 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private UserCredentialService userCredentialService;
 
     @Bean
     public UserDetailsService userDetailsService()
@@ -69,12 +73,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .usernameParameter("email")
+
                     .defaultSuccessUrl("/profile_configuration")
                     .failureUrl("/login.html?error=true")
+
+                    .successHandler(new AuthenticationSuccessHandler(){
+                        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse
+                        response, Authentication authentication) throws IOException, ServletException {
+
+                            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+                            String email = customUserDetails.getEmail();
+
+                            UserCredential user = userCredentialService.getUserByEmail(email);
+
+                            response.sendRedirect("/home_page/"+user.getId());
+
+                        }})
+
                     .permitAll() //redirect a successful login to /list_users
                 .and()
                 .oauth2Login()
-                    .loginPage("/login")
                     .userInfoEndpoint().userService(OAuth2UserService)
                     .and()
                     //.successHandler(successHandler)
