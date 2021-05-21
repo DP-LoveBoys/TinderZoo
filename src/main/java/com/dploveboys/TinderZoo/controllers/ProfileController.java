@@ -2,17 +2,22 @@ package com.dploveboys.TinderZoo.controllers;
 
 import com.dploveboys.TinderZoo.model.Interest;
 import com.dploveboys.TinderZoo.model.ProfilePicture;
+import com.dploveboys.TinderZoo.model.UserCredential;
+import com.dploveboys.TinderZoo.model.UserData;
+import com.dploveboys.TinderZoo.repositories.PreferenceRepository;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
-import com.dploveboys.TinderZoo.service.InterestService;
-import com.dploveboys.TinderZoo.service.PhotoService;
-import com.dploveboys.TinderZoo.service.ProfilePictureService;
+import com.dploveboys.TinderZoo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.UsesJava8;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Controller
 public class ProfileController {
@@ -30,7 +35,13 @@ public class ProfileController {
     private UserCredentialRepository userCredentialRepository;
 
     @Autowired
+    private UserDataService userDataService;
+
+    @Autowired
     private InterestService interestService;
+
+    @Autowired
+    private PreferenceService preferenceService;
 
     @RequestMapping("/add_profile_picture/{userId}")
     public String getProfileProfile(@PathVariable("userId") Long userId, Model model){
@@ -58,6 +69,22 @@ public class ProfileController {
         }
     }
 
+    @PostMapping("/myphotos")
+    public String goToPhotos(@RequestParam("userId") Long userId,Model model){
+        model.addAttribute("userId",userId);
+        model.addAttribute("profilePicture",profilePictureService.getProfilePicture(userId));
+        model.addAttribute("photos",photoService.getPhotos(userId));
+
+        Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
+        try {
+            model.addAttribute("username",userCredential.get().getName());
+        }catch(NoSuchElementException e){
+            e.printStackTrace();
+        }
+
+        return "/myphotos";
+    }
+
     @PostMapping("/addPhotos")
     public String savePhotos(@RequestParam("photos") MultipartFile[] photos,@RequestParam("userId") Long userId){
         Arrays.asList(photos).stream().forEach(photo -> {
@@ -78,7 +105,24 @@ public class ProfileController {
 
     @RequestMapping("/profile/{userId}")
     public String getUserProfile(@PathVariable("userId") Long userId, Model model){
-        model.addAttribute("userId",userId);
+
+        Optional<UserData> userData=userDataService.getUserById(userId);
+        Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
+
+        try {
+            model.addAttribute("userData",userData.get());
+            model.addAttribute("username",userCredential.get().getName());
+        }catch(NoSuchElementException e){
+            e.printStackTrace();
+        }
+
+        List<Interest> interests=interestService.getInterests(userId);
+        model.addAttribute("interests",interests);
+
+        System.out.println(preferenceService.getPreferences(userId));
+
+        model.addAttribute("preferences",preferenceService.getPreferences(userId));
+        model.addAttribute("userId", userId);
         model.addAttribute("profilePicture",profilePictureService.getProfilePicture(userId));
         model.addAttribute("photos",photoService.getPhotos(userId));
         return "/profile";

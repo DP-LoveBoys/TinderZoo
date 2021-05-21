@@ -5,6 +5,7 @@
     <title>This is the profile page</title>
     <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
     <link rel="stylesheet" th:href="@{/css/styles_profile_page.css}">
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -40,63 +41,80 @@
     <input type="radio" name="slider" id="item-3">
     <div class="cards">
         <label class="card" for="item-1" id="song-1">
-            <img src="../images/capre.jpg" alt="song">
+            <img src="../images/capre.jpg" alt="song" id="image1">
         </label>
         <label class="card" for="item-2" id="song-2">
-            <img src="../images/capre.jpg" alt="song">
+            <img src="../images/capre.jpg" alt="song" id="image2">
         </label>
         <label class="card" for="item-3" id="song-3">
-            <img src="../images/capre.jpg" alt="song">
+            <img src="../images/capre.jpg" alt="song" id="image3">
         </label>
     </div>
 </div>
 
+<div>
+    <p th:text="${userData.description}"></p>
+</div>
 <div class="container_profile">
     <div class="row">
-   <div class="col-md-3">
-        <button type="button" class="btn btn-primary ">MATCH</button>
-    </div>
+        <div class="col-md-3" id="matchBtn">
+            <button type="button" class="btn btn-primary ">MATCH</button>
+         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
-        <button type="button" class="btn btn-secondary">Not interested</button>
+        <div class="col-md-3" id="notInterestedBtn">
+            <button type="button" class="btn btn-secondary">Not interested</button>
         </div>
+        <form action="myphotos" method="post">
+            <input type="hidden" th:value="${userData.id}" name="userId"/>
+            <input type="submit" value="MyPhotos"/>
+        </form>
 
         <div class="rectangle col-md-8" style="height: 800px; margin-bottom: 40px;">
             <div class="rectangle_bottom">
                 <div class="row">
-                    <button type="button" class="btn btn-primary col-md-3">General</button>
+                    <button type="button" class="btn btn-primary col-md-3" id="generalBtn">General</button>
                     <div class="col-md-1"></div>
-                    <button type="button" class="btn btn-primary col-md-3">Hobbies</button>
+                    <button type="button" class="btn btn-primary col-md-3" id="hobbiesBtn">Interests</button>
                     <div class="col-md-1"></div>
-                    <button type="button" class="btn btn-primary col-md-4">Preferences</button>
+                    <button type="button" class="btn btn-primary col-md-4" id="preferencesBtn">Preferences</button>
                 </div>
             </div>
-            <div class="row hidden">
-                <div class="col-md-3 info_profile">Origin:</div>
-                <div class="col-md-9 info_profile">field1</div>
+            <div class="row" id="generals">
+                <div class="col-md-3 info_profile">Origin: </div>
+                <div class="col-md-9 info_profile"><span style="display: inline" th:text="${userData.city}+', '+${userData.country}"></span></div>
+                <div class="col-md-3 info_profile">Specie: </div>
+                <div class="col-md-9 info_profile"><span th:text="${userData.specie}"></span></div>
+                <div class="col-md-3 info_profile">Breed: </div>
+                <div class="col-md-9 info_profile"><span th:text="${userData.breed}"></span></div>
+                <div class="col-md-3 info_profile">Age: </div>
+                <div class="col-md-9 info_profile"><span th:text="${userData.age}"></span></div>
+                <div class="col-md-3 info_profile">Gender: </div>
+                <div class="col-md-9 info_profile"><span th:text="${userData.gender}"></span></div>
                 <div class="col-md-3 info_profile">Height: </div>
-                <div class="col-md-9 info_profile">field2</div>
+                <div class="col-md-9 info_profile"><span th:text="${userData.height}"></span></div>
                 <div class="col-md-3 info_profile">Eye color: </div>
-                <div class="col-md-9 info_profile">field3</div>
-                <div class="col-md-3 info_profile">Hobbies:</div>
-                <div class="col-md-9 info_profile">field4</div>
+                <div class="col-md-9 info_profile"><span th:text="${userData.eyeColor}"></span></div>
+
+
             </div>
             <!-- Hobbies div -->
-            <div class="row hidden">
-                <div class="col-md-12 info_profile">Hobby1</div>
-                <div class="col-md-12 info_profile">Hobby2</div>
-                <div class="col-md-12 info_profile">Hobby3</div>
-                <div class="col-md-12 info_profile">Hobby4</div>
-                <div class="col-md-12 info_profile">Hobby5</div>
+
+            <div class="row" id="hobbies" >
+                <h2><span th:text="${username} +'is most interested in: '"></span></h2>
+                <div class="col-md-12 info_profile" th:each="interest: ${interests}">
+                    <span th:text="${interest.interest_tag}"></span>
+                </div>
             </div>
             <!-- Preferences div -->
-            <div class="row ">
-                <div class="col-md-12 info_profile">Preference1</div>
-                <div class="col-md-12 info_profile">Preference2</div>
-                <div class="col-md-12 info_profile">Preference3</div>
-                <div class="col-md-12 info_profile">Preference4</div>
-                <div class="col-md-12 info_profile">Preference5</div>
+            <div class="row" id="preferences">
+                <h2><span th:text="${username} +' prefers partners which fulfill the following: '"></span></h2>
+                <div class="col-md-12 info_profile">
+                    <span th:if="${preferences.closeAge == true}">are close to his age</span>
+                    <span th:if="${preferences.sameBreed == true}">belong to the same breed</span>
+                    <span th:if="${preferences.nearby == true}">live in his proximity</span>
+                </div>
+
             </div>
         </div>
 
@@ -105,7 +123,14 @@
 
 
 </div>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
 
+        let photoList = /*[[${photos}]]*/ 'default';
+        console.log(photoList);
 
+    /*]]>*/
+    </script>
+    <script type="text/javascript" src="../js/profile_page.js"></script>
 </body>
 </html>
