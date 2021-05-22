@@ -31,8 +31,21 @@
 </nav>
 
 <div class="circular--portrait1 container_left" >
-    <img th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}" />
+    <img id="profilePict" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  />
     <a th:href="@{'/add_profile_picture/' + ${userId}}">Change profile picture</a>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+
+        const pictureElem=document.querySelector("#profilePict");
+        let profilePicture = /*[[${profilePicture}]]*/ 'default';
+        console.log(profilePicture);
+
+        if(profilePicture.image==null){
+            pictureElem.src="../images/empty_picture.jpg";
+        }
+
+    /*]]>*/
+    </script>
 </div>
 
 <div class="container_carousel" style="display: block; margin-left: auto; margin-right: auto;">
@@ -65,9 +78,9 @@
         <div class="col-md-3" id="notInterestedBtn">
             <button type="button" class="btn btn-secondary">Not interested</button>
         </div>
-        <form action="myphotos" method="post">
+        <form th:action="@{/myphotos}" method="post">
             <input type="hidden" th:value="${userData.id}" name="userId"/>
-            <input type="submit" value="MyPhotos"/>
+            <input type="submit" value="MyPhotos" />
         </form>
 
         <div class="rectangle col-md-8" style="height: 800px; margin-bottom: 40px;">

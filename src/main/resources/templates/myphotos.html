@@ -30,5 +30,31 @@
     </div>
 </nav>
 
+<div>
+    <div th:each="photo:${photos}">
+        <div>
+            <img style="width: 200px; height: 200px" th:src="'data:image/${photo.imageType};base64,'+${photo.image}" />
+            <form th:action="@{/deletePhoto}" method="post">
+                <input type="hidden" th:value="${photo.id}" name="photoId"/>
+                <input type="hidden" th:value="${userId}" name="userId"/>
+                <button type="submit">Delete</button>
+            </form>
+            <form th:action="@{/setAsProfile}" method="post">
+                <input type="hidden" th:value="${photo.id}" name="photoId"/>
+                <input type="hidden" th:value="${userId}" name="userId"/>
+                <button type="submit">Set as profile</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    <form th:action="@{/addPhotos}" method="post" enctype="multipart/form-data">
+        <input type="file" name="photos" multiple><br><br>
+        <input type="hidden" th:value="${userId}" name="userId"/>
+        <button type="submit">Add photos</button>
+    </form>
+</div>
+
 </body>
 </html>

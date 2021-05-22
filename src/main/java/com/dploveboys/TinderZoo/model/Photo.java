@@ -22,6 +22,7 @@ public class Photo {
     private Long userId;
     private String image;
     private String imageType;
+    private Boolean profile;
 
     public Photo() {
     }
@@ -71,5 +72,13 @@ public class Photo {
 
     public void setImageType(String imageType) {
         this.imageType = imageType;
+    }
+
+    public Boolean getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Boolean profile) {
+        this.profile = profile;
     }
 }

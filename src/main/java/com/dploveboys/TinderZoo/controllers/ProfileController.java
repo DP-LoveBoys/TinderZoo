@@ -1,9 +1,6 @@
 package com.dploveboys.TinderZoo.controllers;
 
-import com.dploveboys.TinderZoo.model.Interest;
-import com.dploveboys.TinderZoo.model.ProfilePicture;
-import com.dploveboys.TinderZoo.model.UserCredential;
-import com.dploveboys.TinderZoo.model.UserData;
+import com.dploveboys.TinderZoo.model.*;
 import com.dploveboys.TinderZoo.repositories.PreferenceRepository;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.service.*;
@@ -24,10 +21,6 @@ public class ProfileController {
 
     private Long userId= Long.valueOf(3); // TODO
                           // Replace this hardcoded value and pass the id of the user that is logged in
-
-    @Autowired
-    private ProfilePictureService profilePictureService;
-
     @Autowired
     private PhotoService photoService;
 
@@ -43,15 +36,15 @@ public class ProfileController {
     @Autowired
     private PreferenceService preferenceService;
 
-    @RequestMapping("/add_profile_picture/{userId}")
+    /*@RequestMapping("/add_profile_picture/{userId}")
     public String getProfileProfile(@PathVariable("userId") Long userId, Model model){
 
         model.addAttribute("userId",userId);
 
         return "/add_profile_picture";
-    }
+    }*/
 
-    @PostMapping("/add_profile_picture/addProfilePicture")
+    /*@PostMapping("/add_profile_picture/addProfilePicture")
     public String saveProfilePicture(@RequestParam("profile_picture") MultipartFile photo,@RequestParam("userId") Long userId,Model model){
         if(photo.getOriginalFilename().isEmpty()) {
             System.out.println("NU A FOST SELECTATA NICIO IMAGINE");
@@ -67,12 +60,13 @@ public class ProfileController {
             }
             return "redirect:/profile";
         }
-    }
+    }*/
 
-    @PostMapping("/myphotos")
-    public String goToPhotos(@RequestParam("userId") Long userId,Model model){
+
+    @RequestMapping("/myphotos/{userId}")
+    public String myPhotosPage(@PathVariable("userId") Long userId,Model model){
         model.addAttribute("userId",userId);
-        model.addAttribute("profilePicture",profilePictureService.getProfilePicture(userId));
+        model.addAttribute("profilePicture",photoService.getProfilePhoto(userId));
         model.addAttribute("photos",photoService.getPhotos(userId));
 
         Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
@@ -81,8 +75,12 @@ public class ProfileController {
         }catch(NoSuchElementException e){
             e.printStackTrace();
         }
+        return "myphotos";
+    }
 
-        return "/myphotos";
+    @PostMapping("/myphotos")
+    public String goToPhotos(@RequestParam("userId") Long userId){
+        return "redirect:/myphotos/"+userId;
     }
 
     @PostMapping("/addPhotos")
@@ -91,16 +89,16 @@ public class ProfileController {
             if(photo.getOriginalFilename().isEmpty()) {
                 System.out.println("NU A FOST SELECTATA NICIO IMAGINE");
             }else {
-                photoService.savePhoto(photo, userId);
+                photoService.savePhoto(photo, userId,false);
             }
         });
-        return "redirect:/profile";
+        return "redirect:/profile/"+userId;
     }
 
     @PostMapping("/deletePhoto")
-    public String deletePhoto(@RequestParam("photoId") Long photoId){
+    public String deletePhoto(@RequestParam("photoId") Long photoId,@RequestParam("userId") Long userId){
         photoService.deletePhoto(photoId);
-        return "redirect:/profile";
+        return "redirect:/profile/"+userId;
     }
 
     @RequestMapping("/profile/{userId}")
@@ -108,6 +106,17 @@ public class ProfileController {
 
         Optional<UserData> userData=userDataService.getUserById(userId);
         Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
+        List<Interest> interests=interestService.getInterests(userId);
+        Photo profilePicture=photoService.getProfilePhoto(userId);
+
+        Preference preferences=preferenceService.getPreferences(userId);
+        if(preferences==null) {
+            preferences = new Preference();
+        }
+
+        if(profilePicture==null){
+            profilePicture=new Photo();
+        }
 
         try {
             model.addAttribute("userData",userData.get());
@@ -115,15 +124,10 @@ public class ProfileController {
         }catch(NoSuchElementException e){
             e.printStackTrace();
         }
-
-        List<Interest> interests=interestService.getInterests(userId);
         model.addAttribute("interests",interests);
-
-        System.out.println(preferenceService.getPreferences(userId));
-
-        model.addAttribute("preferences",preferenceService.getPreferences(userId));
+        model.addAttribute("preferences", preferences);
         model.addAttribute("userId", userId);
-        model.addAttribute("profilePicture",profilePictureService.getProfilePicture(userId));
+        model.addAttribute("profilePicture", profilePicture);
         model.addAttribute("photos",photoService.getPhotos(userId));
         return "/profile";
     }
@@ -149,6 +153,7 @@ public class ProfileController {
 
         return "redirect:interests_selection/" + userId;
     }
+
 
 
 }

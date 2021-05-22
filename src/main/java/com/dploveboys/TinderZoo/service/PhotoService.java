@@ -22,7 +22,10 @@ public class PhotoService {
 
     public static final String FIND_PHOTOS = "SELECT image FROM profile_photos WHERE user_id=?1";
 
-    public void savePhoto(MultipartFile file, Long userId){
+
+
+
+    public void savePhoto(MultipartFile file, Long userId,Boolean isProfile){
         Photo photo=new Photo();
 
         String fileName= StringUtils.cleanPath(file.getOriginalFilename());
@@ -37,12 +40,16 @@ public class PhotoService {
         }
         photo.setUserId(userId);
         photo.setImageType(FilenameUtils.getExtension(fileName));
-
+        photo.setProfile(isProfile);
         photoRepository.save(photo);
     }
 
     public List<Photo> getPhotos(Long userId){
         return photoRepository.findByUserId(userId);
+    }
+
+    public Photo getProfilePhoto(Long userId){
+        return photoRepository.findByUserIdAndProfile(userId,true);
     }
 
     public void deletePhoto(Long photoId){

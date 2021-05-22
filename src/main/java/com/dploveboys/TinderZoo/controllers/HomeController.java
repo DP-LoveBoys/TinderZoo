@@ -1,10 +1,10 @@
 package com.dploveboys.TinderZoo.controllers;
 
-import com.dploveboys.TinderZoo.model.ProfilePicture;
+import com.dploveboys.TinderZoo.model.Photo;
 import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.model.UserData;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
-import com.dploveboys.TinderZoo.service.ProfilePictureService;
+import com.dploveboys.TinderZoo.service.PhotoService;
 import com.dploveboys.TinderZoo.service.UserCredentialService;
 import com.dploveboys.TinderZoo.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class HomeController {
     UserCredentialService userCredentialService;
 
     @Autowired
-    ProfilePictureService profilePictureService;
+    PhotoService photoService;
 
     @Autowired
     UserDataService userDataService;
@@ -34,7 +34,7 @@ public class HomeController {
 
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
         Optional<UserData> userData=userDataService.getUserById(userId);
-        ProfilePicture profilePicture = profilePictureService.getProfilePicture(userId);
+        Photo profilePicture =photoService.getProfilePhoto(userId);
 
         model.addAttribute("profilePicture",profilePicture);
         try {
