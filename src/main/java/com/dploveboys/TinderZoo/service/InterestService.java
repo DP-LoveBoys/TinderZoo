@@ -14,11 +14,10 @@ public class InterestService {
     private InterestRepository interestRepository;
 
     public void saveInterest(String interest, Long userId){
-        //System.out.println("User id in InterestService: " + userId);
         Interest temp_interest = new Interest();
         temp_interest.setUser_id(userId);
         temp_interest.setInterest_tag(interest);
-        //System.out.println("New interesent generated in InterestService: " + temp_interest);
+
         interestRepository.save(temp_interest);
     }
 
@@ -30,4 +29,12 @@ public class InterestService {
         interestRepository.deleteByTag(userId, interest_tag);
     }
 
+    public List<Long> getUsers(String interest){
+        return interestRepository.getUserIDsByInterests(interest);
+    }
+
+    public List<Long> getUsersExceptThisId(String interest, Long thisId)
+    {
+        return interestRepository.getUserIDsByInterestsButNotThisUser(interest, thisId);
+    }
 }

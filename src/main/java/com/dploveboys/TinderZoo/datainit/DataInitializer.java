@@ -42,7 +42,7 @@ public class DataInitializer implements CommandLineRunner {
 
         Long userId = Long.valueOf(3);
         Long matchId = Long.valueOf(4);
-        matchRepository.save(new Match(userId, matchId));
+        //matchRepository.save(new Match(userId, matchId));
 
         System.out.println("Matches " + matchService.getMatchesByUserId(userId));
         System.out.println("Users " + matchService.getUserIDsByMatchId(matchId));
