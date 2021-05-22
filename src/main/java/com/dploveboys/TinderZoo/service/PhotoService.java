@@ -44,6 +44,19 @@ public class PhotoService {
         photoRepository.save(photo);
     }
 
+    public void updateProfilePicture(Long photoId, Long userId){
+        Photo oldProfilePicture=photoRepository.findByUserIdAndProfile(userId,true);
+
+        if(oldProfilePicture!=null){
+            oldProfilePicture.setProfile(false);
+            photoRepository.save(oldProfilePicture);
+        }
+
+        Photo newProfilePicture = photoRepository.findById(photoId).get();
+        newProfilePicture.setProfile(true);
+        photoRepository.save(newProfilePicture);
+    }
+
     public List<Photo> getPhotos(Long userId){
         return photoRepository.findByUserId(userId);
     }

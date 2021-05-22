@@ -101,6 +101,12 @@ public class ProfileController {
         return "redirect:/profile/"+userId;
     }
 
+    @PostMapping("/setAsProfile")
+    public String setPhotoAsProfile(@RequestParam("photoId") Long photoId,@RequestParam("userId") Long userId){
+        photoService.updateProfilePicture(photoId,userId);
+        return "redirect:/profile/"+userId;
+    }
+
     @RequestMapping("/profile/{userId}")
     public String getUserProfile(@PathVariable("userId") Long userId, Model model){
 
