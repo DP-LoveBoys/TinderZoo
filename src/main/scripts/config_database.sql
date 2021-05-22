@@ -13,6 +13,8 @@ GRANT SELECT ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'%';
 GRANT INSERT ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'%';
 GRANT DELETE ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'%';
 GRANT UPDATE ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'%';
+GRANT ALTER ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'localhost';
+GRANT ALTER ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'%';
 
 
 CREATE TABLE `user_data` (
