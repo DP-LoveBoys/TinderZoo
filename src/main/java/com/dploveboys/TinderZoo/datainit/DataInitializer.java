@@ -39,14 +39,13 @@ public class DataInitializer implements CommandLineRunner {
         //userCredentialRepository.save(userCred);
         System.out.println("New user " + userCred);
 
-        /*
-        Long userId = Long.valueOf(1);
-        Long matchId = Long.valueOf(2);
+
+        Long userId = Long.valueOf(3);
+        Long matchId = Long.valueOf(4);
         matchRepository.save(new Match(userId, matchId));
-        System.out.println(matchRepository);
 
         System.out.println("Matches " + matchService.getMatchesByUserId(userId));
         System.out.println("Users " + matchService.getUserIDsByMatchId(matchId));
-         */
+
     }
 }

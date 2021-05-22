@@ -25,12 +25,16 @@ public class Match {
     @Column(name = "match_id")
     private Long match_id;
 
-    public Match() {
-    }
+    @Enumerated(EnumType.STRING)
+    private MatchResponseProvider matchResponseProvider;
 
     public Match(Long user_id, Long match_id) {
         this.user_id = user_id;
         this.match_id = match_id;
+        setMatchResponseProvider(matchResponseProvider.UNKNOWN); //default
+    }
+
+    public Match() {
     }
 
     @Override
@@ -47,6 +51,7 @@ public class Match {
                 "id=" + id +
                 ", user_id=" + user_id +
                 ", match_id=" + match_id +
+                ", matchResponseProvider=" + matchResponseProvider +
                 '}';
     }
 
@@ -87,4 +92,11 @@ public class Match {
         this.user_id = user_id;
     }
 
+    public MatchResponseProvider getMatchResponseProvider() {
+        return matchResponseProvider;
+    }
+
+    public void setMatchResponseProvider(MatchResponseProvider matchResponseProvider) {
+        this.matchResponseProvider = matchResponseProvider;
+    }
 }

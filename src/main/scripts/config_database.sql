@@ -61,3 +61,11 @@ CREATE TABLE interests(
 `interest_tag` VARCHAR(25) NOT NULL,
 PRIMARY KEY (`id`)
 );
+
+CREATE TABLE matches(
+`id` int NOT NULL AUTO_INCREMENT,
+`user_id` int NOT NULL,
+`match_id` int NOT NULL,
+'match_response_provider' VARCHAR(20),
+PRIMARY KEY (`id`)
+);
