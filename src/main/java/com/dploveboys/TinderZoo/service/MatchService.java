@@ -39,10 +39,14 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         int value = 1;
         for(Interest interest : interests) //go through each of our own interests
         {
+            System.out.println("At interest " + interest);
+
             List <Long> users_with_common_interests;
             users_with_common_interests = interestService.getUsersExceptThisId(interest.getInterest_tag(), ourId); //get users with same interests as us
             for(Long userId : users_with_common_interests) //for each of these users, map their id and a score based on how frequent the overlapping interests are
             {
+                System.out.println("At user " + userId);
+
                 if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
                 {
                     int temp_value = matches_map.get(userId);

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface InterestRepository extends CrudRepository<Interest,Long> {
     @Query(
-            value = "SELECT * FROM interests WHERE user_id = ?1",
+            value = "SELECT id, user_id, interest_tag FROM tinderzoo_dev.interests WHERE user_id = ?1",
             nativeQuery = true)
     List<Interest> getInterestsByUserId(Long userId);
 
