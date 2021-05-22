@@ -22,7 +22,13 @@ public class InterestService {
     }
 
     public List<Interest> getInterests(Long userId){
-        return interestRepository.getInterestsByUserId(userId);
+
+        System.out.println(interestRepository.findById(userId));
+        interestRepository.getInterestsByUserId(userId);
+        //for(Interest i : interestRepository.getInterestsByUserId(userId))
+        //    System.out.println(i);
+        //return interestRepository.getInterestsByUserId(userId);
+        return null;
     }
 
     public void deleteInterest(Long userId, String interest_tag){
