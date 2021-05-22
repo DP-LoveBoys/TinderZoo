@@ -36,6 +36,10 @@ public class HomeController {
         Optional<UserData> userData=userDataService.getUserById(userId);
         Photo profilePicture =photoService.getProfilePhoto(userId);
 
+        if(profilePicture==null){
+            profilePicture=new Photo();
+        }
+
         model.addAttribute("profilePicture",profilePicture);
         try {
             model.addAttribute("username", userCredential.get().getName());

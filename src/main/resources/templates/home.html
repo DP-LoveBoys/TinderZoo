@@ -32,7 +32,20 @@
 <h1 class="container text-center display-1">Tinder Zoo</h1>
 <div class="w3-container">
     <div class="circular--portrait1">
-        <img th:src="'data:image/'+${profilePicture.imageType}+';base64,'+${profilePicture.image}" />
+        <img id="profilePict" th:src="'data:image/'+${profilePicture.imageType}+';base64,'+${profilePicture.image}" />
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+
+            const pictureElem=document.querySelector("#profilePict");
+            let profilePicture = /*[[${profilePicture}]]*/ 'default';
+            console.log(profilePicture);
+
+            if(profilePicture.image==null){
+                pictureElem.src="../images/empty_picture.jpg";
+            }
+
+        /*]]>*/
+        </script>
     </div>
     <div>
         <h1 style="text-align: center; width: 15%; height: 15%;"><span th:text="${username}"></span></h1>
