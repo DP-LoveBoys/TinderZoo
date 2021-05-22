@@ -66,18 +66,17 @@
 </div>
 
 <div class="container_left" style="margin-top: 0px;">
-    <div id="matchBtn">
-        <button type="button" class="btn btn-primary ">MATCH</button>
-    </div>
-    <div id="notInterestedBtn">
-        <button type="button" class="btn btn-secondary">Not interested</button>
-    </div>
+    <form th:action="@{/myphotos}" method="post">
+        <input type="hidden" th:value="${userData.id}" name="userId"/>
+        <button type="submit" class="btn btn-success" value="MyPhotos">My Photos</button>
+    </form>
 </div>
 <div>
     <div class="card text-white bg-primary mb-3 " style="margin-left: 25%; height: 200px; overflow:auto">
         <div class="card-body ">
             <h5 class="card-title" style="text-align: center; font-size: 40px;">My description:</h5>
             <p class="card-text" th:text="${userData.description}" style="font-size: 20px;"></p>
+            <button type="submit" class="btn btn-info" value="Edit" style="margin-bottom: 50px;">Edit description</button>
         </div>
     </div>
 </div>
@@ -107,6 +106,7 @@
         <div class="col-md-9 info_profile"><span th:text="${userData.height}"></span></div>
         <div class="col-md-3 info_profile">Eye color: </div>
         <div class="col-md-9 info_profile"><span th:text="${userData.eyeColor}"></span></div>
+        <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit" >Edit</button>
 
     </div>
     <!-- Hobbies div -->
@@ -117,6 +117,7 @@
             <span th:text="${interest.interest_tag}"></span>
         </div>
         <div class="col-md-12 info_profile"></div>
+        <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit">Edit</button>
     </div>
     <!-- Preferences div -->
     <div class="row" id="preferences">
@@ -126,6 +127,7 @@
             <span th:if="${preferences.sameBreed == true}">belong to the same breed</span>
             <span th:if="${preferences.nearby == true}">live in his proximity</span>
         </div>
+        <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit">Edit</button>
     </div>
 </div>
 
