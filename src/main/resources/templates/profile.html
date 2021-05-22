@@ -31,7 +31,7 @@
 </nav>
 
 <div class="circular--portrait1 container_left" >
-    <img id="profilePict" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  />
+    <img id="profilePict" th:src="'data:image/'+${profilePicture.imageType}+';base64,'+${profilePicture.image}"  />
     <a th:href="@{'/add_profile_picture/' + ${userId}}">Change profile picture</a>
     <script th:inline="javascript">
     /*<![CDATA[*/
@@ -54,13 +54,13 @@
     <input type="radio" name="slider" id="item-3">
     <div class="cards">
         <label class="card" for="item-1" id="song-1">
-            <img src="../images/capre.jpg" alt="song" id="image1">
+            <img src="../images/capre.jpg" alt="song" id="image0">
         </label>
         <label class="card" for="item-2" id="song-2">
-            <img src="../images/capre.jpg" alt="song" id="image2">
+            <img src="../images/capre.jpg" alt="song" id="image1">
         </label>
         <label class="card" for="item-3" id="song-3">
-            <img src="../images/capre.jpg" alt="song" id="image3">
+            <img src="../images/capre.jpg" alt="song" id="image2">
         </label>
     </div>
 </div>
@@ -140,13 +140,98 @@
     /*<![CDATA[*/
 
         let photoList = /*[[${photos}]]*/ 'default';
-        const image1=document.querySelector("#image1");
-        const image2=document.querySelector("#image2");
-        const image3=document.querySelector("#image3");
+        let len=photoList.length;
+        const image=new Array();
+        let order=[3,1,2];
+        let currentPhotoIndexes=[len-1,0,1];
+
+        console.log(currentPhotoIndexes);
+
+        let setImageSource=function(imgIndex,photoIndex){
+            console.log("Setting image nr."+imgIndex+" to have photo with index "+photoIndex);
+          if(photoIndex < len){
+            image[imgIndex].src=`data:image/${photoList[photoIndex].imageType};base64,${photoList[photoIndex].image}`;
+          }
+          else{
+            image[imgIndex].src="../images/empty_picture.jpg";
+          }
+        }
+
+        let decrementCurrentPhotoIndexes=function(index){
+          if(currentPhotoIndexes[index]==0){
+            currentPhotoIndexes[index]=len-1;
+          }
+          else{
+            currentPhotoIndexes[index]=currentPhotoIndexes[index]-1;
+          }
+          console.log("len="+len);
+          console.log("currentPhotoIndexes="+currentPhotoIndexes);
+        }
+
+        function handler(imgNumber){
+          if(imgNumber==order[0]){
+            order[0]=order[2];
+            order[2]=order[1]
+            order[1]=imgNumber;
+
+            if(len>3){
+              for(let i=0;i<3;i++){
+                decrementCurrentPhotoIndexes(i);
+              }
+              setImageSource(order[0]-1,currentPhotoIndexes[0]);
+            }
+            return 0;
+          }
+          if(imgNumber==order[2]){
+            order[2]=order[0];
+            order[0]=order[1]
+            order[1]=imgNumber;
+
+            if(len>3){
+              for(i=0;i<3;i++){
+                currentPhotoIndexes[i]=currentPhotoIndexes[i]+1;
+                currentPhotoIndexes[i]=currentPhotoIndexes[i]%len;
+              }
+              setImageSource(order[2]-1,currentPhotoIndexes[2]);
+            }
+          }
+          return 0;
+        }
+
+        let handler1=function(){handler(1)};
+        let handler2=function(){handler(2)};
+        let handler3=function(){handler(3)};
+
+        for(let i=0;i<3;i++){
+          image[i]=document.querySelector(`#image${i}`);
+        }
+
+        image[0].addEventListener("click",handler1);
+        image[1].addEventListener("click",handler2);
+        image[2].addEventListener("click",handler3);
+
+        console.log(order);
+
+        // START EXECUTION
+
+        if(len>=3){
+          setImageSource(0,0);
+          setImageSource(1,1);
+          setImageSource(2,len-1);
+        }
+        else if(len==0){ // set all to empty_picture
+          setImageSource(0,1);
+          setImageSource(1,1);
+          setImageSource(2,1);
+        }
+        else{
+          setImageSource(0,0);
+          setImageSource(1,1);
+          setImageSource(2,2);
+        }
 
 
         console.log(photoList);
-
     /*]]>*/
     </script>
     <script type="text/javascript" src="../js/profile_page.js"></script>

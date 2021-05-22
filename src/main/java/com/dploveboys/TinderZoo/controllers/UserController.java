@@ -36,6 +36,8 @@ public class UserController {
             @ModelAttribute("user") UserData userData
             ){
 
+        //TODO Ckeditor adds paragraph tags around the description; truncate the description
+
         userData.setId(userId);
         System.out.println(userData);
         userDataService.addUserData(userData);

@@ -10,9 +10,9 @@ const generalDiv = document.querySelector("#generals");
 const hobbieDiv = document.querySelector("#hobbies");
 const prefsDiv = document.querySelector("#preferences");
 
-const img1=document.querySelector("#image1");
-const img2=document.querySelector("#image2");
-const img3=document.querySelector("#image3");
+const img1=document.querySelector("#image0");
+const img2=document.querySelector("#image1");
+const img3=document.querySelector("#image2");
 
 
 
