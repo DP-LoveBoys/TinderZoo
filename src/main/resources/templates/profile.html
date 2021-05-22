@@ -10,45 +10,47 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/home_page">TinderZoo</a>
+        <a class="navbar-brand" th:href="@{/home_page/{id}(id = ${userData.id})}">TinderZoo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active">My Profile</a>
+                    <a class="nav-link active" th:href="@{/profile/{id}(id = ${userData.id})}">My Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" >Settings</a>
+                    <a class="nav-link active" th:href="@{/settings/{id}(id = ${userData.id})}">Settings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">Logout</a>
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+<div class="container_left" >
+    <div class="circular--portrait1" style="display: block; margin-left: auto; margin-right: auto;">
+        <img id="profilePict" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  />
 
-<div class="circular--portrait1 container_left" >
-    <img id="profilePict" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  />
-    <a th:href="@{'/add_profile_picture/' + ${userId}}">Change profile picture</a>
-    <script th:inline="javascript">
-    /*<![CDATA[*/
+        <script th:inline="javascript">
+        /*<![CDATA[*/
 
-        const pictureElem=document.querySelector("#profilePict");
-        let profilePicture = /*[[${profilePicture}]]*/ 'default';
-        console.log(profilePicture);
+            const pictureElem=document.querySelector("#profilePict");
+            let profilePicture = /*[[${profilePicture}]]*/ 'default';
+            console.log(profilePicture);
 
-        if(profilePicture.image==null){
-            pictureElem.src="../images/empty_picture.jpg";
-        }
+            if(profilePicture.image==null){
+                pictureElem.src="../images/empty_picture.jpg";
+            }
 
-    /*]]>*/
-    </script>
+        /*]]>*/
+        </script>
+    </div>
+    <h1 style="text-align: center; display: block; margin-left: auto; margin-right: auto; margin-top: 10px;"><span style=" " th:text="${username}"></span></h1>
 </div>
 
-<div class="container_carousel" style="display: block; margin-left: auto; margin-right: auto;">
+<div class="container_carousel">
     <input type="radio" name="slider" id="item-1" checked>
     <input type="radio" name="slider" id="item-2">
     <input type="radio" name="slider" id="item-3">
@@ -65,78 +67,79 @@
     </div>
 </div>
 
+<div class="container_left" style="margin-top: 0px;">
+    <div id="matchBtn">
+        <button type="button" class="btn btn-primary ">MATCH</button>
+    </div>
+    <div id="notInterestedBtn">
+        <button type="button" class="btn btn-secondary">Not interested</button>
+    </div>
+    <form th:action="@{/myphotos}" method="post">
+        <input type="hidden" th:value="${userData.id}" name="userId"/>
+        <button type="submit" class="btn btn-success" value="MyPhotos">My Photos</button>
+    </form>
+</div>
 <div>
-    <p th:text="${userData.description}"></p>
-</div>
-<div class="container_profile">
-    <div class="row">
-        <div class="col-md-3" id="matchBtn">
-            <button type="button" class="btn btn-primary ">MATCH</button>
-         </div>
+    <div class="card text-white bg-primary mb-3 " style="margin-left: 25%; height: 200px; overflow:auto">
+        <div class="card-body ">
+            <h5 class="card-title" style="text-align: center; font-size: 40px;">My description:</h5>
+            <p class="card-text" th:text="${userData.description}" style="font-size: 20px;"></p>
+            <button type="submit" class="btn btn-info" value="Edit" style="margin-bottom: 50px;">Edit description</button>
+        </div>
     </div>
-    <div class="row">
-        <div class="col-md-3" id="notInterestedBtn">
-            <button type="button" class="btn btn-secondary">Not interested</button>
+</div>
+
+<div class="rectangle col-md-8" style="display: block; margin-left: 25%; margin-right: auto; margin-top: 270px; margin-bottom: 40px;">
+    <div class="rectangle col-md-12">
+        <div class="row">
+            <button type="button" class="btn btn-primary col-md-3" id="generalBtn">General</button>
+            <div class="col-md-1"></div>
+            <button type="button" class="btn btn-primary col-md-3" id="hobbiesBtn">Interests</button>
+            <div class="col-md-1"></div>
+            <button type="button" class="btn btn-primary col-md-4" id="preferencesBtn">Preferences</button>
         </div>
-        <form th:action="@{/myphotos}" method="post">
-            <input type="hidden" th:value="${userData.id}" name="userId"/>
-            <input type="submit" value="MyPhotos" />
-        </form>
-
-        <div class="rectangle col-md-8" style="height: 800px; margin-bottom: 40px;">
-            <div class="rectangle_bottom">
-                <div class="row">
-                    <button type="button" class="btn btn-primary col-md-3" id="generalBtn">General</button>
-                    <div class="col-md-1"></div>
-                    <button type="button" class="btn btn-primary col-md-3" id="hobbiesBtn">Interests</button>
-                    <div class="col-md-1"></div>
-                    <button type="button" class="btn btn-primary col-md-4" id="preferencesBtn">Preferences</button>
-                </div>
-            </div>
-            <div class="row" id="generals">
-                <div class="col-md-3 info_profile">Origin: </div>
-                <div class="col-md-9 info_profile"><span style="display: inline" th:text="${userData.city}+', '+${userData.country}"></span></div>
-                <div class="col-md-3 info_profile">Specie: </div>
-                <div class="col-md-9 info_profile"><span th:text="${userData.specie}"></span></div>
-                <div class="col-md-3 info_profile">Breed: </div>
-                <div class="col-md-9 info_profile"><span th:text="${userData.breed}"></span></div>
-                <div class="col-md-3 info_profile">Age: </div>
-                <div class="col-md-9 info_profile"><span th:text="${userData.age}"></span></div>
-                <div class="col-md-3 info_profile">Gender: </div>
-                <div class="col-md-9 info_profile"><span th:text="${userData.gender}"></span></div>
-                <div class="col-md-3 info_profile">Height: </div>
-                <div class="col-md-9 info_profile"><span th:text="${userData.height}"></span></div>
-                <div class="col-md-3 info_profile">Eye color: </div>
-                <div class="col-md-9 info_profile"><span th:text="${userData.eyeColor}"></span></div>
-
-
-            </div>
-            <!-- Hobbies div -->
-
-            <div class="row" id="hobbies" >
-                <h2><span th:text="${username} +'is most interested in: '"></span></h2>
-                <div class="col-md-12 info_profile" th:each="interest: ${interests}">
-                    <span th:text="${interest.interest_tag}"></span>
-                </div>
-            </div>
-            <!-- Preferences div -->
-            <div class="row" id="preferences">
-                <h2><span th:text="${username} +' prefers partners which fulfill the following: '"></span></h2>
-                <div class="col-md-12 info_profile">
-                    <span th:if="${preferences.closeAge == true}">are close to his age</span>
-                    <span th:if="${preferences.sameBreed == true}">belong to the same breed</span>
-                    <span th:if="${preferences.nearby == true}">live in his proximity</span>
-                </div>
-
-            </div>
-        </div>
+    </div>
+    <div class="row" id="generals">
+        <div class="col-md-3 info_profile">Origin: </div>
+        <div class="col-md-9 info_profile"><span style="display: inline" th:text="${userData.city}+', '+${userData.country}"></span></div>
+        <div class="col-md-3 info_profile">Specie: </div>
+        <div class="col-md-9 info_profile"><span th:text="${userData.specie}"></span></div>
+        <div class="col-md-3 info_profile">Breed: </div>
+        <div class="col-md-9 info_profile"><span th:text="${userData.breed}"></span></div>
+        <div class="col-md-3 info_profile">Age: </div>
+        <div class="col-md-9 info_profile"><span th:text="${userData.age}"></span></div>
+        <div class="col-md-3 info_profile">Gender: </div>
+        <div class="col-md-9 info_profile"><span th:text="${userData.gender}"></span></div>
+        <div class="col-md-3 info_profile">Height: </div>
+        <div class="col-md-9 info_profile"><span th:text="${userData.height}"></span></div>
+        <div class="col-md-3 info_profile">Eye color: </div>
+        <div class="col-md-9 info_profile"><span th:text="${userData.eyeColor}"></span></div>
+        <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit" >Edit</button>
 
     </div>
+    <!-- Hobbies div -->
 
-
-
+    <div class="row" id="hobbies" >
+        <h2><span th:text="${username} +' is most interested in: '"></span></h2>
+        <div class="col-md-12 info_profile" th:each="interest: ${interests}">
+            <span th:text="${interest.interest_tag}"></span>
+        </div>
+        <div class="col-md-12 info_profile"></div>
+        <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit">Edit</button>
+    </div>
+    <!-- Preferences div -->
+    <div class="row" id="preferences">
+        <h2><span th:text="${username} +' prefers partners which fulfill the following: '"></span></h2>
+        <div class="col-md-12 info_profile">
+            <span th:if="${preferences.closeAge == true}">are close to his age</span>
+            <span th:if="${preferences.sameBreed == true}">belong to the same breed</span>
+            <span th:if="${preferences.nearby == true}">live in his proximity</span>
+        </div>
+        <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit">Edit</button>
+    </div>
 </div>
-    <script th:inline="javascript">
+
+<script th:inline="javascript">
     /*<![CDATA[*/
 
         let photoList = /*[[${photos}]]*/ 'default';
@@ -149,6 +152,7 @@
 
     /*]]>*/
     </script>
-    <script type="text/javascript" src="../js/profile_page.js"></script>
+<script type="text/javascript" src="../js/profile_page.js"></script>
+<div style="height: 100px;"></div>
 </body>
 </html>
