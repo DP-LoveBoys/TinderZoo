@@ -162,6 +162,7 @@ img {
   display: none;
 }
 
+
 .menu {
     visibility: hidden;
 }
@@ -170,3 +171,28 @@ div:active .menu,
 div:focus .menu {
     visibility: visible;
 }
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-header {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.delete_button {
+    font-size: 20px;
+    margin-left: 100px;
+    width:100px;
+    margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 80%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+
+}
+

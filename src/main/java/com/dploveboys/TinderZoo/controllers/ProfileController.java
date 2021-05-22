@@ -138,6 +138,37 @@ public class ProfileController {
         return "/profile";
     }
 
+    @RequestMapping("/myprofile/{userId}")
+    public String getMyProfile(@PathVariable("userId") Long userId, Model model){
+
+        Optional<UserData> userData=userDataService.getUserById(userId);
+        Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
+        List<Interest> interests=interestService.getInterests(userId);
+        Photo profilePicture=photoService.getProfilePhoto(userId);
+
+        Preference preferences=preferenceService.getPreferences(userId);
+        if(preferences==null) {
+            preferences = new Preference();
+        }
+
+        if(profilePicture==null){
+            profilePicture=new Photo();
+        }
+
+        try {
+            model.addAttribute("userData",userData.get());
+            model.addAttribute("username",userCredential.get().getName());
+        }catch(NoSuchElementException e){
+            e.printStackTrace();
+        }
+        model.addAttribute("interests",interests);
+        model.addAttribute("preferences", preferences);
+        model.addAttribute("userId", userId);
+        model.addAttribute("profilePicture", profilePicture);
+        model.addAttribute("photos",photoService.getPhotos(userId));
+        return "/myprofile";
+    }
+
     @PostMapping("/deleteProfile")
     public String deleteProfile(@RequestParam("userId") Long userId){
         userCredentialRepository.deleteProfile(userId);
@@ -148,8 +179,11 @@ public class ProfileController {
     public String getInterestsUser(@PathVariable("userId") Long userId, Model model){
         Interest interest = new Interest();
 
+        List<Interest> interests=interestService.getInterests(userId);
+        model.addAttribute("interests",interests);
+        model.addAttribute("userId", userId);
         model.addAttribute("interest", interest);
-        return "interests_selection";
+        return "/interests_selection";
     }
 
     @PostMapping("/interests_selection_processing")
@@ -158,6 +192,20 @@ public class ProfileController {
         interestService.saveInterest(interest_tag, userId);
 
         return "redirect:interests_selection/" + userId;
+    }
+
+    @RequestMapping("/preferences_selection/{userId}")
+    public String getPreferencesUser(@PathVariable("userId") Long userId, Model model){
+        Preference preference = new Preference();
+
+        Preference preferences=preferenceService.getPreferences(userId);
+
+        if(preferences==null) {
+            preferences = new Preference();
+        }
+        model.addAttribute("preferences",preferences);
+        model.addAttribute("userId", userId);
+        return "/preferences_selection";
     }
 
 
