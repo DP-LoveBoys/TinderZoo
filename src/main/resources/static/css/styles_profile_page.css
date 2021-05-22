@@ -161,3 +161,12 @@ img {
 .hidden {
   display: none;
 }
+
+.menu {
+    visibility: hidden;
+}
+
+div:active .menu,
+div:focus .menu {
+    visibility: visible;
+}

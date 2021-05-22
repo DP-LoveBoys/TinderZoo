@@ -39,7 +39,7 @@ public class UserController {
         //TODO Ckeditor adds paragraph tags around the description; truncate the description
 
         userData.setId(userId);
-        System.out.println(userData);
+        String description=userData.getDescription();
         userDataService.addUserData(userData);
         photoService.savePhoto(photo,userId,true);
 
