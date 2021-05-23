@@ -48,15 +48,13 @@ public class DataInitializer implements CommandLineRunner {
         //System.out.println("New user " + userCred);
 
 
-        Long userId = Long.valueOf(6);
+
         //Long matchId = Long.valueOf(4);
         //matchRepository.save(new Match(userId, matchId));
-
+        //interestService.saveInterest("test_interest", 7L);
         //System.out.println("Matches " + matchService.getMatchesByUserId(userId));
         //System.out.println("Users " + matchService.getUserIDsByMatchId(matchId));
 
-        UserCredential temp_cred = new UserCredential("joe@joe.com", "john", "password");
-        UserData temp_user = new UserData(userId, "dog", "joe", 7, "romania", "oravita", 500, 'F', "brown","meow");
         /*
         userCredentialRepository.save(temp_cred);
         userDataRepository.save(temp_user);
@@ -65,9 +63,14 @@ public class DataInitializer implements CommandLineRunner {
         interestRepository.save(interest1);
         interestRepository.save(interest2);
          */
-        List<Interest> interests = interestService.getInterests(3L);
-        System.out.println("Interests: " + interests);
-        //LoveRadar loveRadar = new LoveRadar(temp_user);
-        //loveRadar.giveMatchResponse();
+        //List<Interest> interests = interestService.getInterests(17L);
+        //System.out.println("Interests: " + interests);
+        Long userId = 1L;
+
+        UserCredential temp_cred = new UserCredential("joe@joe.com", "john", "password");
+        UserData temp_user = new UserData(userId, "dog", "joe", 7, "romania", "oravita", 500, 'F', "brown","meow");
+
+        LoveRadar loveRadar = new LoveRadar(temp_user);
+        loveRadar.giveMatchResponse();
     }
 }

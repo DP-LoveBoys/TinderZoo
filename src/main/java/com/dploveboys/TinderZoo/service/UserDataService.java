@@ -28,6 +28,7 @@ public class UserDataService {
         userDataRepository.save(userData);
     }
 
+    /*
     public Queue<Match> getPotentialMatches(UserData our_user) //maybe return List<Long>
     {
         Long our_userId = our_user.getId(); //don't go through interests looking at your own interests
@@ -59,4 +60,6 @@ public class UserDataService {
 
         return sorted_matches;
     }
+
+     */
 }

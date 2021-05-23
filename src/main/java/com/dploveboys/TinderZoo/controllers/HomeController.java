@@ -33,7 +33,7 @@ public class HomeController {
     public String getHomePage(@PathVariable("userId") Long userId,Model model){
 
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
-        Optional<UserData> userData=userDataService.getUserById(userId);
+        Optional<UserData> userData=userDataService.findById(userId);
         ProfilePicture profilePicture = profilePictureService.getProfilePicture(userId);
 
         model.addAttribute("profilePicture",profilePicture);
