@@ -34,7 +34,7 @@
 <div>
     <div th:each="photo:${photos}">
         <div>
-            <img th:id="'img'+{photo.id}" style="width: 200px; height: 200px" th:src="'data:image/${photo.imageType};base64,'+${photo.image}" />
+            <img style="width: 200px; height: 200px" th:src="'data:image/${photo.imageType};base64,'+${photo.image}" />
 
             <form th:action="@{/deletePhoto}" method="post" id="deleteForm">
                 <input type="hidden" th:value="${photo.id}" name="photoId"/>

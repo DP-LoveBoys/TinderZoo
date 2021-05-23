@@ -208,6 +208,40 @@ public class ProfileController {
         return "/preferences_selection";
     }
 
+    @RequestMapping("/edit_profile/{userId}")
+    public String EditProfileUser(@PathVariable("userId") Long userId, Model model){
+        UserData user = new UserData();
+        Optional<UserData> userData=userDataService.getUserById(userId);
+
+        try {
+            model.addAttribute("userData",userData.get());
+        }catch(NoSuchElementException e){
+            e.printStackTrace();
+        }
+
+        model.addAttribute("userId",userId);
+        model.addAttribute("user", user);
+
+        return "/edit_profile";
+    }
+
+    @RequestMapping("/edit_description/{userId}")
+    public String EditDescriptionUser(@PathVariable("userId") Long userId, Model model){
+        UserData user = new UserData();
+        Optional<UserData> userData=userDataService.getUserById(userId);
+
+        try {
+            model.addAttribute("userData",userData.get());
+        }catch(NoSuchElementException e){
+            e.printStackTrace();
+        }
+
+        model.addAttribute("userId",userId);
+        model.addAttribute("user", user);
+
+        return "/edit_description";
+    }
+
 
 
 }

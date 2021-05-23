@@ -72,16 +72,19 @@
     </form>
 </div>
 <div>
-    <div class="card text-white bg-primary mb-3 " style="margin-left: 25%; height: 200px; overflow:auto">
-        <div class="card-body ">
-            <h5 class="card-title" style="text-align: center; font-size: 40px;">My description:</h5>
-            <p class="card-text" th:text="${userData.description}" style="font-size: 20px;"></p>
-            <button type="submit" class="btn btn-info" value="Edit" style="margin-bottom: 50px;">Edit description</button>
+    <form th:action = "@{/edit_description/{id}(id = ${userData.id})}"  method="post">
+        <div class="card text-white bg-primary mb-3 " style="margin-left: 25%; height: 200px; overflow:auto">
+            <div class="card-body ">
+                <h5 class="card-title" style="text-align: center; font-size: 40px;">My description:</h5>
+                <p class="card-text" th:text="${userData.description}" style="font-size: 20px;"></p>
+                <button type="submit" class="btn btn-info" value="Edit" style="margin-bottom: 50px;">Edit description</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <div class="rectangle col-md-8" style="display: block; margin-left: 25%; margin-right: auto; margin-top: 270px; margin-bottom: 40px;">
+
     <div class="rectangle col-md-12">
         <div class="row">
             <button type="button" class="btn btn-primary col-md-3" id="generalBtn">General</button>
@@ -91,44 +94,50 @@
             <button type="button" class="btn btn-primary col-md-4" id="preferencesBtn">Preferences</button>
         </div>
     </div>
-    <div class="row" id="generals">
-        <div class="col-md-3 info_profile">Origin: </div>
-        <div class="col-md-9 info_profile"><span style="display: inline" th:text="${userData.city}+', '+${userData.country}"></span></div>
-        <div class="col-md-3 info_profile">Specie: </div>
-        <div class="col-md-9 info_profile"><span th:text="${userData.specie}"></span></div>
-        <div class="col-md-3 info_profile">Breed: </div>
-        <div class="col-md-9 info_profile"><span th:text="${userData.breed}"></span></div>
-        <div class="col-md-3 info_profile">Age: </div>
-        <div class="col-md-9 info_profile"><span th:text="${userData.age}"></span></div>
-        <div class="col-md-3 info_profile">Gender: </div>
-        <div class="col-md-9 info_profile"><span th:text="${userData.gender}"></span></div>
-        <div class="col-md-3 info_profile">Height: </div>
-        <div class="col-md-9 info_profile"><span th:text="${userData.height}"></span></div>
-        <div class="col-md-3 info_profile">Eye color: </div>
-        <div class="col-md-9 info_profile"><span th:text="${userData.eyeColor}"></span></div>
-        <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit" >Edit</button>
-
-    </div>
+    <form th:action = "@{/edit_profile/{id}(id = ${userData.id})}"  method="post">
+        <div class="row" id="generals">
+            <div class="col-md-3 info_profile">Origin: </div>
+            <div class="col-md-9 info_profile"><span style="display: inline" th:text="${userData.city}+', '+${userData.country}"></span></div>
+            <div class="col-md-3 info_profile">Specie: </div>
+            <div class="col-md-9 info_profile"><span th:text="${userData.specie}"></span></div>
+            <div class="col-md-3 info_profile">Breed: </div>
+            <div class="col-md-9 info_profile"><span th:text="${userData.breed}"></span></div>
+            <div class="col-md-3 info_profile">Age: </div>
+            <div class="col-md-9 info_profile"><span th:text="${userData.age}"></span></div>
+            <div class="col-md-3 info_profile">Gender: </div>
+            <div class="col-md-9 info_profile"><span th:text="${userData.gender}"></span></div>
+            <div class="col-md-3 info_profile">Height: </div>
+            <div class="col-md-9 info_profile"><span th:text="${userData.height}"></span></div>
+            <div class="col-md-3 info_profile">Eye color: </div>
+            <div class="col-md-9 info_profile"><span th:text="${userData.eyeColor}"></span></div>
+            <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit" >Edit</button>
+        </div>
+    </form>
     <!-- Hobbies div -->
-
-    <div class="row" id="hobbies" >
-        <h2><span th:text="${username} +' is most interested in: '"></span></h2>
-        <div class="col-md-12 info_profile" th:each="interest: ${interests}">
-            <span th:text="${interest.interest_tag}"></span>
+    <form th:action = "@{/interests_selection/{id}(id = ${userData.id})}"  method="post">
+        <div class="row" id="hobbies" >
+            <h2><span th:text="${username} +' is most interested in: '"></span></h2>
+            <div class="col-md-12 info_profile" th:each="interest: ${interests}">
+                <span th:text="${interest.interest_tag}"></span>
+            </div>
+            <div class="col-md-12 info_profile"></div>
+            <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit">Edit</button>
         </div>
-        <div class="col-md-12 info_profile"></div>
-        <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit">Edit</button>
-    </div>
+    </form>
     <!-- Preferences div -->
-    <div class="row" id="preferences">
-        <h2><span th:text="${username} +' prefers partners which fulfill the following: '"></span></h2>
-        <div class="col-md-12 info_profile">
-            <span th:if="${preferences.closeAge == true}">are close to his age</span>
-            <span th:if="${preferences.sameBreed == true}">belong to the same breed</span>
-            <span th:if="${preferences.nearby == true}">live in his proximity</span>
+    <form th:action = "@{/preferences_selection/{id}(id = ${userData.id})}"  method="post">
+        <div class="row" id="preferences">
+            <h2><span th:text="${username} +' prefers partners which fulfill the following: '"></span></h2>
+            <div class="col-md-12 info_profile" th:if="${preferences.closeAge == true}">are close to his age</div>
+
+            <div class="col-md-12 info_profile" th:if="${preferences.sameBreed == true}">belong to the same breed</div>
+
+
+            <div class="col-md-12 info_profile" th:if="${preferences.nearby == true}">live in his proximity</div>
+
+            <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit">Edit</button>
         </div>
-        <button type="submit" class="btn btn-info info_profile" style="width: 100px; margin-bottom: 50px;" value="Edit">Edit</button>
-    </div>
+    </form>
 </div>
 
 <script th:inline="javascript">

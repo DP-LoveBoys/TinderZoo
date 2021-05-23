@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Profile Configuration - TinderZoo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/home_page/{id}(id = ${userData.id})}">TinderZoo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/myprofile/{id}(id = ${userData.id})}">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/settings/{id}(id = ${userData.id})}">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container text-center">
+    <div>
+        <h1 style="margin-bottom: 60px;">Edit Profile</h1>
+    </div>
+    <div>
+        <h2 style="font-size:28px; margin-bottom: 50px;"><b>These information is essential for anyone that visits you profile.</br> Make sure you leave accurate info for them:</b></h2>
+    </div>
+    <form th:action="@{/process_edit_profile_data}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}" enctype="multipart/form-data"> <!-- userCredentials sent by registrationController -->
+        <fieldset>
+            <div class="m-3">
+                <div class="form-group row">
+                    <label style="margin-bottom: 20px;" for="InputSpecie" class="col-form-label col-4">Specie:</label>
+                    <div class="col-8">
+                        <input type="hidden" th:value="${userId}" name="userId"/>
+                        <input type="text" th:field="*{specie}" name="specie" class="form-control" id="InputSpecie" th:placeholder="${userData.specie}" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: 20px;" for="InputBreed" class="col-form-label col-4">Breed:</label>
+                    <div class="col-8">
+                        <input type="text" th:field="*{breed}" name="breed" class="form-control" id="InputBreed" th:placeholder="${userData.breed}" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: 20px;" for="InputAge" class="col-form-label col-4">Age:</label>
+                    <div class="col-8">
+                        <input type="number" th:field="*{age}" name="age" class="form-control" id="InputAge" th:placeholder="${userData.age}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: 20px;" for="InputCountry" class="col-form-label col-4">Country:</label>
+                    <div class="col-8">
+                        <input type="text" th:field="*{country}" name="country" class="form-control" id="InputCountry" th:placeholder="${userData.country}" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: 20px;" for="InputCity" class="col-form-label col-4">City:</label>
+                    <div class="col-8">
+                        <input type="text" th:field="*{city}" name="city" class="form-control" id="InputCity" th:placeholder="${userData.city}" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: 20px;" for="InputHeight" class="col-form-label col-4">Height:</label>
+                    <div class="col-8">
+                        <input type="number" th:field="*{height}" name="height" class="form-control" id="InputHeight" placeholder="5" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: 20px;" for="InputGender" class="col-form-label col-4">Gender:</label>
+                    <div class="col-1">
+                        <select class="form-select" th:field="*{gender}" name="gender" id="InputGender">
+                            <option th:value="'F'" th:text="Female"></option>
+                            <option th:value="'M'" th:text="Male"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label style="margin-bottom: 20px;" for="InputEyeColour" class="col-form-label col-4">Eye colour:</label>
+                    <div class="col-8">
+                        <input type="text" th:field="*{eyeColor}" name="eyeColor" class="form-control" id="InputEyeColour"th:placeholder="${userData.eyeColor}" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+
+                <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+</body>
+</html>
