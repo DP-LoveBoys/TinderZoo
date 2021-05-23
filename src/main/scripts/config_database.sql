@@ -69,3 +69,7 @@ CREATE TABLE matches(
 'match_response_provider' VARCHAR(20),
 PRIMARY KEY (`id`)
 );
+
+create table roles (id bigint not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB
+
+create table users_roles (user_id bigint not null, role_id bigint not null, primary key (user_id, role_id)) engine=InnoDB

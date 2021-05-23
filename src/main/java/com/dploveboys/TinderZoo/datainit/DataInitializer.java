@@ -6,13 +6,12 @@ import com.dploveboys.TinderZoo.repositories.MatchRepository;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.repositories.UserDataRepository;
 import com.dploveboys.TinderZoo.service.InterestService;
+import com.dploveboys.TinderZoo.service.LoveRadar;
 import com.dploveboys.TinderZoo.service.MatchService;
 import com.dploveboys.TinderZoo.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -71,6 +70,6 @@ public class DataInitializer implements CommandLineRunner {
         UserData temp_user = new UserData(userId, "dog", "joe", 7, "romania", "oravita", 500, 'F', "brown","meow");
 
         LoveRadar loveRadar = new LoveRadar(temp_user);
-        loveRadar.giveMatchResponse();
+        //loveRadar.giveMatchResponse();
     }
 }

@@ -1,5 +1,7 @@
-package com.dploveboys.TinderZoo.model;
+package com.dploveboys.TinderZoo.service;
 
+import com.dploveboys.TinderZoo.model.Interest;
+import com.dploveboys.TinderZoo.model.UserData;
 import com.dploveboys.TinderZoo.service.InterestService;
 import com.dploveboys.TinderZoo.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +11,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.persistence.Id;
 import java.util.List;
 import java.util.Map;
 
-@ComponentScan(basePackages={"com/dploveboys/TinderZoo/model"})
+@ComponentScan(basePackages={"com/dploveboys/TinderZoo/service"})
 
-@Component
+@Service
 public class LoveRadar {
 
     private UserData user;
 
     @Autowired
+    //@Resource(name = "interestService")
     private InterestService interestService;
 
     @Autowired
