@@ -1,5 +1,6 @@
 package com.dploveboys.TinderZoo.controllers;
 
+import com.dploveboys.TinderZoo.model.Role;
 import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.service.UserCredentialService;
@@ -46,7 +47,13 @@ public class CommonController {
 
     @GetMapping({"/users/edit/{userId}"})
     public String editUsers(@PathVariable("userId") Long userId, Model model){
-        UserCredential user = userCredentialService.get(userId);
-        return "users";
+
+        UserCredential userCredential = userCredentialService.get(userId);
+        List <Role> roles = userCredentialService.getRoles();
+
+        model.addAttribute("userCredential", userCredential);
+        model.addAttribute("roles", roles);
+
+        return "user_form";
     }
 }

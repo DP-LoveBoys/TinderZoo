@@ -77,4 +77,9 @@ public class UserCredentialService {
     {
         return (List<UserCredential>) userCredentialRepository.findAll();
     }
+
+    public List<Role> getRoles()
+    {
+        return (List<Role>) roleRepository.findAll();
+    }
 }
