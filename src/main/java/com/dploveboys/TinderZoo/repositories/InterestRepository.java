@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface InterestRepository extends CrudRepository<Interest,Long> {
     @Query(
-            value = "SELECT * FROM interests WHERE user_id = ?1",
+            value = "SELECT id, user_id, interest_tag FROM tinderzoo_dev.interests WHERE user_id = ?1",
             nativeQuery = true)
     List<Interest> getInterestsByUserId(Long userId);
 
@@ -22,4 +22,9 @@ public interface InterestRepository extends CrudRepository<Interest,Long> {
             value = "DELETE FROM interests WHERE user_id = ?1 AND interest_tag = ?2",
             nativeQuery = true)
     void deleteByTag(Long userId, String interest_tag);
+
+    @Query(
+            value = "SELECT user_id FROM interests WHERE user_id != ?2 AND interest_tag = ?1",
+            nativeQuery = true)
+    List<Long> getUserIDsByInterestsButNotThisUser(String interest, Long thisId);
 }

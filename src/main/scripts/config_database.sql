@@ -57,6 +57,7 @@ CREATE TABLE interests(
 PRIMARY KEY (`id`)
 );
 
+
 CREATE TABLE `preferences` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -68,3 +69,12 @@ CREATE TABLE `preferences` (
   KEY `user_fk_idx` (`user_id`),
   CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `credentials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE matches(
+`id` int NOT NULL AUTO_INCREMENT,
+`user_id` int NOT NULL,
+`match_id` int NOT NULL,
+'match_response_provider' VARCHAR(20),
+PRIMARY KEY (`id`)
+);
+
