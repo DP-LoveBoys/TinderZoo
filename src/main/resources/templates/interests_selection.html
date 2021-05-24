@@ -42,7 +42,11 @@
             <div class="row">
                 <div class="col-md-12" style="font-size: 20px; margin-bottom: 20px;" th:each="interest: ${interests}">
                     <span th:text="${interest.interest_tag}"></span>
-                    <span> <button type="button" class="btn btn-success delete_button" id="deleteInterest">Delete</button></span>
+                    <span> <form th:action="@{/deleteInterest}" method="post">
+                        <input type="hidden" th:value="${interest.id}" name="interestId">
+                        <input type="hidden" th:value="${interest.user_id}" name="userId">
+                        <button type="submit" class="btn btn-success delete_button" id="deleteInterest">Delete</button>
+                    </form></span>
                 </div>
 
             </div>

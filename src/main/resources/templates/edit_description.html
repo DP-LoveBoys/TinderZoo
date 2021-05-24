@@ -39,15 +39,23 @@
   <div>
 
   </div>
-  <form th:action="@{/process_profile_data}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}" enctype="multipart/form-data"> <!-- userCredentials sent by registrationController -->
+  <form th:action="@{/edit_user_description}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}" enctype="multipart/form-data"> <!-- userCredentials sent by registrationController -->
     <fieldset>
       <div class="m-3">
         <div class="form-group">
           <label style="margin-top: 20px; margin-bottom: 40px; font-size:28px;"><b>This is your self-description.</br> Change it so that it fits you best right now:</b></label>
           <div>
-            <textarea name="description" th:field="*{description}" th:placeholder="${userData.description}"></textarea>
-            <script>
-                  CKEDITOR.replace('description');
+            <input type="hidden" th:value="${userId}" name="userId"/>
+            <textarea name="description" th:field="*{description}" th:text="${userData.description}"></textarea>
+            <script th:inline="javascript">
+                  /*<![CDATA[*/
+                      let my_desc = /*[[${userData.description}]]*/ 'default';
+                      console.log(my_desc);
+
+                      CKEDITOR.replace('description');
+                      CKEDITOR.instances["description"].setData(my_desc);
+                  /*]]>*/
+
             </script>
           </div>
         </div>

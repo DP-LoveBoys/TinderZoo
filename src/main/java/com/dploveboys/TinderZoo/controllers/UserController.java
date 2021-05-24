@@ -36,7 +36,10 @@ public class UserController {
             @ModelAttribute("user") UserData userData
             ){
 
-        //TODO Ckeditor adds paragraph tags around the description; truncate the description
+        // CKeditor adds paragraph tags around description and must be deleted
+        String truncDesc=userData.getDescription();
+        truncDesc=truncDesc.substring(3,truncDesc.length()-6);
+        userData.setDescription(truncDesc);
 
         userData.setId(userId);
         String description=userData.getDescription();

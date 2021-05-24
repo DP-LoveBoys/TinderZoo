@@ -18,7 +18,7 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/profile/{id}(id = ${userId})}">My Profile</a>
+                    <a class="nav-link active" th:href="@{/myprofile/{id}(id = ${userId})}">My Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" th:href="@{/settings/{id}(id = ${userId})}">Settings</a>
@@ -38,7 +38,6 @@
         /*<![CDATA[*/
             const pictureElem=document.querySelector("#profilePict");
             let profilePicture = /*[[${profilePicture}]]*/ 'default';
-            console.log(profilePicture);
 
             if(profilePicture.image==null){
                 pictureElem.src="../images/empty_picture.jpg";
@@ -76,12 +75,12 @@
         <div>
             <img style="width: 400px; height: 400px" th:src="'data:image/${photo.imageType};base64,'+${photo.image}" />
 
-            <form th:action="@{/deletePhoto}" method="post" id="deleteForm">
+            <form th:action="@{/deletePhoto}" method="post" th:id="'deleteForm'+${photo.id}">
                 <input type="hidden" th:value="${photo.id}" name="photoId"/>
                 <input type="hidden" th:value="${userId}" name="userId"/>
             </form>
 
-            <form th:action="@{/setAsProfile}" method="post" id="setAsProfileForm">
+            <form th:action="@{/setAsProfile}" method="post" th:id="'setAsProfileForm'+${photo.id}">
                 <input type="hidden" th:value="${photo.id}" name="photoId"/>
                 <input type="hidden" th:value="${userId}" name="userId"/>
             </form>
@@ -92,11 +91,11 @@
             </div>-->
 
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" style="margin-top: 10px; font-size: 30px;" data-bs-toggle="modal" data-bs-target="#modal1">Delete</button>
-                <button type="button" class="btn btn-primary" style="margin-top: 10px; font-size: 30px;" data-bs-toggle="modal" data-bs-target="#modal2">Set as profile picture</button>
+                <button type="button" class="btn btn-primary" style="margin-top: 10px; font-size: 30px;" data-bs-toggle="modal" th:data-bs-target="'#modal1'+${photo.id}">Delete</button>
+                <button type="button" class="btn btn-primary" style="margin-top: 10px; font-size: 30px;" data-bs-toggle="modal" th:data-bs-target="'#modal2'+${photo.id}">Set as profile picture</button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="model1Label" aria-hidden="true">
+                <div class="modal fade" th:id="'modal1'+${photo.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="model1Label" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -108,13 +107,13 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" form="deleteForm" class="btn btn-primary">Delete</button>
+                                <button type="submit" th:form="'deleteForm'+${photo.id}" class="btn btn-primary">Delete</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="modal fade" id="modal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="model2Label" aria-hidden="true">
+                <div class="modal fade" th:id="'modal2'+${photo.id}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="model2Label" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -126,7 +125,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" form="setAsProfileForm" class="btn btn-primary">Confirm</button>
+                                <button type="submit" th:form="'setAsProfileForm'+${photo.id}" class="btn btn-primary">Confirm</button>
                             </div>
                         </div>
                     </div>

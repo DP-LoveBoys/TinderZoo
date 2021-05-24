@@ -30,4 +30,9 @@ public class InterestService {
         interestRepository.deleteByTag(userId, interest_tag);
     }
 
+    public void deleteInterestById(Long interestId){
+        Interest interest=interestRepository.findById(interestId).get();
+        interestRepository.delete(interest);
+    }
+
 }

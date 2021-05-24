@@ -42,9 +42,27 @@
 
                 <div style="font-size: 20px; margin-bottom: 20px;">
                     <div class="row">
-                    <span class="col-md-12" th:if="${preferences.closeAge == true}" style="font-size: 20px; margin-bottom: 30px;">be close to your age <span> <button type="button" class="btn btn-success col-md-6 delete_button" id="deletePreference1">Delete</button></span></span>
-                    <span class="col-md-12" th:if="${preferences.sameBreed == true}" style="font-size: 20px; margin-bottom: 30px;">belong to the same breed <span> <button type="button" class="btn btn-success col-md-6 delete_button" id="deletePreference2">Delete</button></span></span>
-                    <span class="col-md-12" th:if="${preferences.nearby == true}" style="font-size: 20px; margin-bottom: 30px;">live in your proximity <span> <button type="button" class="btn btn-success col-md-6 delete_button" id="deletePreference3">Delete</button></span></span>
+                    <span class="col-md-12" th:if="${preferences.closeAge == true}" style="font-size: 20px; margin-bottom: 30px;">be close to your age
+                        <span><form th:action="@{/deletePreference}" method="post">
+                            <input type="hidden" th:value="${userId}" name="userId"/>
+                            <input type="hidden" th:value="closeAge" name="preference"/>
+                            <button type="submit" class="btn btn-success col-md-6 delete_button" id="deletePreference1">Delete</button>
+                        </form></span>
+                    </span>
+                    <span class="col-md-12" th:if="${preferences.sameBreed == true}" style="font-size: 20px; margin-bottom: 30px;">belong to the same breed
+                        <span><form th:action="@{/deletePreference}" method="post">
+                            <input type="hidden" th:value="${userId}" name="userId"/>
+                            <input type="hidden" th:value="sameBreed" name="preference"/>
+                            <button type="submit" class="btn btn-success col-md-6 delete_button" id="deletePreference2">Delete</button>
+                        </form></span>
+                    </span>
+                    <span class="col-md-12" th:if="${preferences.nearby == true}" style="font-size: 20px; margin-bottom: 30px;">live in your proximity
+                        <span><form th:action="@{/deletePreference}" method="post">
+                            <input type="hidden" th:value="${userId}" name="userId"/>
+                            <input type="hidden" th:value="nearby" name="preference"/>
+                            <button type="submit" class="btn btn-success col-md-6 delete_button" id="deletePreference3">Delete</button>
+                        </form></span>
+                    </span>
                 </div>
 
 
@@ -61,10 +79,10 @@
             <input type="hidden" th:value="${userId}" name="userId"/>
             <div class="form-group">
                 <label for="PreferenceSelected" class="form-label mt-4" style="font-size: 30px;">Available preferences:&ensp;</label>
-                <select class="form-select" style="height:30px;" id="PreferenceSelected">
-                        <option class="service-small">Close age</option>
-                        <option class="service-small">Same breed</option>
-                        <option class="service-small">Nearby</option>
+                <select class="form-select" style="height:30px;" id="PreferenceSelected" name="preference">
+                        <option th:value="closeAge" class="service-small">Close age</option>
+                        <option th:value="sameBreed" class="service-small">Same breed</option>
+                        <option th:value="nearby" class="service-small">Nearby</option>
                 </select>
             </div>
         </div>
