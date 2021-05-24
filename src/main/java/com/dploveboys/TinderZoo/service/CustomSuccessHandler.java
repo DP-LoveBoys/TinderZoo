@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -44,24 +45,26 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
         if (!isAdminAuthority(authentication))
         {
             String targetUrl = super.determineTargetUrl(request, response);
-            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-            String email = customUserDetails.getEmail();
+
+            //System.out.println("Authentication is " + authentication.getDetails());  //this gives sessionId
+            //System.out.println("Authentication is " + authentication.isAuthenticated());
+
+            String email = authentication.getName();
 
             UserCredential user = userService.getUserByEmail(email);
+            System.out.println("User is " + user);
 
             if(targetUrl.isEmpty() || targetUrl.equals("/"))
             {
-                targetUrl ="/home_page/" + user.getId();
+                targetUrl ="home_page/" + user.getId();
             }
+            //targetUrl ="home/" + user.getId();
 
+            System.out.println("Request is " + request);
             clearAuthenticationAttributes(request);
             LOG.info("Redirecting user to the following location {} ",targetUrl);
 
             redirectStrategy.sendRedirect(request, response, targetUrl);
-
-            //You can let Spring security handle it for you.
-            // super.onAuthenticationSuccess(request, response, authentication);
-
         }
         else{
             // we invalidating the session for the admin user.

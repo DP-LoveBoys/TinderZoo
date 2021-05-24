@@ -9,6 +9,7 @@ import org.springframework.beans.factory.support.SecurityContextProvider;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,14 +28,14 @@ public class CommonController {
 
     @RequestMapping("/login") //if you want to go back to login as a logged in user, it takes you back to index
     public String viewLoginPage(Model model){
-        model.addAttribute("userCredentials",new UserCredential());
+        model.addAttribute("userCredentials", new UserCredential());
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("Authentication is " +  authentication);
-        if(authentication == null || authentication instanceof AnonymousAuthenticationToken)
+        if(authentication.isAuthenticated() == true)
         {
-            return "login";
+            return "redirect:/";
         }
-        return "redirect:/";
+        return "login";
     }
 
     @GetMapping({"/list_users"})

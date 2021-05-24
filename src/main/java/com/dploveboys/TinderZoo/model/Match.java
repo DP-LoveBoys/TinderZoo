@@ -26,11 +26,14 @@ public class Match {
     private Long match_id;
 
     @Enumerated(EnumType.STRING)
+    private MatchResponseProvider userResponseProvider;
+    @Enumerated(EnumType.STRING)
     private MatchResponseProvider matchResponseProvider;
 
     public Match(Long user_id, Long match_id) {
         this.user_id = user_id;
         this.match_id = match_id;
+        setMatchResponseProvider(userResponseProvider.UNKNOWN); //default
         setMatchResponseProvider(matchResponseProvider.UNKNOWN); //default
     }
 
@@ -51,6 +54,7 @@ public class Match {
                 "id=" + id +
                 ", user_id=" + user_id +
                 ", match_id=" + match_id +
+                ", userResponseProvider=" + userResponseProvider +
                 ", matchResponseProvider=" + matchResponseProvider +
                 '}';
     }
@@ -76,13 +80,6 @@ public class Match {
         return id != null ? id.hashCode() : 0;
     }
 
-    public Long getInterest_id() {
-        return id;
-    }
-
-    public void setInterest_id(Long interest_id) {
-        this.id = interest_id;
-    }
 
     public Long getUser_id() {
         return user_id;
@@ -98,5 +95,13 @@ public class Match {
 
     public void setMatchResponseProvider(MatchResponseProvider matchResponseProvider) {
         this.matchResponseProvider = matchResponseProvider;
+    }
+
+    public MatchResponseProvider getUserResponseProvider() {
+        return userResponseProvider;
+    }
+
+    public void setUserResponseProvider(MatchResponseProvider userResponseProvider) {
+        this.userResponseProvider = userResponseProvider;
     }
 }

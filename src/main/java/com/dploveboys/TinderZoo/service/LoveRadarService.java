@@ -19,12 +19,12 @@ import java.util.Map;
 @ComponentScan(basePackages={"com/dploveboys/TinderZoo/service"})
 
 @Service
-public class LoveRadar {
+public
+class LoveRadarService {
 
     private UserData user;
-
-    @Autowired
     //@Resource(name = "interestService")
+    @Autowired
     private InterestService interestService;
 
     @Autowired
@@ -32,11 +32,11 @@ public class LoveRadar {
     private Long id;
 
 
-    public LoveRadar(UserData user){
+    public LoveRadarService(UserData user){
         this.user = user;
     }
 
-    public LoveRadar() {}
+    public LoveRadarService() {}
 
     public Map<Long, Integer> searchForLove()
     {
@@ -45,8 +45,8 @@ public class LoveRadar {
         List<Interest> interests = interestService.getInterests(our_id);
         System.out.println("Interests are: " + interests);
 
-        //matches = matchService.getMatches(our_id, interests);
-        //System.out.println("Matches " + matches);
+        Map<Long, Integer> matches = matchService.getMatches(our_id, interests);
+        System.out.println("Matches " + matches);
 
         return null;
     }

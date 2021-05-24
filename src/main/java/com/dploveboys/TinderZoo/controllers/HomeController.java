@@ -43,7 +43,7 @@ public class HomeController {
         }catch(NoSuchElementException e){
             e.printStackTrace();
         }
-        return "/home";
+        return "home";
     }
 
 }
