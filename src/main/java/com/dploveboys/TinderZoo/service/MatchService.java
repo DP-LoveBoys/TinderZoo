@@ -45,15 +45,19 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
             users_with_common_interests = interestService.getUsersExceptThisId(interest.getInterest_tag(), ourId); //get users with same interests as us
             for(Long userId : users_with_common_interests) //for each of these users, map their id and a score based on how frequent the overlapping interests are
             {
-                System.out.println("At user " + userId);
+                //System.out.println("At user " + userId);
 
                 if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
                 {
                     int temp_value = matches_map.get(userId);
-                    matches_map.put(userId, temp_value++);
+                    //System.out.println("Current score for user " + userId + " is " + temp_value);
+                    temp_value++;
+                    matches_map.put(userId, temp_value);
+                    //System.out.println("Score incremented: " + temp_value);
                 }
                 else
                 {
+                    //System.out.println("Never seen user " + userId + " before, initialize score with " + value);
                     matches_map.put(userId, value);
                 }
             }
@@ -74,5 +78,11 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
                         Map.Entry::getValue,
                         (elem1, elem2) -> elem1, LinkedHashMap::new));
         return temp_map;
+    }
+
+    public List<Long> getMatchesByMatchId(Long their_id, String their_response) {
+        List<Long> matches_ids_for_us = matchRepository.getMatchesForMatchId(their_id, their_response);
+
+        return matches_ids_for_us;
     }
 }

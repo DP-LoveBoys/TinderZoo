@@ -4,10 +4,7 @@ import com.dploveboys.TinderZoo.model.AuthenticationProvider;
 import com.dploveboys.TinderZoo.model.CustomOAuth2User;
 import com.dploveboys.TinderZoo.model.CustomUserDetails;
 import com.dploveboys.TinderZoo.model.UserCredential;
-import com.dploveboys.TinderZoo.service.CustomOAuth2UserService;
-import com.dploveboys.TinderZoo.service.CustomUserDetailsService;
-import com.dploveboys.TinderZoo.service.OAuth2LoginSuccessHandler;
-import com.dploveboys.TinderZoo.service.UserCredentialService;
+import com.dploveboys.TinderZoo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -76,7 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                     .defaultSuccessUrl("/profile_configuration")
                     .failureUrl("/login.html?error=true")
-
+                .successHandler(customSuccessHandler)
+/*
                     .successHandler(new AuthenticationSuccessHandler(){
                         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse
                         response, Authentication authentication) throws IOException, ServletException {
@@ -89,6 +87,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                             response.sendRedirect("/home_page/"+user.getId());
 
                         }})
+
+ */
 
                     .permitAll() //redirect a successful login to /list_users
                 .and()
@@ -133,4 +133,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserCredentialService userService;
+
+    @Autowired
+    private CustomSuccessHandler customSuccessHandler;
 }

@@ -78,3 +78,12 @@ CREATE TABLE matches(
 PRIMARY KEY (`id`)
 );
 
+
+create table roles (id int not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
+
+create table users_roles (user_id int not null, role_id bigint not null, primary key (user_id, role_id)) engine=InnoDB;
+
+alter table users_roles add constraint foreign key (user_id) references credentials (id);
+
+GRANT ALL privileges ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'localhost';
+

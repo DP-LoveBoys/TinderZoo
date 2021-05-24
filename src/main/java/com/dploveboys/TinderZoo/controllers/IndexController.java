@@ -19,4 +19,9 @@ public class IndexController {
         return "/index";
     }
 
+    @RequestMapping("/admin")
+    public String getAdminPage(){
+        return "/admin";
+    }
+
 }

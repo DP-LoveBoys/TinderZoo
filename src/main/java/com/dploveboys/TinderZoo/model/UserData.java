@@ -2,6 +2,7 @@ package com.dploveboys.TinderZoo.model;
 
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="user_data")
@@ -19,9 +20,12 @@ public class UserData {
     private char gender;
     private String eyeColor;
     private String description;
+
+    @Transient
+    private List<Long> matches_list; //this list of user_ids that matched this user should update periodically
+
     public UserData(){
     }
-
 
 
     public UserData(Long id, String specie, String breed, int age, String country, String city, int height, char gender,String eyeColor,String description) {
@@ -35,6 +39,27 @@ public class UserData {
         this.gender = gender;
         this.eyeColor=eyeColor;
         this.description=description;
+    }
+
+    public void addMatch(Long another_user_id)
+    {
+        this.matches_list.add(another_user_id);
+    }
+
+    public void removeMatch(Long another_user_id) //needs checking
+    {
+        Long index = Long.valueOf(this.matches_list.indexOf(another_user_id));
+        this.matches_list.remove(index);
+    }
+
+    public void clearMatches()
+    {
+        this.matches_list.clear();
+    }
+
+    public List<Long> getAllMatches()
+    {
+        return matches_list;
     }
 
     @Override
