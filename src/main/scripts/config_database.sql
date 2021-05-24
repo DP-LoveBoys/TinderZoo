@@ -36,7 +36,7 @@ CREATE TABLE `profile_pictures` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int UNIQUE NOT NULL,
   `image` longblob NOT NULL,
-  `image_type` VARCHAR(15) NOT NULL
+  `image_type` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -61,5 +61,13 @@ CREATE TABLE interests(
 `id` int NOT NULL AUTO_INCREMENT,
 `user_id` int NOT NULL,
 `interest_tag` VARCHAR(25) NOT NULL,
+PRIMARY KEY (`id`)
+);
+
+CREATE TABLE matches(
+`id` int NOT NULL AUTO_INCREMENT,
+`user_id` int NOT NULL,
+`match_id` int NOT NULL,
+'match_response_provider' VARCHAR(20),
 PRIMARY KEY (`id`)
 );
