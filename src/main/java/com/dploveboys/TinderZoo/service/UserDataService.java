@@ -22,4 +22,16 @@ public class UserDataService {
     public void addUserData(UserData userData){
         userDataRepository.save(userData);
     }
+
+    public void updateUserData(Long userId,UserData newUserData){
+        UserData oldUserData=getUserById(userId).get();
+        newUserData.setDescription(oldUserData.getDescription());
+        addUserData(newUserData);
+    }
+
+    public void updateDescription(Long userId,String description){
+        UserData userData=getUserById(userId).get();
+        userData.setDescription(description.substring(3,description.length()-6));
+        userDataRepository.save(userData);
+    }
 }

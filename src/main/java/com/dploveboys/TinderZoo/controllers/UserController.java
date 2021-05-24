@@ -1,10 +1,7 @@
 package com.dploveboys.TinderZoo.controllers;
 
-import com.dploveboys.TinderZoo.model.Interest;
 import com.dploveboys.TinderZoo.model.UserData;
-import com.dploveboys.TinderZoo.repositories.UserDataRepository;
-import com.dploveboys.TinderZoo.service.InterestService;
-import com.dploveboys.TinderZoo.service.ProfilePictureService;
+import com.dploveboys.TinderZoo.service.PhotoService;
 import com.dploveboys.TinderZoo.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +18,7 @@ public class UserController {
     private UserDataService userDataService;
 
     @Autowired
-    private ProfilePictureService profilePictureService;
+    private PhotoService photoService;
 
 
     @RequestMapping("/profile_configuration/{userId}")
@@ -39,11 +36,15 @@ public class UserController {
             @ModelAttribute("user") UserData userData
             ){
 
+        // CKeditor adds paragraph tags around description and must be deleted
+        String truncDesc=userData.getDescription();
+        truncDesc=truncDesc.substring(3,truncDesc.length()-6);
+        userData.setDescription(truncDesc);
+
         userData.setId(userId);
-        System.out.println(userData);
+        String description=userData.getDescription();
         userDataService.addUserData(userData);
-        //System.out.println("SENT PROFILE PICTURE: "+photo.getOriginalFilename()+"\nAnd user id: "+userId);
-        profilePictureService.saveProfilePicture(photo,userId);
+        photoService.savePhoto(photo,userId,true);
 
         return "redirect:/login";
     }

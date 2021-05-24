@@ -5,23 +5,26 @@
     <title>Interest Selection - TinderZoo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
     <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <link rel="stylesheet" th:href="@{/css/styles_profile_page.css}">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/index">TinderZoo</a>
+        <a class="navbar-brand" th:href="@{/home_page/{id}(id = ${userId})}">TinderZoo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav ml-auto ">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/register">Registration</a>
+                    <a class="nav-link active" th:href="@{/myprofile/{id}(id = ${userId})}">My Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link active" th:href="@{/settings/{id}(id = ${userId})}">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
                 </li>
             </ul>
         </div>
@@ -30,30 +33,44 @@
 
 <div class="container text-center">
     <div>
-        <h1 style="margin-bottom: 60px;">Interest selection</h1>
+        <h1 style="font-size: 60px; margin-bottom: 60px;">Interests</h1>
+    </div>
+
+    <div class="card text-white bg-primary mb-3" style="height: 400px; overflow:auto;">
+        <div class="card-header">Your interests at the moment are:</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12" style="font-size: 20px; margin-bottom: 20px;" th:each="interest: ${interests}">
+                    <span th:text="${interest.interest_tag}"></span>
+                    <span> <form th:action="@{/deleteInterest}" method="post">
+                        <input type="hidden" th:value="${interest.id}" name="interestId">
+                        <input type="hidden" th:value="${interest.user_id}" name="userId">
+                        <button type="submit" class="btn btn-success delete_button" id="deleteInterest">Delete</button>
+                    </form></span>
+                </div>
+
+            </div>
+        </div>
     </div>
     <div>
-        <h2 style="font-size:28px; margin-bottom: 50px;"><b>Enter any interest that comes to mind. Keep it one word</b></h2>
+        <h2 style="font-size:40px; margin-bottom: 50px; margin-top: 500px;"><b>Enter any new interest that comes to mind. Keep it one word!</b></h2>
     </div>
+
     <form th:action="@{/interests_selection_processing}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${interest}" > <!-- userCredentials sent by registrationController -->
-           <fieldset>
-               <div class="m-3">
-                   <div class="form-group row">
-                        <div class="col-8">
-                            <input type="hidden" th:value="${userId}" name="userId"/>
-                            <input type="text" th:field="*{interest_tag}" name="interest_tag" class="form-control" id="InputInterest_tag" placeholder="Enter interest" minlength="2" maxlength="25" required>
-                        </div>
+        <fieldset>
+                    <div class="m-3">
+                        <input type="hidden" th:value="${userId}" name="userId"/>
+                        <input type="text" th:field="*{interest_tag}" name="interest_tag" class="form-control" id="InputInterest_tag" placeholder="Enter interest" minlength="2"  maxlength="20" required>
+                    </div>
 
                     <button type="submit" style="margin-top: 30px;" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
-            </fieldset>
+        </fieldset>
 
-       </form>
+    </form>
 
 
 
 
-   </div>
+</div>
    </body>
    </html>
