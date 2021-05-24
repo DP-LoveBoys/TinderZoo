@@ -38,19 +38,13 @@ public class InterestService {
     }
 
 
-    public List<Long> getUsers(String interest, Long exceptId){
+    public List<Long> getUsers(String interest, Long exceptId) {
         return interestRepository.getUserIDsByInterests(interest, exceptId);
-
+    }
 
     public void deleteInterestById(Long interestId){
         Interest interest=interestRepository.findById(interestId).get();
         interestRepository.delete(interest);
-    }
-
-
-    public List<Long> getUsers(String interest){
-        return interestRepository.getUserIDsByInterests(interest);
-
     }
 
     public List<Long> getUsersExceptThisId(String interest, Long thisId)

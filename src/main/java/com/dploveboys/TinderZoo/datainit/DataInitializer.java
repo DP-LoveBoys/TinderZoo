@@ -44,30 +44,6 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        //User cutu=new User("Bella","cat","siamese",7,"Romania","Oravita",40, 'M', "blue");
-        //userRepository.save(cutu);
-        //UserCredential userCred = new UserCredential("timi@timu.com", "timi", "parola");
-        //userCredentialRepository.save(userCred);
-        //System.out.println("New user " + userCred);
-
-
-
-        //Long matchId = Long.valueOf(4);
-        //matchRepository.save(new Match(userId, matchId));
-        //interestService.saveInterest("test_interest", 7L);
-        //System.out.println("Matches " + matchService.getMatchesByUserId(userId));
-        //System.out.println("Users " + matchService.getUserIDsByMatchId(matchId));
-
-        /*
-        userCredentialRepository.save(temp_cred);
-        userDataRepository.save(temp_user);
-        Interest interest1 = new Interest(userId, "bark");
-        Interest interest2 = new Interest(userId, "walk");
-        interestRepository.save(interest1);
-        interestRepository.save(interest2);
-         */
-        //List<Interest> interests = interestService.getInterests(17L);
-        //System.out.println("Interests: " + interests);
         Long userId = 1L;
 
         UserCredential temp_cred = new UserCredential("joe@joe.com", "john", "password");
@@ -82,13 +58,13 @@ public class DataInitializer implements CommandLineRunner {
 
         Long our_id = temp_user.getId();
         Long their_id = 2L;
-        System.out.println("User is : " + our_id);
+        //System.out.println("User is : " + our_id);
 
         List<Interest> interests = interestService.getInterests(our_id);
-        System.out.println("Interests are: " + interests);
+        //System.out.println("Interests are: " + interests);
 
         matches = matchService.getMatches(our_id, interests);  //this will be used to get the potential matches
-        System.out.println("Matches " + matches);
+        //System.out.println("Matches " + matches);
 
         //EXAMPLE OF SAVING THE MATCHES FOR AN USER TO matches TABLE
         //We have our_id, match_id, match_response_provider
@@ -99,28 +75,24 @@ public class DataInitializer implements CommandLineRunner {
             MatchResponseProvider match_response = MatchResponseProvider.MATCH;
             for (Long l : love_list)
             {
-                System.out.println("At lover with ID " + l);
+                //System.out.println("At lover with ID " + l);
 
                 Match temp_match = matchRepository.getPair(our_id, their_id);
                 if(temp_match != null)          //the pair exists already, don't add it
                 {
-                    matchRepository.updateOurResponse(our_id, their_id, our_response.toString());
+                    //matchRepository.updateOurResponse(our_id, their_id, our_response.toString());
                 }
                 else
                 {
                     temp_match = new Match(our_id, l);
-                    matchRepository.save(temp_match);         //UNCOMMENT TO SAVE MATCH
+                    //matchRepository.save(temp_match);         //UNCOMMENT TO SAVE MATCH
                 }
             }
         }
 
         //CHECK IF FOR THIS ID, WE HAVE MATCHES. IF SOMEONE MATCHED THIS ID, GIVE THIS ID THE OPTION TO GIVE A RESPONSE TO EACH
         //the people that matched us should have said "MATCH" for our id in the table
-        List<Long> people_that_matched_us = matchService.getMatchesByMatchId(their_id, "NOT_INTERESTED");
-        for(Long l : people_that_matched_us)
-        {
-            System.out.println("This user matched with us " + l);
-        }
+
 
     }
 }

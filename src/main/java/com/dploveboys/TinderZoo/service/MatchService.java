@@ -21,16 +21,7 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
     @Autowired
     private InterestService interestService;
 
-    public List<Long> getMatchesByUserId(Long userId) throws NotFoundException {
-        List<Long> matchesIDs = matchRepository.getMatchIDsByUserId(userId);
 
-        return matchesIDs;
-    }
-    public List<Long> getUserIDsByMatchId(Long matchId) throws NotFoundException {
-        List<Long> userIDs = matchRepository.getUserIDsByMatchId(matchId);
-
-        return userIDs;
-    }
 
     public Map<Long, Integer> getMatches(Long ourId, List <Interest> interests) //this should return a list of matches IDs, based on our interests
     {
@@ -39,7 +30,7 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         int value = 1;
         for(Interest interest : interests) //go through each of our own interests
         {
-            System.out.println("At interest " + interest);
+            //System.out.println("At interest " + interest);
 
             List <Long> users_with_common_interests;
             users_with_common_interests = interestService.getUsersExceptThisId(interest.getInterest_tag(), ourId); //get users with same interests as us
@@ -80,9 +71,31 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         return temp_map;
     }
 
-    public List<Long> getMatchesByMatchId(Long their_id, String their_response) {
-        List<Long> matches_ids_for_us = matchRepository.getMatchesForMatchId(their_id, their_response);
+
+    public List<Long> getUsersByMatchId(Long their_id, String their_response) {
+        List<Long> userIDs = matchRepository.getUsersForMatchId(their_id, their_response);
+
+        return userIDs;
+    }
+
+    public List<Long> getMatchesByUserId(Long our_id, String our_response) {
+        List<Long> matches_ids_for_us = matchRepository.getMatchesForUserId(our_id, our_response);
 
         return matches_ids_for_us;
     }
+
+    /*
+    public List<Long> getMatchesByUserId(Long userId) throws NotFoundException {
+        List<Long> matchesIDs = matchRepository.getMatchIDsByUserId(userId);
+
+        return matchesIDs;
+    }
+    public List<Long> getUserIDsByMatchId(Long matchId) throws NotFoundException {
+        List<Long> userIDs = matchRepository.getUserIDsByMatchId(matchId);
+
+        return userIDs;
+    }
+
+     */
+
 }

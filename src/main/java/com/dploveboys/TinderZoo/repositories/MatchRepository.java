@@ -40,5 +40,10 @@ public interface MatchRepository extends CrudRepository<Match,Long> {
     @Query(
             value = "SELECT user_id FROM matches WHERE match_id = ?1 AND match_response_provider = ?2",
             nativeQuery = true)
-    List<Long> getMatchesForMatchId(Long their_id, String their_response);
+    List<Long> getUsersForMatchId(Long their_id, String their_response);
+
+    @Query(
+            value = "SELECT user_id FROM matches WHERE match_id = ?1 AND match_response_provider = ?2",
+            nativeQuery = true)
+    List<Long> getMatchesForUserId(Long our_id, String our_response);
 }
