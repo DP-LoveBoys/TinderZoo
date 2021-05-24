@@ -93,9 +93,9 @@
                 <div class="form-group">
                     <label style="margin-top: 20px; margin-bottom: 40px; font-size:28px;"><b>Now add a short description about yourself:</b></label>
                     <div>
-                        <textarea name="editor1" th:field="*{description}"></textarea>
+                        <textarea name="description" th:field="*{description}"></textarea>
                         <script>
-                            CKEDITOR.replace('editor1');
+                            CKEDITOR.replace('description');
                         </script>
                     </div>
                 </div>

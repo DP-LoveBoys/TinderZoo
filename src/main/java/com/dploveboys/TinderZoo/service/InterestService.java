@@ -35,6 +35,13 @@ public class InterestService {
         interestRepository.deleteByTag(userId, interest_tag);
     }
 
+
+    public void deleteInterestById(Long interestId){
+        Interest interest=interestRepository.findById(interestId).get();
+        interestRepository.delete(interest);
+    }
+
+
     public List<Long> getUsers(String interest){
         return interestRepository.getUserIDsByInterests(interest);
     }
@@ -43,4 +50,5 @@ public class InterestService {
     {
         return interestRepository.getUserIDsByInterestsButNotThisUser(interest, thisId);
     }
+
 }

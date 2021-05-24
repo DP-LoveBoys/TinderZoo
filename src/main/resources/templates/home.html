@@ -9,14 +9,14 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/home_page">TinderZoo</a>
+        <a class="navbar-brand" th:href="@{/home_page/{id}(id = ${userData.id})}">TinderZoo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/profile/{id}(id = ${userData.id})}">My Profile</a>
+                    <a class="nav-link active" th:href="@{/myprofile/{id}(id = ${userData.id})}">My Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" th:href="@{/settings/{id}(id = ${userData.id})}">Settings</a>
@@ -35,7 +35,20 @@
 <h1 class="container text-center display-1">Tinder Zoo</h1>
 <div class="w3-container">
     <div class="circular--portrait1">
-        <img th:src="'data:image/'+${profilePicture.imageType}+';base64,'+${profilePicture.image}" />
+        <img id="profilePict" th:src="'data:image/'+${profilePicture.imageType}+';base64,'+${profilePicture.image}" />
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+
+            const pictureElem=document.querySelector("#profilePict");
+            let profilePicture = /*[[${profilePicture}]]*/ 'default';
+            console.log(profilePicture);
+
+            if(profilePicture.image==null){
+                pictureElem.src="../images/empty_picture.jpg";
+            }
+
+        /*]]>*/
+        </script>
     </div>
     <div>
         <h1 style="text-align: center; width: 15%; height: 15%;"><span th:text="${username}"></span></h1>
