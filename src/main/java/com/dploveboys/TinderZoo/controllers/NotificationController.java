@@ -5,12 +5,10 @@ import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.model.UserData;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.service.PhotoService;
-import com.dploveboys.TinderZoo.service.UserCredentialService;
 import com.dploveboys.TinderZoo.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,40 +16,39 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
-public class HomeController {
+public class NotificationController {
 
     @Autowired
-    UserCredentialService userCredentialService;
+    private UserDataService userDataService;
 
     @Autowired
-    PhotoService photoService;
+    private PhotoService photoService;
 
     @Autowired
-    UserDataService userDataService;
+    private UserCredentialRepository userCredentialRepository;
 
-    @RequestMapping("/home_page/{userId}")
-    public String getHomePage(@PathVariable("userId") Long userId,Model model){
-
-        Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
-
-        Optional<UserData> userData=userDataService.findById(userId);
-        ProfilePicture profilePicture = profilePictureService.getProfilePicture(userId);
-
+    @RequestMapping("/notifications/{userId}")
+    public String getPendingNotificationPage(@PathVariable("userId") Long userId, Model model){
         Optional<UserData> userData=userDataService.getUserById(userId);
-        Photo profilePicture =photoService.getProfilePhoto(userId);
+        UserData user = new UserData();
+        Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
 
+        Photo profilePicture=photoService.getProfilePhoto(userId);
         if(profilePicture==null){
             profilePicture=new Photo();
         }
-
-        model.addAttribute("profilePicture",profilePicture);
         try {
-            model.addAttribute("username", userCredential.get().getName());
-            model.addAttribute("userData", userData.get());
+            model.addAttribute("userData",userData.get());
+            model.addAttribute("username",userCredential.get().getName());
         }catch(NoSuchElementException e){
             e.printStackTrace();
         }
-        return "home";
-    }
 
+
+        model.addAttribute("profilePicture", profilePicture);
+        model.addAttribute("userId",userId);
+        model.addAttribute("user", user);
+
+        return "/notifications";
+    }
 }

@@ -30,20 +30,15 @@ CREATE TABLE `user_data` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `profile_pictures` (
+CREATE TABLE `photos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int UNIQUE NOT NULL,
+  `user_id` int NOT NULL,
   `image` longblob NOT NULL,
-  `image_type` VARCHAR(15) NOT NULL,
+  `image_type` varchar(15) NOT NULL,
+  `profile` tinyint NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `tinderzoo_dev`.`photos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
-  `image` LONGBLOB NOT NULL,
-  `image_type` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`id`));
 
 CREATE TABLE `credentials` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -62,6 +57,19 @@ CREATE TABLE interests(
 PRIMARY KEY (`id`)
 );
 
+
+CREATE TABLE `preferences` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `close_age` tinyint NOT NULL,
+  `same_breed` tinyint NOT NULL,
+  `nearby` tinyint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`),
+  KEY `user_fk_idx` (`user_id`),
+  CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `credentials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE matches(
 `id` int NOT NULL AUTO_INCREMENT,
 `user_id` int NOT NULL,
@@ -70,6 +78,7 @@ CREATE TABLE matches(
 PRIMARY KEY (`id`)
 );
 
+
 create table roles (id int not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
 
 create table users_roles (user_id int not null, role_id bigint not null, primary key (user_id, role_id)) engine=InnoDB;
@@ -77,3 +86,4 @@ create table users_roles (user_id int not null, role_id bigint not null, primary
 alter table users_roles add constraint foreign key (user_id) references credentials (id);
 
 GRANT ALL privileges ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'localhost';
+

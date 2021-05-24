@@ -5,9 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name="profile_pictures")
-public class ProfilePicture {
-
+@Table(name="preferences")
+public class Preference {
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
@@ -19,12 +18,23 @@ public class ProfilePicture {
     )
     private Long id;
 
-    @Column(name = "user_id")
     private Long userId;
-    private String image;
-    private String imageType;
+    private Boolean closeAge;
+    private Boolean sameBreed;
+    private Boolean nearby;
 
-    public ProfilePicture() {
+    public Preference() {
+    }
+
+    @Override
+    public String toString() {
+        return "Preference{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", closeAge=" + closeAge +
+                ", sameBreed=" + sameBreed +
+                ", nearby=" + nearby +
+                '}';
     }
 
     @Override
@@ -32,7 +42,7 @@ public class ProfilePicture {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProfilePicture that = (ProfilePicture) o;
+        Preference that = (Preference) o;
 
         return id != null ? id.equals(that.id) : that.id == null;
     }
@@ -58,19 +68,27 @@ public class ProfilePicture {
         this.userId = userId;
     }
 
-    public String getImage() {
-        return image;
+    public Boolean getCloseAge() {
+        return closeAge;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setCloseAge(Boolean closeAge) {
+        this.closeAge = closeAge;
     }
 
-    public String getImageType() {
-        return imageType;
+    public Boolean getSameBreed() {
+        return sameBreed;
     }
 
-    public void setImageType(String imageType) {
-        this.imageType = imageType;
+    public void setSameBreed(Boolean sameBreed) {
+        this.sameBreed = sameBreed;
+    }
+
+    public Boolean getNearby() {
+        return nearby;
+    }
+
+    public void setNearby(Boolean nearby) {
+        this.nearby = nearby;
     }
 }
