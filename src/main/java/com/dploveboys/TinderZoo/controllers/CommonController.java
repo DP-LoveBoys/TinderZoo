@@ -29,15 +29,14 @@ public class CommonController {
     @RequestMapping("/login") //if you want to go back to login as a logged in user, it takes you back to index
     public String viewLoginPage(Model model){
         model.addAttribute("userCredentials", new UserCredential());
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if(authentication.isAuthenticated() == true)
         {
             return "redirect:/";
         }
 
-
-        return "login";
+        return "/login";
     }
 
     @RequestMapping({"/list_users"})

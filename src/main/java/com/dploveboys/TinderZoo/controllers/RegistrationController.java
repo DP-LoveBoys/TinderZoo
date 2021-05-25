@@ -34,14 +34,8 @@ public class RegistrationController {
     @PostMapping("/process_register")
     public String processRegistration(UserCredential userCredential) {
 
-        //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        //String password = userCredential.getPassword();
-        //password = encoder.encode(password);
-        //userCredential.setPassword(password);
-
-        //userCredentialRepository.save(userCredential);
         userCredentialService.saveUserWithDefaultRole(userCredential);
-        //model.addAttribute("id", userCredential.getId());
+
         return "redirect:/profile_configuration/"+userCredential.getId();
     }
 
