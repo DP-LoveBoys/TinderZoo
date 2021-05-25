@@ -60,9 +60,8 @@ public class CustomSuccessHandler extends SavedRequestAwareAuthenticationSuccess
             }
             //targetUrl ="home/" + user.getId();
 
-            System.out.println("Request is " + request);
             clearAuthenticationAttributes(request);
-            LOG.info("Redirecting user to the following location {} ",targetUrl);
+            System.out.println("Redirecting user to the following location " + targetUrl);
 
             redirectStrategy.sendRedirect(request, response, targetUrl);
         }

@@ -33,6 +33,7 @@ public class HomeController {
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
         Optional<UserData> userData=userDataService.getUserById(userId);
 
+        System.out.println("Am ajusn admine");
         Photo profilePicture =photoService.getProfilePhoto(userId);
         if(profilePicture==null){
             profilePicture=new Photo();
@@ -45,6 +46,7 @@ public class HomeController {
         }catch(NoSuchElementException e){
             e.printStackTrace();
         }
+        System.out.println("Aici am ajuns de asemenea");
         return "home";
     }
 

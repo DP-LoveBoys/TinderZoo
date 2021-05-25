@@ -35,10 +35,12 @@ public class CommonController {
         {
             return "redirect:/";
         }
+
+
         return "login";
     }
 
-    @GetMapping({"/list_users"})
+    @RequestMapping({"/list_users"})
     public String viewUsersList(Model model){
         List<UserCredential> listUsers = userCredentialService.listAll();
 
@@ -46,7 +48,7 @@ public class CommonController {
         return "users";
     }
 
-    @GetMapping({"/users/edit/{userId}"})
+    @RequestMapping({"/users/edit/{userId}"})
     public String editUsers(@PathVariable("userId") Long userId, Model model){
 
         UserCredential userCredential = userCredentialService.get(userId);
