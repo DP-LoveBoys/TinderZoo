@@ -8,17 +8,17 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/home_page/{id}(id = ${userData.id})}">TinderZoo</a>
+        <a class="navbar-brand" th:href="@{/home_page/{id}(id = ${userId})}">TinderZoo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/home_page/{id}(id = ${userData.id})}">Home</a>
+                    <a class="nav-link active" th:href="@{/home_page/{id}(id = ${userId})}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/settings/{id}(id = ${userData.id})}">Settings</a>
+                    <a class="nav-link active" th:href="@{/settings/{id}(id = ${userId})}">Settings</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/logout}">Logout</a>
@@ -52,61 +52,65 @@
     <div class="rectangle_title text-center display-4" >Matches</div>
     <div style="height: 10px;"></div>
 
-    <!-- A match -->
-    <div class="card text-dark bg-info mb-3" style="width: 100%; height: 300px;">
-        <div class="card-header" style="color: black;">Username</div>
-        <div class="card-body">
-            <div class="row">
-                <div class="circular--portrait1_notification col-md-2" style=" margin-top: 5px; margin-left: 20px;">
-                    <img id="profilePict1" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  />
-                    <script th:inline="javascript">
-                /*<![CDATA[*/
-                    const pictureElem=document.querySelector("#profilePict");
-                    let profilePicture = /*[[${profilePicture}]]*/ 'default';
-                    console.log(profilePicture);
-
-                    if(profilePicture.image==null){
-                        pictureElem.src="../images/empty_picture.jpg";
-                    }
-
-                /*]]>*/
-                </script></div>
-                <div class="col-md-5"></div>
-                <div class="d-grid gap-3 d-md-block col-md-4 text-right">
-                    <button class="btn btn-lg btn-primary" type="button" style="border-radius: 15px; font-size: 30px; max-width: 300px; ">Chat</button>
-                    <button class="btn btn-lg btn-primary" type="button" style="border-radius: 15px; font-size: 30px; max-width: 300px; margin-top: 5%;">Unmatch</button>
-                </div>
-            </div>
-        </div>
+    <div id="discoverLink">
+        Seems like you didn't match anybody yet. <a th:href="@{/discover_page/{id}(id = ${userId})}">Discover now</a>
     </div>
-    <div style="height: 320px;"></div>
-    <div class="card text-dark bg-info mb-3" style="width: 100%; height: 300px;">
-        <div class="card-header" style="color: black;">Username</div>
-        <div class="card-body" style="margin-bottom: 10px;">
-            <div class="row">
-                <div class="circular--portrait1_notification col-md-2" style=" margin-top: 5px; margin-left: 20px;">
-                    <img id="profilePict2" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  />
-                    <script th:inline="javascript">
-                /*<![CDATA[*/
-                    const pictureElem=document.querySelector("#profilePict");
-                    let profilePicture = /*[[${profilePicture}]]*/ 'default';
-                    console.log(profilePicture);
 
-                    if(profilePicture.image==null){
-                        pictureElem.src="../images/empty_picture.jpg";
-                    }
+    <!-- A match -->
+    <div th:each="i : ${index}">
+        <div class="card text-dark bg-info mb-3" style="width: 100%; height: 300px;">
+            <div class="card-header" style="color: black;" th:text="${names[i]}">Username</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="circular--portrait1_notification col-md-2" style=" margin-top: 5px; margin-left: 20px;">
+                        <img th:id="'profilePict'+${i}" th:src="'data:image/'+${profilePictures[i].imageType}+';base64,'+${profilePictures[i].image}"  />
+                        </div>
+                    <div class="col-md-5"></div>
+                    <div class="d-grid gap-3 d-md-block col-md-4 text-right">
+                        <form th:action="@{/view_profile}" method="post">
+                            <input type="hidden" name="userId" th:value="${matches[i]}"/>
+                            <input type="hidden" name="myId" th:value="${userId}"/>
+                            <button class="btn btn-lg btn-primary" type="submit" style="border-radius: 15px; font-size: 30px; max-width: 300px; ">View profile</button>
+                        </form>
+                        <form th:action="@{/unmatch}" method="post">
+                            <input type="hidden" name="matchId" th:value="${matches[i]}"/>
+                            <input type="hidden" name="userId" th:value="${userId}"/>
+                            <button class="btn btn-lg btn-primary" type="submit" style="border-radius: 15px; font-size: 30px; max-width: 300px; margin-top: 5%;">Unmatch</button>
+                        </form>
 
-                /*]]>*/
-                </script></div>
-                <div class="col-md-5"></div>
-                <div class="d-grid gap-3 d-md-block col-md-4 text-right">
-                    <button class="btn btn-lg btn-primary" type="button" style="border-radius: 15px; font-size: 30px; max-width: 300px;">Chat</button>
-                    <button class="btn btn-lg btn-primary" type="button" style="border-radius: 15px; font-size: 30px; max-width: 300px; margin-top: 5%;">Unmatch</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <div style="height: 320px;"></div>
     </div>
 </div>
 <div style="height: 100px;"></div>
+
+<script th:inline="javascript">
+        /*<![CDATA[*/
+            profilePictures = /*[[${profilePictures}]]*/ 'default';
+            let index=/*[[${index}]]*/ 'default';
+            const discoverLink=document.getElementById("discoverLink");
+            discoverLink.classList.add("hidden");
+
+            const len=index.length;
+
+            for(let i=0;i<len;i++){
+
+                if(profilePictures[i].image==null){
+                     document.getElementById(`profilePict${i}`).src="../images/empty_picture.jpg";
+                }
+
+            }
+
+            if(len==0){
+                 discoverLink.classList.remove("hidden");
+            }
+
+
+        /*]]>*/
+</script>
+
 </body>
 </html>

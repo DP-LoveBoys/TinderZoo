@@ -35,18 +35,34 @@ public class ProfileController {
     @Autowired
     private PreferenceService preferenceService;
 
+    @Autowired
+    private MatchService matchService;
 
 
+    @PostMapping("/view_profile")
+    public String sendToProfile(@RequestParam("userId") Long userId,@RequestParam("myId") Long myId){
+        return "redirect:profile/"+myId+"/"+userId;
+    }
 
-    @RequestMapping("/profile/{userId}")
-    public String getUserProfile(@PathVariable("userId") Long userId, Model model){
+    @RequestMapping("/profile/{userId}/{otherId}")
+    public String getUserProfile(@PathVariable("userId") Long userId,@PathVariable("otherId") Long otherId, Model model){
 
-        Optional<UserData> userData=userDataService.getUserById(userId);
-        Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
-        List<Interest> interests=interestService.getInterests(userId);
-        Photo profilePicture=photoService.getProfilePhoto(userId);
+        Optional<UserData> userData=userDataService.getUserById(otherId);
+        Optional<UserCredential> userCredential = userCredentialRepository.findById(otherId);
+        List<Interest> interests=interestService.getInterests(otherId);
+        Photo profilePicture=photoService.getProfilePhoto(otherId);
 
-        Preference preferences=preferenceService.getPreferences(userId);
+        Boolean matched;
+
+        Match match=matchService.getMatch(userId,otherId);
+        if(match.getMatchResponseProvider().equals(MatchResponseProvider.MATCH) && match.getUserResponseProvider().equals(MatchResponseProvider.MATCH)){
+            matched=true;
+        }
+        else{
+            matched=false;
+        }
+
+        Preference preferences=preferenceService.getPreferences(otherId);
         if(preferences==null) {
             preferences = new Preference();
         }
@@ -65,7 +81,8 @@ public class ProfileController {
         model.addAttribute("preferences", preferences);
         model.addAttribute("userId", userId);
         model.addAttribute("profilePicture", profilePicture);
-        model.addAttribute("photos",photoService.getPhotos(userId));
+        model.addAttribute("photos",photoService.getPhotos(otherId));
+        model.addAttribute("matched",matched);
         return "/profile";
     }
 

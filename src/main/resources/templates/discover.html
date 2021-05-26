@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>TinderZooApp</title>
+  <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home_page">TinderZoo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link active" th:href="@{/profile/{id}(id = ${userData.id})}">My Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" th:href="@{/settings/{id}(id = ${userData.id})}">Settings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/logout}">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<div class="card mb-3">
+  <h3 class="card-header"></h3>
+  <div class="card-body">
+    <h5 class="card-title">You have been matched with</h5>
+    <h6 class="card-subtitle text-muted" th:text="${match_name}"></h6>
+  </div>
+  <img id="profilePict" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  width="200" height="200"/>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    const pictureElem=document.querySelector("#profilePict");
+    let profilePicture = /*[[${profilePicture}]]*/ 'default';
+    console.log(profilePicture);
+
+    if(profilePicture.image==null){
+      pictureElem.src="../images/empty_picture.jpg";
+    }
+
+    /*]]>*/
+  </script>
+  <div class="card-body">
+    <p class="card-text" th:text="'Description: '+${userData.description}"></p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" th:text="'Location: '+${userData.city}+', '+${userData.country}"></li>
+    <li class="list-group-item" th:text="'Species: '+${userData.specie}+' Breed: '+${userData.breed}+' Gender: '+${userData.gender}"></li>
+    <li class="list-group-item" th:text="'Age: '+${userData.age}+' Height: '+${userData.height}+' Eye Color: '+${userData.eyeColor}"></li>
+    <input type="hidden" th:value="${userId}" name="userId"/>
+  </ul>
+  <div class="card-body">
+    <a class="btn btn-success" th:href="@{/discover_match}">Interested</a>
+    <a class="btn btn-danger" th:href="@{/discover_nomatch}">Pass</a>
+  </div>
+</div>
+</div>
+</body>
+</html>
