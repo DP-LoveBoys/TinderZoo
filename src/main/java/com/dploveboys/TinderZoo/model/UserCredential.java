@@ -49,8 +49,7 @@ public class UserCredential{
     public UserCredential(String email, String name, String password) {
         this.email = email;
         this.name = name;
-        encryption x = new encryption();
-        this.password = x.encrypt(password);
+        this.password = password;
     }
 
     public UserCredential() {
