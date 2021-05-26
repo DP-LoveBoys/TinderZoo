@@ -19,10 +19,7 @@ public class Match {
     )
     private Long id;
 
-    @Column(name = "user_id")
     private Long user_id;
-
-    @Column(name = "match_id")
     private Long match_id;
 
     @Enumerated(EnumType.STRING)
