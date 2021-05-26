@@ -37,6 +37,11 @@ public class HomeController {
         if(profilePicture==null){
             profilePicture=new Photo();
         }
+        System.out.println(userData + "Andrei");
+        if(!userData.isPresent()){
+            System.out.println("Hei");
+            return "redirect:/profile_configuration/"+userId;
+        }
 
         model.addAttribute("profilePicture",profilePicture);
         try {
