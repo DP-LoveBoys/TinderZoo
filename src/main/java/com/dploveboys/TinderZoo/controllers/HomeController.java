@@ -3,6 +3,7 @@ package com.dploveboys.TinderZoo.controllers;
 import com.dploveboys.TinderZoo.model.Photo;
 import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.model.UserData;
+import com.dploveboys.TinderZoo.service.NotificationService;
 import com.dploveboys.TinderZoo.service.PhotoService;
 import com.dploveboys.TinderZoo.service.UserCredentialService;
 import com.dploveboys.TinderZoo.service.UserDataService;
@@ -28,9 +29,13 @@ public class HomeController {
     @Autowired
     UserDataService userDataService;
 
+    @Autowired
+    NotificationService notificationService;
+
     @RequestMapping("/home_page/{userId}") //id/
     public String getHomePage(@PathVariable("userId") Long userId,Model model){
 
+        int notifications=notificationService.getNotificationCount(userId);
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
         Optional<UserData> userData=userDataService.getUserById(userId);
 
@@ -51,6 +56,8 @@ public class HomeController {
         }catch(NoSuchElementException e){
             e.printStackTrace();
         }
+
+        model.addAttribute("notifications",notifications);
 
         return "home";
     }
