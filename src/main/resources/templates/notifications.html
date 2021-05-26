@@ -67,6 +67,7 @@
                 <div class="d-grid gap-2 d-md-block col-md-4 text-right">
                     <form th:action="@{/view_profile}" method="post">
                         <input type="hidden" name="userId" th:value="${users[i]}">
+                        <input type="hidden" name="myId" th:value="${userId}">
                         <button th:id="'btn_view'+${i}" class="btn btn-primary" type="submit" style="border-radius: 15px; font-size: 30px; margin-top: 10%; width: 300px;">View profile</button>
                     </form>
                     <form th:action="@{/deleteNotification}" method="post">

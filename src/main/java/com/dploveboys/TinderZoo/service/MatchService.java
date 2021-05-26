@@ -1,6 +1,8 @@
 package com.dploveboys.TinderZoo.service;
 
 import com.dploveboys.TinderZoo.model.Interest;
+import com.dploveboys.TinderZoo.model.Match;
+import com.dploveboys.TinderZoo.model.MatchResponseProvider;
 import com.dploveboys.TinderZoo.repositories.MatchRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,5 +99,38 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
     }
 
      */
+
+    public List<Long> getConfirmedMatchesIds(Long our_id, String response)
+    {
+        return (List<Long>) matchRepository.getConfirmedMatchesId(our_id, response);
+    }
+
+    public void unmatch(Long userId,Long matchId){
+        Match match = matchRepository.getPair(userId,matchId);
+        if(match==null){
+            match=new Match();
+            match.setUser_id(userId);
+            match.setMatch_id(matchId);
+            match.setMatchResponseProvider(MatchResponseProvider.UNKNOWN);
+        }
+        match.setUserResponseProvider(MatchResponseProvider.NOT_INTERESTED);
+        matchRepository.save(match);
+    }
+
+    public void match(Long userId,Long matchId){
+        Match match=matchRepository.getPair(userId,matchId);
+        if(match==null){
+            match=new Match();
+            match.setUser_id(userId);
+            match.setMatch_id(matchId);
+            match.setMatchResponseProvider(MatchResponseProvider.UNKNOWN);
+        }
+        match.setUserResponseProvider(MatchResponseProvider.MATCH);
+        matchRepository.save(match);
+    }
+
+    public Match getMatch(Long userId,Long matchId){
+        return matchRepository.getPair(userId,matchId);
+    }
 
 }

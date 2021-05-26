@@ -1,25 +1,18 @@
 package com.dploveboys.TinderZoo.controllers;
 
-import com.dploveboys.TinderZoo.model.Interest;
-import com.dploveboys.TinderZoo.model.Match;
-import com.dploveboys.TinderZoo.model.UserCredential;
-import com.dploveboys.TinderZoo.model.UserData;
+import com.dploveboys.TinderZoo.model.*;
 import com.dploveboys.TinderZoo.repositories.MatchRepository;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
-import com.dploveboys.TinderZoo.service.InterestService;
-import com.dploveboys.TinderZoo.service.MatchService;
-import com.dploveboys.TinderZoo.service.UserDataService;
+import com.dploveboys.TinderZoo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class MatchController {
@@ -31,6 +24,9 @@ public class MatchController {
     private UserCredentialRepository userCredentialRepository;
 
     @Autowired
+    private UserCredentialService userCredentialService;
+
+    @Autowired
     private MatchRepository matchRepository;
 
     @Autowired
@@ -38,6 +34,11 @@ public class MatchController {
 
     @Autowired
     InterestService interestService;
+
+    @Autowired
+    private PhotoService photoService;
+
+
 
     @RequestMapping("/pending_matches/{userId}")
     public String getPendingMatchesPage(@PathVariable("userId") Long userId, Model model){
@@ -109,4 +110,58 @@ public class MatchController {
         System.out.println("We have these users pending approval: " + people_that_like_us);
         return "/pending_matches";
     }
+
+    @RequestMapping("/matches_page/{userId}")
+    public String getMyMatches(@PathVariable("userId") Long userId,Model model){
+        List<Long> matches=matchService.getConfirmedMatchesIds(userId, MatchResponseProvider.MATCH.toString());
+        List<String> names=new ArrayList<>();
+        List<Photo> profilePictures=new ArrayList<>();
+        Photo profilePicture;
+
+        model.addAttribute("userId",userId);
+        model.addAttribute("username",userCredentialService.getUserById(userId).get().getName());
+        profilePicture=photoService.getProfilePhoto(userId);
+        if(profilePicture==null){
+            profilePicture = new Photo();
+        }
+        model.addAttribute("profilePicture",profilePicture);
+
+
+        List<Integer> index = new ArrayList<>();
+
+        int i=0;
+
+        for (Long m : matches
+        ) {
+
+            names.add(userCredentialService.getUserById(m).get().getName());
+            Photo p=photoService.getProfilePhoto(m);
+            if(p==null){
+                p=new Photo();
+            }
+            profilePictures.add(p);
+            index.add(i);
+            i++;
+        }
+
+        model.addAttribute("matches",matches);
+        model.addAttribute("profilePictures",profilePictures);
+        model.addAttribute("names",names);
+        model.addAttribute("index",index);
+
+        return "matches";
+    }
+
+    @PostMapping("/unmatch")
+    public String unmatchUser(@RequestParam("matchId")Long matchId,@RequestParam("userId") Long userId){
+        matchService.unmatch(userId,matchId);
+        return "redirect:profile/"+userId+"/"+matchId;
+    }
+
+    @PostMapping("/addMatch")
+    public String addMatch(@RequestParam("matchId") Long matchId,@RequestParam("userId") Long userId){
+        matchService.match(userId,matchId);
+        return "redirect:profile/"+userId+"/"+matchId;
+    }
+
 }

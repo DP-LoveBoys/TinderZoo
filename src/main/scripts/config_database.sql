@@ -70,13 +70,14 @@ CREATE TABLE `preferences` (
   CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `credentials` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE matches(
-`id` int NOT NULL AUTO_INCREMENT,
-`user_id` int NOT NULL,
-`match_id` int NOT NULL,
-`match_response_provider` VARCHAR(20),
-PRIMARY KEY (`id`)
-);
+CREATE TABLE matches (
+  id int NOT NULL AUTO_INCREMENT,
+  user_id int NOT NULL,
+  match_id int NOT NULL,
+  match_response_provider varchar(20) DEFAULT NULL,
+  user_response_provider varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 CREATE TABLE `tinderzoo_dev`.`notifications` (

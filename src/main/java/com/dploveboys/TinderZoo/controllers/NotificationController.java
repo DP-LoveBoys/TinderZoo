@@ -90,10 +90,7 @@ public class NotificationController {
         return "redirect:notifications/"+userId;
     }
 
-    @PostMapping("/view_profile")
-    public String sendToProfile(@RequestParam("userId") Long userId){
-        return "redirect:profile/"+userId;
-    }
+
 
 
 }
