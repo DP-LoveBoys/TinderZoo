@@ -3,8 +3,12 @@ package com.dploveboys.TinderZoo.model;
 import com.dploveboys.TinderZoo.service.encryption;
 import org.apache.tomcat.util.net.openssl.ciphers.Encryption;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="credentials")
@@ -33,6 +37,15 @@ public class UserCredential{
     @Enumerated(EnumType.STRING)
     private AuthenticationProvider authenticationProvider;
 
+
+    @ManyToMany(fetch = FetchType.EAGER) //the "roles" table is linked to the user_credentials table and  the "users_roles" table
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
     public UserCredential(String email, String name, String password) {
         this.email = email;
         this.name = name;
@@ -49,6 +62,7 @@ public class UserCredential{
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", roles='" + roles + '\'' +
                 '}';
     }
 
@@ -106,4 +120,19 @@ public class UserCredential{
     public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
     }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role role)
+    {
+        this.roles.add(role);
+    }
+
+
 }

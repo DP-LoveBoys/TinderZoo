@@ -4,6 +4,7 @@ import com.dploveboys.TinderZoo.model.CustomUserDetails;
 import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,12 +18,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserCredential userCredential = userCredentialRepository.findByEmail(email);
-        System.out.println("User is: " + userCredential);
+
         if(userCredential == null)
         {
             throw new UsernameNotFoundException("The user was not found");
         }
-        return new CustomUserDetails(userCredential);
+        UserDetails user = User.withUsername(userCredential.getEmail()).password(userCredential.getPassword()).authorities("USER").build();
+
+        return user;
 
     }
 }

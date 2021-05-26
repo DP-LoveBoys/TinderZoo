@@ -1,7 +1,10 @@
 package com.dploveboys.TinderZoo.service;
 
 
+import com.dploveboys.TinderZoo.model.Interest;
+import com.dploveboys.TinderZoo.model.Match;
 import com.dploveboys.TinderZoo.model.UserData;
+import com.dploveboys.TinderZoo.repositories.InterestRepository;
 import com.dploveboys.TinderZoo.repositories.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,8 @@ import java.util.Optional;
 
 @Service
 public class UserDataService {
+    @Autowired
+    private InterestRepository interestRepository;
 
     @Autowired
     private UserDataRepository userDataRepository;
@@ -34,4 +39,5 @@ public class UserDataService {
         userData.setDescription(description.substring(3,description.length()-6));
         userDataRepository.save(userData);
     }
+
 }

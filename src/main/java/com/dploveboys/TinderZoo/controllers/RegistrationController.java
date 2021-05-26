@@ -4,6 +4,7 @@ import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.model.UserData;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.repositories.UserDataRepository;
+import com.dploveboys.TinderZoo.service.UserCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -28,17 +29,13 @@ public class RegistrationController {
         return "signup";
     }
 
+    @Autowired
+    UserCredentialService userCredentialService;
     @PostMapping("/process_register")
     public String processRegistration(UserCredential userCredential) {
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String password = userCredential.getPassword();
-        password = encoder.encode(password);
-        userCredential.setPassword(password);
+        userCredentialService.saveUserWithDefaultRole(userCredential);
 
-        userCredentialRepository.save(userCredential);
-
-        //model.addAttribute("id", userCredential.getId());
         return "redirect:/profile_configuration/"+userCredential.getId();
     }
 
