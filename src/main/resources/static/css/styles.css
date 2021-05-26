@@ -43,3 +43,6 @@ img.home_page {
 img.home_page:hover {
     transform:scale(1.2,1.2);
 }
+.container{
+    max-width: 960px;
+}
