@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -61,7 +62,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception { //This means you have to be logged in to access /list_users, else you can navigate freely
-        http.addFilterBefore(new LoginPageFilter(), UsernamePasswordAuthenticationFilter.class);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("authentication: " + authentication);
+        if(authentication != null)
+        {
+            System.out.println("Authenticated: " + authentication.getName());
+            String email = authentication.getName();
+            Long destId = userCredentialService.getIdByEmail(email);
+        }
+
+        http.addFilterBefore(new LoginPageFilter(userCredentialService), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
                 .antMatchers("/oauth2/**", "/register", "/index").permitAll()

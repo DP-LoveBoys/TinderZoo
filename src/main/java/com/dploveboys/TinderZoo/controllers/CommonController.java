@@ -31,9 +31,11 @@ public class CommonController {
         model.addAttribute("userCredentials", new UserCredential());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        System.out.println("User trying to access login again: " +authentication.getName());
+
         if(authentication.isAuthenticated() == true)
         {
-            return "redirect:/";
+            return "redirect:/home_page/";  //+userId;
         }
 
         return "/login";
