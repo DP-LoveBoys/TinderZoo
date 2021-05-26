@@ -55,7 +55,7 @@
     <!-- Good notification -->
     <div class="rectangle_notification1" style="height: 200px; margin-bottom: 20px;">
         <div class="row">
-            <div class="circular--portrait1_notification" style=" margin-top: 5px; margin-left: 20px;">
+            <div class="circular--portrait1_notification col-md-2" style=" margin-top: 5px; margin-left: 20px;">
             <img id="profilePict1" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  />
             <script th:inline="javascript">
             /*<![CDATA[*/
@@ -69,10 +69,10 @@
 
             /*]]>*/
             </script> </div>
-            <div class="good_notification col-md-6"> X is interested in you!</div>
-            <div class="d-grid gap-2 d-md-block col-md-2 text-right">
+            <div class="good_notification col-md-5"> X is interested in you!</div>
+            <div class="d-grid gap-2 d-md-block col-md-4 text-right">
                 <button class="btn btn-primary" type="button" style="border-radius: 15px; font-size: 30px; margin-top: 10%; width: 300px;">View profile</button>
-                <button class="btn btn-primary" type="button" style="border-radius: 15px; font-size: 30px; margin-top: 20%; margin-bottom: 10%; width: 300px; ">OK</button>
+                <button class="btn btn-primary" type="button" style="border-radius: 15px; font-size: 30px; margin-top: 5%; margin-bottom: 10%; width: 300px; ">OK</button>
             </div>
         </div>
     </div>
@@ -81,7 +81,7 @@
     <!-- Bad notification -->
     <div class="rectangle_notification2" style="height: 200px; margin-bottom: 20px;">
         <div class="row">
-            <div class="circular--portrait1_notification" style="margin-top: 5px; margin-left: 20px;">
+            <div class="circular--portrait1_notification col-md-2" style="margin-top: 5px; margin-left: 20px;">
                 <img id="profilePict2" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  />
                 <script th:inline="javascript">
             /*<![CDATA[*/
@@ -95,10 +95,10 @@
 
             /*]]>*/
             </script> </div>
-            <div class="good_notification col-md-6"> Y is not interested in you!</div>
-            <div class="d-grid gap-2 d-md-block col-md-2 text-right">
+            <div class="good_notification col-md-5"> Y is not interested in you!</div>
+            <div class="d-grid gap-2 d-md-block col-md-4 text-right">
                 <button class="btn btn-primary" type="button" style="border-radius: 15px; font-size: 30px; margin-top: 10%; width: 300px;">View profile</button>
-                <button class="btn btn-primary" type="button" style="border-radius: 15px; font-size: 30px; margin-top: 20%; margin-bottom: 10%; width: 300px; ">OK</button>
+                <button class="btn btn-primary" type="button" style="border-radius: 15px; font-size: 30px; margin-top: 5%; margin-bottom: 10%; width: 300px; ">OK</button>
             </div>
         </div>
     </div>
