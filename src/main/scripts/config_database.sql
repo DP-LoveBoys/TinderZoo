@@ -74,9 +74,17 @@ CREATE TABLE matches(
 `id` int NOT NULL AUTO_INCREMENT,
 `user_id` int NOT NULL,
 `match_id` int NOT NULL,
-'match_response_provider' VARCHAR(20),
+`match_response_provider` VARCHAR(20),
 PRIMARY KEY (`id`)
 );
+
+
+CREATE TABLE `tinderzoo_dev`.`notifications` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `pretendent_id` INT NOT NULL,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
 
 
 create table roles (id int not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
@@ -86,4 +94,5 @@ create table users_roles (user_id int not null, role_id bigint not null, primary
 alter table users_roles add constraint foreign key (user_id) references credentials (id);
 
 GRANT ALL privileges ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'localhost';
+
 
