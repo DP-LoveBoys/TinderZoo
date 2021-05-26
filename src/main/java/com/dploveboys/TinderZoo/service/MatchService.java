@@ -1,6 +1,9 @@
 package com.dploveboys.TinderZoo.service;
 
 import com.dploveboys.TinderZoo.model.Interest;
+import com.dploveboys.TinderZoo.model.Match;
+import com.dploveboys.TinderZoo.model.MatchResponseProvider;
+import com.dploveboys.TinderZoo.model.Notification;
 import com.dploveboys.TinderZoo.repositories.MatchRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
 
     @Autowired
     private InterestService interestService;
+
+    @Autowired
+    private NotificationService notificationService;
 
 
 
@@ -84,6 +90,11 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         return matches_ids_for_us;
     }
 
+    public List<Long> getConfirmedMatchesIDs(Long our_id, String response)
+    {
+        return (List<Long>) matchRepository.getConfirmedMatchesID(our_id, response);
+    }
+
     /*
     public List<Long> getMatchesByUserId(Long userId) throws NotFoundException {
         List<Long> matchesIDs = matchRepository.getMatchIDsByUserId(userId);
@@ -97,5 +108,92 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
     }
 
      */
+
+    public List<Long> getConfirmedMatchesIds(Long our_id, String response)
+    {
+         List<Long> matches1 = matchRepository.getConfirmedMatchesIdFromMatchId(our_id, response);
+         List<Long> matches2 = matchRepository.getConfirmedMatchesIdFromUserId(our_id,response);
+         matches1.addAll(matches2);
+
+         return matches1;
+    }
+
+    public void unmatch(Long userId,Long matchId){
+
+        String role;
+        Match match = matchRepository.getPair(userId,matchId);
+        if(match==null){
+            role="match";
+            match=matchRepository.getPair(matchId,userId);
+        }
+        else{
+            role="user";
+        }
+
+        if(match==null){
+            match=new Match();
+            match.setUser_id(userId);
+            match.setMatch_id(matchId);
+            match.setMatchResponseProvider(MatchResponseProvider.UNKNOWN);
+        }
+
+        if(role.equals("user")) {
+            match.setUserResponseProvider(MatchResponseProvider.NOT_INTERESTED);
+        }
+        else{
+            match.setMatchResponseProvider(MatchResponseProvider.NOT_INTERESTED);
+        }
+        matchRepository.save(match);
+    }
+
+    public void match(Long userId,Long matchId){
+        String role;
+        Match match=matchRepository.getPair(userId,matchId);
+
+        if(match==null){
+            role="match";
+            match=matchRepository.getPair(matchId,userId);
+        }
+        else{
+            role="user";
+        }
+
+        if(match==null){
+            match=new Match();
+            match.setUser_id(userId);
+            match.setMatch_id(matchId);
+            match.setMatchResponseProvider(MatchResponseProvider.UNKNOWN);
+        }
+        if(role.equals("user")) {
+            match.setUserResponseProvider(MatchResponseProvider.MATCH);
+            if(match.getMatchResponseProvider()==MatchResponseProvider.MATCH){
+                notificationService.addNotification(notificationService.createNotification(userId,matchId,"match"));
+                notificationService.addNotification(notificationService.createNotification(matchId,userId,"match"));
+            }
+            else if(match.getMatchResponseProvider()==MatchResponseProvider.UNKNOWN){
+                notificationService.addNotification(notificationService.createNotification(matchId,userId,"interest"));
+            }
+        }
+        else{
+            match.setMatchResponseProvider(MatchResponseProvider.MATCH);
+            if(match.getUserResponseProvider()==MatchResponseProvider.MATCH){
+                notificationService.addNotification(notificationService.createNotification(userId,matchId,"match"));
+                notificationService.addNotification(notificationService.createNotification(matchId,userId,"match"));
+            }
+            else if(match.getUserResponseProvider()==MatchResponseProvider.UNKNOWN){
+                notificationService.addNotification(notificationService.createNotification(matchId,userId,"interest"));
+            }
+        }
+        matchRepository.save(match);
+
+    }
+
+    public Match getMatch(Long userId,Long matchId){
+        Match match = matchRepository.getPair(userId,matchId);
+        if(match==null){
+            match=matchRepository.getPair(matchId,userId);
+        }
+        return match;
+    }
 
 }

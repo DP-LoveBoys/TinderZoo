@@ -13,4 +13,10 @@ public interface UserCredentialRepository extends CrudRepository<UserCredential,
             value = "DELETE FROM credentials WHERE id = ?1",
             nativeQuery = true)
     void deleteProfile(Long userId);
+
+
+    @Query(
+            value = "select id from credentials where email = ?1",
+            nativeQuery = true)
+    Long findIdByEmail(String email);
 }

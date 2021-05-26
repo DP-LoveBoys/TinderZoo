@@ -241,7 +241,7 @@ div:focus .menu {
 
 .good_notification {
     margin-left: 5%;
-    margin-top: 5%;
+    margin-top: 10px;
     font-size: 40px;
     font-weight: bold;
 }
