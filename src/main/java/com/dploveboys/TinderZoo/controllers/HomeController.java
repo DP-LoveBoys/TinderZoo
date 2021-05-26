@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -27,8 +28,32 @@ public class HomeController {
     @Autowired
     UserDataService userDataService;
 
-    @RequestMapping("/home_page/{userId}")
+    @RequestMapping("/home_page/{userId}") //id/
     public String getHomePage(@PathVariable("userId") Long userId,Model model){
+
+        Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
+        Optional<UserData> userData=userDataService.getUserById(userId);
+
+        Photo profilePicture =photoService.getProfilePhoto(userId);
+        if(profilePicture==null){
+            profilePicture=new Photo();
+        }
+
+        model.addAttribute("profilePicture",profilePicture);
+        try {
+            model.addAttribute("username", userCredential.get().getName());
+            model.addAttribute("userData", userData.get());
+        }catch(NoSuchElementException e){
+            e.printStackTrace();
+        }
+
+        return "home";
+    }
+/*
+    @RequestMapping("/home_page/{userName}") // name/
+    public String getHomePage2(@RequestParam("userName") String userName, Model model){
+
+        Long userId = userCredentialService.getIdByEmail(userName);
 
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
         Optional<UserData> userData=userDataService.getUserById(userId);
@@ -54,4 +79,6 @@ public class HomeController {
         return "home";
     }
 
+
+ */
 }

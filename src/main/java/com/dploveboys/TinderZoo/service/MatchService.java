@@ -84,6 +84,11 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         return matches_ids_for_us;
     }
 
+    public List<Long> getConfirmedMatchesIDs(Long our_id, String response)
+    {
+        return (List<Long>) matchRepository.getConfirmedMatchesID(our_id, response);
+    }
+
     /*
     public List<Long> getMatchesByUserId(Long userId) throws NotFoundException {
         List<Long> matchesIDs = matchRepository.getMatchIDsByUserId(userId);

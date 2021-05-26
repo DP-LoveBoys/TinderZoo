@@ -39,6 +39,11 @@ public class UserCredentialService {
 
     }
 
+    public Long getIdByEmail(String email) throws UsernameNotFoundException{
+        Long id = userCredentialRepository.findIdByEmail(email);
+
+        return id;
+    }
 
     public void saveUserWithDefaultRole(UserCredential userCredential)
     {

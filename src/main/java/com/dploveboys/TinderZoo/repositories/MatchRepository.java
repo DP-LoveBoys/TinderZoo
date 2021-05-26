@@ -38,6 +38,11 @@ public interface MatchRepository extends CrudRepository<Match,Long> {
     Match getPair(Long our_id, Long their_id);
 
     @Query(
+            value = "SELECT match_id FROM matches WHERE user_id = ?1 AND (user_response_provider = ?2 AND match_response_provider = ?2)",
+            nativeQuery = true)
+    Match getConfirmedMatchesID(Long our_id, String response);
+
+    @Query(
             value = "SELECT user_id FROM matches WHERE match_id = ?1 AND match_response_provider = ?2",
             nativeQuery = true)
     List<Long> getUsersForMatchId(Long their_id, String their_response);
