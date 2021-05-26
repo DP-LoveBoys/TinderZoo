@@ -20,4 +20,20 @@ public class NotificationService {
     public void deleteNotification(Long notificationId){
         notificationRepository.deleteById(notificationId);
     }
+
+    public Notification createNotification(Long userId,Long matchId,String type){
+        Notification notification=new Notification();
+        notification.setUserId(userId);
+        notification.setPretendentId(matchId);
+        notification.setType(type);
+        return notification;
+    }
+
+    public void addNotification(Notification notification){
+        notificationRepository.save(notification);
+    }
+
+    public int getNotificationCount(Long userId){
+        return getNotifications(userId).size();
+    }
 }
