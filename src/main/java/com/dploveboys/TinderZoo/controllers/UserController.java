@@ -1,9 +1,8 @@
 package com.dploveboys.TinderZoo.controllers;
 
-import com.dploveboys.TinderZoo.model.Interest;
-import com.dploveboys.TinderZoo.model.Match;
+import com.dploveboys.TinderZoo.model.*;
 
-import com.dploveboys.TinderZoo.model.UserData;
+import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.service.PhotoService;
 import com.dploveboys.TinderZoo.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Controller
@@ -23,6 +25,8 @@ public class UserController {
     @Autowired
     private PhotoService photoService;
 
+    @Autowired
+    private UserCredentialRepository userCredentialRepository;
 
     @RequestMapping("/profile_configuration/{userId}")
     public String getProfileConfiguration(@PathVariable("userId") Long userId, Model model){
@@ -53,11 +57,32 @@ public class UserController {
     }
 
     @RequestMapping("/matches/{userId}")
-    public String showMatches(@PathVariable("userId") Long userId, Model model){
+    public String getMatchesPage(@PathVariable("userId") Long userId, Model model){
         Match pseudo_random_match = new Match();
         //get a match from the UserDataService and display it on matches page -> let user give response -> move to next
         model.addAttribute("match", pseudo_random_match);
-        return "matches/" + userId;
+
+        Optional<UserData> userData=userDataService.getUserById(userId);
+        UserData user = new UserData();
+        Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
+
+        Photo profilePicture=photoService.getProfilePhoto(userId);
+        if(profilePicture==null){
+            profilePicture=new Photo();
+        }
+        try {
+            model.addAttribute("userData",userData.get());
+            model.addAttribute("username",userCredential.get().getName());
+        }catch(NoSuchElementException e){
+            e.printStackTrace();
+        }
+
+
+        model.addAttribute("profilePicture", profilePicture);
+        model.addAttribute("userId",userId);
+        model.addAttribute("user", user);
+
+        return "/matches";
     }
 
     @PostMapping("/matches_processing")
