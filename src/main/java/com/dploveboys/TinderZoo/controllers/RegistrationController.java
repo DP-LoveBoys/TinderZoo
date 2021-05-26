@@ -22,12 +22,22 @@ public class RegistrationController {
 
     private UserDataRepository userDataRepository;
 
-    @GetMapping("/register")
+    @RequestMapping("/register")
     public String getRegisterPage(Model model)
+    {
+        model.addAttribute("userCredentials", new UserCredential());
+        //return "redirect:/pre_signup";
+        return "signup";
+    }
+/*
+    @RequestMapping("/pre_signup")
+    public String getPreSignupPage(Model model)
     {
         model.addAttribute("userCredentials", new UserCredential());
         return "signup";
     }
+
+ */
 
     @Autowired
     UserCredentialService userCredentialService;

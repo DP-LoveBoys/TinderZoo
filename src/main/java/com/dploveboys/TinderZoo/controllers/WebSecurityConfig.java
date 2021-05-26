@@ -74,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(new LoginPageFilter(userCredentialService), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .antMatchers("/oauth2/**", "/register", "/index").permitAll()
+                .antMatchers("/oauth2/**", "/register", "/process_register", "/signup", "/index").permitAll()
                 .antMatchers("/login").not().authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 //.anyRequest().permitAll()
