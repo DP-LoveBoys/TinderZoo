@@ -1,41 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>TinderZooApp</title>
+    <title>Matches page</title>
     <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/index">TinderZoo</a>
+        <a class="navbar-brand" href="/index">Pending matches page</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div><a th:href="@{/oauth2/authorization/facebook}">Click to login with facebook</a></div>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/register}">Registration</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/list_usersCredentials}">List users</a>
+                    <a class="nav-link" th:href="@{/discover}">Discover more matches</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/interests_selection}">Select interests</a>
                 </li>
             </ul>
         </div>
-
-        <!--<span sec:authentication="principal.authorities"> Roles</span> -->
     </div>
 </nav>
     <div class = "container text-center">
         <div>
-            <h1>Welcome to TinderZoo!</h1>
+            <h1>ahhhhhhhhh</h1>
         </div>
 
 

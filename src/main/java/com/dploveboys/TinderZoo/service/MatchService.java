@@ -21,16 +21,7 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
     @Autowired
     private InterestService interestService;
 
-    public List<Long> getMatchesByUserId(Long userId) throws NotFoundException {
-        List<Long> matchesIDs = matchRepository.getMatchIDsByUserId(userId);
 
-        return matchesIDs;
-    }
-    public List<Long> getUserIDsByMatchId(Long matchId) throws NotFoundException {
-        List<Long> userIDs = matchRepository.getUserIDsByMatchId(matchId);
-
-        return userIDs;
-    }
 
     public Map<Long, Integer> getMatches(Long ourId, List <Interest> interests) //this should return a list of matches IDs, based on our interests
     {
@@ -39,21 +30,25 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         int value = 1;
         for(Interest interest : interests) //go through each of our own interests
         {
-            System.out.println("At interest " + interest);
+            //System.out.println("At interest " + interest);
 
             List <Long> users_with_common_interests;
             users_with_common_interests = interestService.getUsersExceptThisId(interest.getInterest_tag(), ourId); //get users with same interests as us
             for(Long userId : users_with_common_interests) //for each of these users, map their id and a score based on how frequent the overlapping interests are
             {
-                System.out.println("At user " + userId);
+                //System.out.println("At user " + userId);
 
                 if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
                 {
                     int temp_value = matches_map.get(userId);
-                    matches_map.put(userId, temp_value++);
+                    //System.out.println("Current score for user " + userId + " is " + temp_value);
+                    temp_value++;
+                    matches_map.put(userId, temp_value);
+                    //System.out.println("Score incremented: " + temp_value);
                 }
                 else
                 {
+                    //System.out.println("Never seen user " + userId + " before, initialize score with " + value);
                     matches_map.put(userId, value);
                 }
             }
@@ -75,4 +70,32 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
                         (elem1, elem2) -> elem1, LinkedHashMap::new));
         return temp_map;
     }
+
+
+    public List<Long> getUsersByMatchId(Long their_id, String their_response) {
+        List<Long> userIDs = matchRepository.getUsersForMatchId(their_id, their_response);
+
+        return userIDs;
+    }
+
+    public List<Long> getMatchesByUserId(Long our_id, String our_response) {
+        List<Long> matches_ids_for_us = matchRepository.getMatchesForUserId(our_id, our_response);
+
+        return matches_ids_for_us;
+    }
+
+    /*
+    public List<Long> getMatchesByUserId(Long userId) throws NotFoundException {
+        List<Long> matchesIDs = matchRepository.getMatchIDsByUserId(userId);
+
+        return matchesIDs;
+    }
+    public List<Long> getUserIDsByMatchId(Long matchId) throws NotFoundException {
+        List<Long> userIDs = matchRepository.getUserIDsByMatchId(matchId);
+
+        return userIDs;
+    }
+
+     */
+
 }

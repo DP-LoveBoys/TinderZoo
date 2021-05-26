@@ -16,7 +16,12 @@ public class IndexController {
 
     @RequestMapping({"","/","/index"})
     public String getIndexPage(){
-        return "/index";
+        return "index";
+    }
+
+    @RequestMapping("/admin")
+    public String getAdminPage(){
+        return "/admin";
     }
 
 }

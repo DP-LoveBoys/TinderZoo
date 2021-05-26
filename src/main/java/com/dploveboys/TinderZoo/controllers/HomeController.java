@@ -3,14 +3,12 @@ package com.dploveboys.TinderZoo.controllers;
 import com.dploveboys.TinderZoo.model.Photo;
 import com.dploveboys.TinderZoo.model.UserCredential;
 import com.dploveboys.TinderZoo.model.UserData;
-import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.service.PhotoService;
 import com.dploveboys.TinderZoo.service.UserCredentialService;
 import com.dploveboys.TinderZoo.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,10 +32,15 @@ public class HomeController {
 
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
         Optional<UserData> userData=userDataService.getUserById(userId);
-        Photo profilePicture =photoService.getProfilePhoto(userId);
 
+        Photo profilePicture =photoService.getProfilePhoto(userId);
         if(profilePicture==null){
             profilePicture=new Photo();
+        }
+        System.out.println(userData + "Andrei");
+        if(!userData.isPresent()){
+            System.out.println("Hei");
+            return "redirect:/profile_configuration/"+userId;
         }
 
         model.addAttribute("profilePicture",profilePicture);
@@ -47,7 +50,8 @@ public class HomeController {
         }catch(NoSuchElementException e){
             e.printStackTrace();
         }
-        return "/home";
+
+        return "home";
     }
 
 }

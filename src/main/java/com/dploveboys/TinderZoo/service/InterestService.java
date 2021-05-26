@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("interestService")
 public class InterestService {
 
     @Autowired
@@ -24,11 +24,12 @@ public class InterestService {
     public List<Interest> getInterests(Long userId){
 
         System.out.println(interestRepository.findById(userId));
-        interestRepository.getInterestsByUserId(userId);
-        //for(Interest i : interestRepository.getInterestsByUserId(userId))
-        //    System.out.println(i);
-        //return interestRepository.getInterestsByUserId(userId);
-        return null;
+        List<Interest> temp = interestRepository.getInterestsByUserId(userId);
+
+        for(Interest i : temp)
+            System.out.println(i);
+
+        return temp;
     }
 
     public void deleteInterest(Long userId, String interest_tag){
@@ -36,14 +37,13 @@ public class InterestService {
     }
 
 
+    public List<Long> getUsers(String interest, Long exceptId) {
+        return interestRepository.getUserIDsByInterests(interest, exceptId);
+    }
+
     public void deleteInterestById(Long interestId){
         Interest interest=interestRepository.findById(interestId).get();
         interestRepository.delete(interest);
-    }
-
-
-    public List<Long> getUsers(String interest){
-        return interestRepository.getUserIDsByInterests(interest);
     }
 
     public List<Long> getUsersExceptThisId(String interest, Long thisId)

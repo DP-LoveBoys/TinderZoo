@@ -1,9 +1,13 @@
 package com.dploveboys.TinderZoo.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 public class CustomUserDetails implements UserDetails {  //this class uses the spring boot security package on the UserCredential objects
 
@@ -15,7 +19,14 @@ public class CustomUserDetails implements UserDetails {  //this class uses the s
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Set<Role> roles = userCredential.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        for(Role role : roles)
+        {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
     }
 
     @Override

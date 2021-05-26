@@ -7,7 +7,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect #org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
     show-sql: true
   resources:
