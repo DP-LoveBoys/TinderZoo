@@ -55,6 +55,9 @@
   </div>
 </div>
 </div>
+<div id="noUsers" class="hidden">
+  <h1>Nothing to show</h1>
+</div>
 <script th:inline="javascript">
     /*<![CDATA[*/
 
@@ -73,6 +76,10 @@
 
 
     let len = indexes.length;
+    if(len ==  0)
+    {
+      document.getElementById("noUsers").classList.remove("hidden");
+    }
     for(let i = 0; i < len; i++)
     {
       if(pictures[i].image==null)
