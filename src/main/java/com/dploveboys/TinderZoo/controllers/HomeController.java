@@ -39,6 +39,11 @@ public class HomeController {
             profilePicture=new Photo();
         }
 
+        if(!userData.isPresent()){
+            System.out.println("Hei");
+            return "redirect:/profile_configuration/"+userId;
+        }
+
         model.addAttribute("profilePicture",profilePicture);
         try {
             model.addAttribute("username", userCredential.get().getName());
@@ -63,10 +68,7 @@ public class HomeController {
             profilePicture=new Photo();
         }
         System.out.println(userData + "Andrei");
-        if(!userData.isPresent()){
-            System.out.println("Hei");
-            return "redirect:/profile_configuration/"+userId;
-        }
+
 
         model.addAttribute("profilePicture",profilePicture);
         try {
