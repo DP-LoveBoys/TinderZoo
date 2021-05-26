@@ -45,7 +45,6 @@ public class RegistrationController {
     public String processRegistration(UserCredential userCredential) {
 
         userCredentialService.saveUserWithDefaultRole(userCredential);
-
         return "redirect:/profile_configuration/"+userCredential.getId();
     }
 

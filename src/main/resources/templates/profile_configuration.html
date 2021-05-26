@@ -5,6 +5,7 @@
     <title>Profile Configuration - TinderZoo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
     <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
 
@@ -38,45 +39,45 @@
     <form th:action="@{/process_profile_data}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}" enctype="multipart/form-data"> <!-- userCredentials sent by registrationController -->
         <fieldset>
             <div class="m-3">
-                <div class="form-group row">
-                    <label style="margin-bottom: 20px;" for="InputSpecie" class="col-form-label col-4">Specie:</label>
+                <div class="form-group row " style="margin-bottom: 20px;">
+                    <label  for="InputSpecie" class="col-form-label col-4">Specie:</label>
                     <div class="col-8">
                         <input type="hidden" th:value="${userId}" name="userId"/>
                         <input type="text" th:field="*{specie}" name="specie" class="form-control" id="InputSpecie" placeholder="Enter specie" minlength="2" maxlength="25" required>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label style="margin-bottom: 20px;" for="InputBreed" class="col-form-label col-4">Breed:</label>
+                <div class="form-group row" style="margin-bottom: 20px;">
+                    <label  for="InputBreed" class="col-form-label col-4">Breed:</label>
                     <div class="col-8">
                         <input type="text" th:field="*{breed}" name="breed" class="form-control" id="InputBreed" placeholder="Enter breed" minlength="2" maxlength="25" required>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label style="margin-bottom: 20px;" for="InputAge" class="col-form-label col-4">Age:</label>
+                <div class="form-group row" style="margin-bottom: 20px;">
+                    <label  for="InputAge" class="col-form-label col-4">Age:</label>
                     <div class="col-8">
                         <input type="number" th:field="*{age}" name="age" class="form-control" id="InputAge" placeholder="Enter age" required>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label style="margin-bottom: 20px;" for="InputCountry" class="col-form-label col-4">Country:</label>
+                <div class="form-group row" style="margin-bottom: 20px;">
+                    <label  for="InputCountry" class="col-form-label col-4">Country:</label>
                     <div class="col-8">
                         <input type="text" th:field="*{country}" name="country" class="form-control" id="InputCountry" placeholder="Enter country" minlength="2" maxlength="25" required>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label style="margin-bottom: 20px;" for="InputCity" class="col-form-label col-4">City:</label>
+                <div class="form-group row" style="margin-bottom: 20px;">
+                    <label  for="InputCity" class="col-form-label col-4">City:</label>
                     <div class="col-8">
                         <input type="text" th:field="*{city}" name="city" class="form-control" id="InputCity" placeholder="Enter city" minlength="2" maxlength="25" required>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label style="margin-bottom: 20px;" for="InputHeight" class="col-form-label col-4">Height:</label>
+                <div class="form-group row" style="margin-bottom: 20px;">
+                    <label  for="InputHeight" class="col-form-label col-4">Height:</label>
                     <div class="col-8">
                         <input type="number" th:field="*{height}" name="height" class="form-control" id="InputHeight" placeholder="Enter height in cm" required>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label style="margin-bottom: 20px;" for="InputGender" class="col-form-label col-4">Gender:</label>
+                <div class="form-group row" style="margin-bottom: 20px;">
+                    <label  for="InputGender" class="col-form-label col-4">Gender:</label>
                     <div class="col-1">
                         <select class="form-select" th:field="*{gender}" name="gender" id="InputGender">
                             <option th:value="'F'" th:text="Female"></option>
@@ -84,14 +85,14 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label style="margin-bottom: 20px;" for="InputEyeColour" class="col-form-label col-4">Eye colour:</label>
+                <div class="form-group row" style="margin-bottom: 20px;">
+                    <label  for="InputEyeColour" class="col-form-label col-4">Eye colour:</label>
                     <div class="col-8">
                         <input type="text" th:field="*{eyeColor}" name="eyeColor" class="form-control" id="InputEyeColour" placeholder="Enter eye colour" minlength="2" maxlength="25" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label style="margin-top: 20px; margin-bottom: 40px; font-size:28px;"><b>Now add a short description about yourself:</b></label>
+                <div class="form-group" style="margin-top: 20px; margin-bottom: 40px; font-size:28px;">
+                    <label ><b>Now add a short description about yourself:</b></label>
                     <div>
                         <textarea name="description" th:field="*{description}"></textarea>
                         <script>
