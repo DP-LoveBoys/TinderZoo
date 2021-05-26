@@ -78,3 +78,10 @@ CREATE TABLE matches(
 PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `tinderzoo_dev`.`notifications` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `pretendent_id` INT NOT NULL,
+  `type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
