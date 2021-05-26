@@ -24,6 +24,11 @@ public class UserDataService {
         return userDataRepository.findById(id);
     }
 
+    public UserData getActualUserDataById(Long id)
+    {
+        return userDataRepository.getActualUserDataById(id);
+    }
+
     public void addUserData(UserData userData){
         userDataRepository.save(userData);
     }
@@ -40,4 +45,7 @@ public class UserDataService {
         userDataRepository.save(userData);
     }
 
+    public UserData getUserByIdAsUserDataType(Long id) {
+        return userDataRepository.findUserByIdAsUserDataType(id);
+    }
 }

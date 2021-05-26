@@ -57,8 +57,8 @@ public class MatchController {
         model.addAttribute("user", user);
 
         List<Interest> our_interests = interestService.getInterests(userId);
-        Map<Long, Integer> people_that_we_like = matchService.getMatches(userId, our_interests); //see which people said MATCH for this userId
-        model.addAttribute("people_that_we_like", people_that_we_like.keySet());
+        List <Long> people_that_we_like = matchService.getMatches(userId);//, our_interests); //see which people said MATCH for this userId
+        model.addAttribute("people_that_we_like", people_that_we_like);
         System.out.println("We have people_that_we_like: " + people_that_we_like);
 
         List<Long> people_that_like_us = matchService.getMatchesByUserId(userId, "MATCH"); //see which people said MATCH for this userId
@@ -101,8 +101,8 @@ public class MatchController {
 
         List<Interest> our_interests = interestService.getInterests(userId);
 
-        Map<Long, Integer> people_that_we_like = matchService.getMatches(userId, our_interests); //see which people said MATCH for this userId
-        model.addAttribute("people_that_we_like", people_that_we_like.keySet());
+        List<Long> people_that_we_like = matchService.getMatches(userId);//, our_interests); //see which people said MATCH for this userId
+        model.addAttribute("people_that_we_like", people_that_we_like);
 
         List<Long> people_that_like_us = matchService.getUsersByMatchId(userId, "MATCH"); //see which people said MATCH for this userId
         model.addAttribute("people_that_like_us", people_that_like_us);

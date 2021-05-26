@@ -12,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class DiscoverController {
@@ -32,34 +29,69 @@ public class DiscoverController {
     MatchService matchService;
 
     @Autowired
-    PhotoService PhotoService;
+    PhotoService photoService;
 
     @RequestMapping("/discover_page/{userId}")
     public String getDiscoverPage(@PathVariable("userId") Long userId, Model model){
 
-
-
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
-        Optional<UserData> userData=userDataService.getUserById(userId);
-        Map<Long, Integer> matches; //the matches returned will have a score for each userId (how much in common we have with the matches basically)
+        UserData userData = userDataService.getUserByIdAsUserDataType(userId);
 
-        Map<Long, Integer> love_map;
-        UserData temp_user = new UserData(userId, "dog", "joe", 7, "romania", "oravita", 500, 'F', "brown","meow");
-        Long our_id = userCredential.get().getId();
-        System.out.println("User is : " + our_id);
-        UserCredential matchcred = userCredentialService.getUserById(temp_user.getId()).get();
-        Photo picture=PhotoService.getProfilePhoto(temp_user.getId());
-        try {
-            model.addAttribute("match_name",matchcred.getName());
-            model.addAttribute("username", userCredential.get().getName());
-            model.addAttribute("userData", temp_user);
-            model.addAttribute("UserID",our_id);
-            model.addAttribute("profilePicture",picture);
-        }catch(NoSuchElementException e){
-            e.printStackTrace();
+        ArrayList <Long> actualMatches =  matchService.getMatches(userId);
+        ArrayList <Integer> indexes = new ArrayList<>();
+        ArrayList <UserData> users_data = new ArrayList<>();
+        ArrayList <String> usernames = new ArrayList<>();
+        ArrayList <Photo> pictures = new ArrayList<>();
+
+        Optional<UserData> temp_user;
+        int index = 0;
+        for(Long matchID : actualMatches)
+        {
+            indexes.add(index);
+            System.out.println("MatchID is : " + matchID);
+
+            temp_user = userDataService.getUserById(matchID);
+
+            UserData actualUser;
+            if(!temp_user.isPresent())
+            {
+                 actualUser = new UserData();
+            }
+            else
+            {
+                 actualUser = temp_user.get();
+            }
+            users_data.add(actualUser);
+            System.out.println("Actual user is : " + actualUser);
+
+            UserCredential matchcred = userCredentialService.getUserById(matchID).get();
+
+            Photo picture=photoService.getProfilePhoto(actualUser.getId());
+            if(picture==null){
+                picture = new Photo();
+            }
+
+            String username = matchcred.getName();
+            if(username == null)
+            {
+                username = "Anonymous";
+            }
+            usernames.add(username);
+            pictures.add(picture);
+
+            index++;
         }
-        return "/discover";
+
+        model.addAttribute("userId",userId);
+        model.addAttribute("matches",actualMatches);
+        model.addAttribute("users_data", users_data);
+        model.addAttribute("usernames", usernames);
+        model.addAttribute("pictures", pictures);
+        model.addAttribute("indexes", indexes);
+
+        return "discover";      //"no_more_people_on_this_site";
     }
+
     @RequestMapping("/discover_match")
     public String addMatch(@ModelAttribute("userID") Long userID,@RequestParam("userId") long userId)
     {

@@ -55,12 +55,33 @@ public class ProfileController {
         Boolean matched;
 
         Match match=matchService.getMatch(userId,otherId);
-        if(match.getMatchResponseProvider().equals(MatchResponseProvider.MATCH) && match.getUserResponseProvider().equals(MatchResponseProvider.MATCH)){
-            matched=true;
+        if(match == null)
+        {
+            match = matchService.getMatch(otherId, userId);
+            if(match == null)
+            {
+                matched = false;
+            }
+            else
+            {
+                if(match.getMatchResponseProvider().equals(MatchResponseProvider.MATCH) && match.getUserResponseProvider().equals(MatchResponseProvider.MATCH)){
+                    matched=true;
+                }
+                else{
+                    matched=false;
+                }
+            }
         }
-        else{
-            matched=false;
+        else
+        {
+            if(match.getMatchResponseProvider().equals(MatchResponseProvider.MATCH) && match.getUserResponseProvider().equals(MatchResponseProvider.MATCH)){
+                matched=true;
+            }
+            else{
+                matched=false;
+            }
         }
+
 
         Preference preferences=preferenceService.getPreferences(otherId);
         if(preferences==null) {

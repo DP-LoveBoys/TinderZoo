@@ -3,6 +3,7 @@ package com.dploveboys.TinderZoo.model;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name="user_data")
@@ -39,6 +40,20 @@ public class UserData {
         this.gender = gender;
         this.eyeColor=eyeColor;
         this.description=description;
+    }
+
+    public UserData(Optional<UserData> temp_user) {
+        this.id=temp_user.get().id;
+        this.specie = temp_user.get().specie;
+        this.breed = temp_user.get().breed;
+        this.age = temp_user.get().age;
+        this.country = temp_user.get().country;
+        this.city = temp_user.get().city;
+        this.height = temp_user.get().height;
+        this.gender = temp_user.get().gender;
+        this.eyeColor=temp_user.get().eyeColor;
+        this.description=temp_user.get().description;
+
     }
 
     public void addMatch(Long another_user_id)

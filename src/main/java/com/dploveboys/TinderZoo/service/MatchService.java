@@ -8,10 +8,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,10 +20,13 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
     @Autowired
     private InterestService interestService;
 
+    @Autowired
+    private UserCredentialService userCredentialService;
 
-
-    public Map<Long, Integer> getMatches(Long ourId, List <Interest> interests) //this should return a list of matches IDs, based on our interests
+    public ArrayList<Long> getMatches(Long ourId)//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
     {
+        List <Interest> interests = interestService.getInterests(ourId);
+
         HashMap<Long, Integer> matches_map = new HashMap<>();
         int totalScore = 0;
         int value = 1;
@@ -56,16 +56,30 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
             }
             totalScore++; //this is used to see how many interests we have and the total percentage of compatibility each user has with us (sort of)
         }
+        //System.out.println("Matches before sort:" + matches_map);
+
         matches_map = sortByValue(matches_map); //sort the map just because
+        System.out.println("Matches after sort:" + matches_map);
         //the non-matches should be stored at the end of the queue in no particular order
-        return matches_map;
+        ArrayList<Long> matches_with_priority = new ArrayList<> (matches_map.keySet());
+        List<Long> all_users = userCredentialService.getAllUsersExcept(ourId);
+        System.out.println("Matches with priority is:" + matches_with_priority);
+        System.out.println("All users is:" + all_users);
+        for(Long userId : all_users)
+        {
+            if(!matches_with_priority.contains(userId))
+                matches_with_priority.add(userId);
+        }
+
+        System.out.println("Just before exit: " + matches_with_priority);
+        return matches_with_priority;
     }
 
     public static HashMap<Long, Integer> sortByValue(HashMap<Long, Integer> matches_map) //used for help https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/
     {
         HashMap<Long, Integer> temp_map = matches_map.entrySet()
                 .stream()
-                .sorted((elem1, elem2) -> elem1.getValue().compareTo(elem2.getValue()))
+                .sorted((elem1, elem2) -> elem2.getValue().compareTo(elem1.getValue()))
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,

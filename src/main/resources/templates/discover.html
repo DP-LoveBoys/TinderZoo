@@ -16,10 +16,10 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link active" th:href="@{/profile/{id}(id = ${userData.id})}">My Profile</a>
+          <a class="nav-link active" th:href="@{/profile/{id}(id = ${userId})}">My Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" th:href="@{/settings/{id}(id = ${userData.id})}">Settings</a>
+          <a class="nav-link active" th:href="@{/settings/{id}(id = ${userId})}">Settings</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/logout}">Logout</a>
@@ -28,40 +28,72 @@
     </div>
   </div>
 </nav>
-<div class="container">
-<div class="card mb-3">
+<div class="container" th:each="i:${indexes}">
+<div class="card mb-3" th:id="'div'+${i}" >
   <h3 class="card-header"></h3>
-  <div class="card-body">
+  <div class="card-body" >
     <h5 class="card-title">You have been matched with</h5>
-    <h6 class="card-subtitle text-muted" th:text="${match_name}"></h6>
+    <h6 class="card-subtitle text-muted" th:text="${usernames[i]}"></h6>
   </div>
-  <img id="profilePict" th:src="'data:image/${profilePicture.imageType};base64,'+${profilePicture.image}"  width="200" height="200"/>
-  <script th:inline="javascript">
+  <img id="profilePict" th:src="'data:image/'+${pictures[i].imageType}+';base64,'+${pictures[i].image}" th:id="'img'+${i}"  width="200" height="200"/>
+  <div class="card-body">
+    <p class="card-text" th:text="'Description: '+${users_data[i].description}"></p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" th:text="'Location: '+${users_data[i].city}+', '+${users_data[i].country}"></li>
+    <li class="list-group-item" th:text="'Species: '+${users_data[i].specie}"></li>
+    <li class="list-group-item" th:text="'Age: '+${users_data[i].age}"></li>
+    <input type="hidden" th:value="${userId}" name="userId"/>
+  </ul>
+  <div class="card-body btn-group col-md-4" role="group">
+    <form method="post" th:action="@{/view_profile}" >
+      <input type="hidden" name="userId" th:value="${matches[i]}"/>
+      <input type="hidden" name="myId" th:value="${userId}"/>
+      <button class="btn btn-success" type="submit" >View Profile</button>
+    </form>
+    <button class="btn btn-danger" type="button" onclick="showNext()">Pass </button>
+  </div>
+</div>
+</div>
+<script th:inline="javascript">
     /*<![CDATA[*/
-    const pictureElem=document.querySelector("#profilePict");
-    let profilePicture = /*[[${profilePicture}]]*/ 'default';
-    console.log(profilePicture);
 
-    if(profilePicture.image==null){
-      pictureElem.src="../images/empty_picture.jpg";
+    let indexes = /*[[${indexes}]]*/ 'default';
+    console.log(indexes);
+
+    let usernames = /*[[${usernames}]]*/ 'default';
+    console.log(usernames);
+
+    let pictures = /*[[${pictures}]]*/ 'default';
+    console.log(pictures);
+
+    let users_data = /*[[${users_data}]]*/ 'default';
+    console.log(users_data);
+
+
+
+    let len = indexes.length;
+    for(let i = 0; i < len; i++)
+    {
+      if(pictures[i].image==null)
+      {
+        document.getElementById(`img${i}`).src ="../images/empty_picture.jpg";
+      }
+    }
+
+    for(let i = 1; i < len; i++)
+    {
+      document.getElementById(`div${i}`).classList.add("hidden");
+    }
+
+    let current = 0;
+    let showNext = function(){
+      document.getElementById(`div${current}`).classList.add("hidden");
+      current++;
+      document.getElementById(`div${current}`).classList.remove("hidden");
     }
 
     /*]]>*/
   </script>
-  <div class="card-body">
-    <p class="card-text" th:text="'Description: '+${userData.description}"></p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item" th:text="'Location: '+${userData.city}+', '+${userData.country}"></li>
-    <li class="list-group-item" th:text="'Species: '+${userData.specie}+' Breed: '+${userData.breed}+' Gender: '+${userData.gender}"></li>
-    <li class="list-group-item" th:text="'Age: '+${userData.age}+' Height: '+${userData.height}+' Eye Color: '+${userData.eyeColor}"></li>
-    <input type="hidden" th:value="${userId}" name="userId"/>
-  </ul>
-  <div class="card-body">
-    <a class="btn btn-success" th:href="@{/discover_match}">Interested</a>
-    <a class="btn btn-danger" th:href="@{/discover_nomatch}">Pass</a>
-  </div>
-</div>
-</div>
 </body>
 </html>

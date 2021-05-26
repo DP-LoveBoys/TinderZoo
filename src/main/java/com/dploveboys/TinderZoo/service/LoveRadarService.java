@@ -45,7 +45,7 @@ class LoveRadarService {
         List<Interest> interests = interestService.getInterests(our_id);
         System.out.println("Interests are: " + interests);
 
-        Map<Long, Integer> matches = matchService.getMatches(our_id, interests);
+        List <Long> matches = matchService.getMatches(our_id);//, interests);
         System.out.println("Matches " + matches);
 
         return null;

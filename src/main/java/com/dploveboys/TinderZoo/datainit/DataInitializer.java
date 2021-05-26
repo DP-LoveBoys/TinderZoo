@@ -53,8 +53,8 @@ public class DataInitializer implements CommandLineRunner {
         //loveRadar.giveMatchResponse();
         //------------------------------------------------
 
-        Map<Long, Integer> matches; //the matches returned will have a score for each userId (how much in common we have with the matches basically)
-        Map<Long, Integer> love_map;
+        List<Long> matches; //the matches returned will have a score for each userId (how much in common we have with the matches basically)
+        List<Long> love_list;
 
         Long our_id = temp_user.getId();
         Long their_id = 2L;
@@ -63,12 +63,12 @@ public class DataInitializer implements CommandLineRunner {
         List<Interest> interests = interestService.getInterests(our_id);
         //System.out.println("Interests are: " + interests);
 
-        matches = matchService.getMatches(our_id, interests);  //this will be used to get the potential matches
+        matches = matchService.getMatches(our_id); //, interests);  //this will be used to get the potential matches
         //System.out.println("Matches " + matches);
 
         //EXAMPLE OF SAVING THE MATCHES FOR AN USER TO matches TABLE
         //We have our_id, match_id, match_response_provider
-        Set<Long> love_list = matches.keySet(); //for each match the algorithm finds, you will add them to matches table with UNKNOWN response
+         love_list = matches; //for each match the algorithm finds, you will add them to matches table with UNKNOWN response
         if(!love_list.isEmpty())
         {
             MatchResponseProvider our_response = MatchResponseProvider.NOT_INTERESTED;

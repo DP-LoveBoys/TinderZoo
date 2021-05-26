@@ -53,3 +53,7 @@ img.home_page:hover {
 .container{
     max-width: 960px;
 }
+
+.hidden {
+  display: none;
+}

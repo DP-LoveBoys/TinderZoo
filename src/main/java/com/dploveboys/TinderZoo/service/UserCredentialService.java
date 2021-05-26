@@ -87,4 +87,8 @@ public class UserCredentialService {
     {
         return (List<Role>) roleRepository.findAll();
     }
+
+    public List<Long> getAllUsersExcept(Long ourId) {
+        return userCredentialRepository.getAllUsersExcept(ourId);
+    }
 }
