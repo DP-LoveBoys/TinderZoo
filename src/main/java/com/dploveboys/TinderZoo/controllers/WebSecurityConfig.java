@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
@@ -67,6 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/oauth2/**", "/register", "/index").permitAll()
                 .antMatchers("/login").not().authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/").permitAll()
+                .antMatchers("/images/*").permitAll()
                 //.anyRequest().permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -106,6 +109,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                     .logoutSuccessUrl("/").permitAll();
+
+
     }
 
     @Autowired
