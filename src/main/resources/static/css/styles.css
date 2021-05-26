@@ -50,6 +50,37 @@ img.home_page {
 img.home_page:hover {
     transform:scale(1.2,1.2);
 }
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../images/hearts1.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.col-form-label {
+    font-size: 40px;
+}
+
 .container{
     max-width: 960px;
+
+}
+
+.btn-primary {
+    font-size: 50px;
+    width:100%;
+}
+
+.form-control {
+    margin: 0;
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
 }
