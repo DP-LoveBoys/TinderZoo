@@ -1,10 +1,7 @@
 package com.dploveboys.TinderZoo.controllers;
 
 
-import com.dploveboys.TinderZoo.model.Interest;
-import com.dploveboys.TinderZoo.model.Photo;
-import com.dploveboys.TinderZoo.model.UserCredential;
-import com.dploveboys.TinderZoo.model.UserData;
+import com.dploveboys.TinderZoo.model.*;
 
 import com.dploveboys.TinderZoo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,4 +101,31 @@ public class DiscoverController {
 
         return "redirect:/home_page/"+userId;
     }
+
+    @RequestMapping("/configure_distance/{userId}")
+    public String configureDistance(@PathVariable("userId") Long userId,Model model){
+        UserData userData=userDataService.getUserById(userId).get();
+        if(userData==null){
+            userData=new UserData();
+        }
+
+        model.addAttribute("userData",userData);
+        model.addAttribute("userId",userId);
+
+        return "/configure_distance";
+    }
+
+    @PostMapping("/distancePreference")
+    public String setDistanceParams(@RequestParam("userId") Long userId,
+                                    @RequestParam("location")String location,
+                                    @RequestParam("address") String address
+                                    ){
+
+        System.out.println("Address: "+address);
+        System.out.println(location);
+
+
+        return "redirect:/discover_page/"+userId;
+    }
+
 }

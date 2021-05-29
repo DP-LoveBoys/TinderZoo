@@ -41,12 +41,12 @@ class LoveRadarService {
     public Map<Long, Integer> searchForLove()
     {
         Long our_id = user.getId();
-        System.out.println("User is : " + our_id);
+        //System.out.println("User is : " + our_id);
         List<Interest> interests = interestService.getInterests(our_id);
-        System.out.println("Interests are: " + interests);
+        //System.out.println("Interests are: " + interests);
 
         List <Long> matches = matchService.getMatches(our_id);//, interests);
-        System.out.println("Matches " + matches);
+        //System.out.println("Matches " + matches);
 
         return null;
     }
