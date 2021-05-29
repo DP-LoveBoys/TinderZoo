@@ -99,7 +99,7 @@ public class DiscoverController {
     @RequestMapping("/discover_nomatch")
     public String deleteUnmatch(@ModelAttribute("targetID") UserData target,@RequestParam("userId") long userId){
 
-        return "redirect:/home_page/"+userId;
+        return "redirect:/home_page/" + userId;
     }
 
     @RequestMapping("/configure_distance/{userId}")
@@ -122,8 +122,25 @@ public class DiscoverController {
                                     ){
 
         System.out.println("Address: "+address);
-        System.out.println(location);
-
+        System.out.println("Location is " + location);
+        String[] locationString = location.split("[,]+", 2); //[0-9.]
+        int i = 0;
+        String [] latitude;
+        String [] longitude;
+        for(String s : locationString){
+            if(i == 0)
+            {
+                latitude = s.split("[0-9\\.]+", 1);
+                for(String s2: latitude)
+                    System.out.println("latitude is " + s2);
+            }
+            else{
+                longitude = s.split("[0-9\\.]+", 1);
+                for(String s3: longitude)
+                    System.out.println("longitude is " + s3);
+            }
+            i++;
+        }
 
         return "redirect:/discover_page/"+userId;
     }

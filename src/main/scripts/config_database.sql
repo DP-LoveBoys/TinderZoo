@@ -92,7 +92,7 @@ CREATE TABLE `tinderzoo_dev`.`notifications` (
 
 create table roles (id int not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
 
-create table users_roles (user_id int not null, role_id bigint not null, primary key (user_id, role_id)) engine=InnoDB;
+create table users_roles (user_id int not null, role_id int not null, primary key (user_id, role_id)) engine=InnoDB;
 
 alter table users_roles add constraint foreign key (user_id) references credentials (id);
 
