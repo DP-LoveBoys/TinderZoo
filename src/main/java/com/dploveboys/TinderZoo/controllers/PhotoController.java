@@ -61,7 +61,7 @@ public class PhotoController {
                 photoService.savePhoto(photo, userId,false);
             }
         });
-        return "redirect:/myphotos/"+userId;
+        return "redirect:myphotos/"+userId;
     }
 
     @PostMapping("/deletePhoto")
@@ -69,7 +69,7 @@ public class PhotoController {
         System.out.println("PhotoId="+photoId);
         System.out.println("UserId"+userId);
         photoService.deletePhoto(photoId);
-        return "redirect:/myphotos/"+userId;
+        return "redirect:myphotos/"+userId;
     }
 
     @PostMapping("/setAsProfile")
@@ -78,7 +78,7 @@ public class PhotoController {
 
         System.out.println("PhotoId="+photoId);
         System.out.println("UserId"+userId);
-        return "redirect:/myphotos/"+userId;
+        return "redirect:myphotos/"+userId;
     }
 
 

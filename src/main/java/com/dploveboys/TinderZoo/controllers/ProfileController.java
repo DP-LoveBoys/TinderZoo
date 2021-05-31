@@ -44,7 +44,7 @@ public class ProfileController {
         return "redirect:profile/"+myId+"/"+userId;
     }
 
-    @RequestMapping("/profile/{userId}/{otherId}")
+    @RequestMapping("profile/{userId}/{otherId}")
     public String getUserProfile(@PathVariable("userId") Long userId,@PathVariable("otherId") Long otherId, Model model){
 
         Optional<UserData> userData=userDataService.getUserById(otherId);
@@ -104,13 +104,13 @@ public class ProfileController {
         model.addAttribute("profilePicture", profilePicture);
         model.addAttribute("photos",photoService.getPhotos(otherId));
         model.addAttribute("matched",matched);
-        return "/profile";
+        return "profile";
     }
 
     @PostMapping("/deleteProfile")
     public String deleteProfile(@RequestParam("userId") Long userId){
         userCredentialRepository.deleteProfile(userId);
-        return "redirect:/index";
+        return "redirect:index";
     }
 
     @RequestMapping("/edit_profile/{userId}")
@@ -127,7 +127,7 @@ public class ProfileController {
         model.addAttribute("userId",userId);
         model.addAttribute("user", user);
 
-        return "/edit_profile";
+        return "edit_profile";
     }
 
     @RequestMapping("/edit_description/{userId}")
@@ -144,7 +144,7 @@ public class ProfileController {
         model.addAttribute("userId",userId);
         model.addAttribute("user", user);
 
-        return "/edit_description";
+        return "edit_description";
     }
 
     @PostMapping("/process_edit_profile_data")
@@ -160,7 +160,7 @@ public class ProfileController {
         return "redirect:myprofile/"+userId;
     }
 
-    @RequestMapping("/myprofile/{userId}")
+    @RequestMapping("myprofile/{userId}")
     public String getMyProfile(@PathVariable("userId") Long userId, Model model){
 
         Optional<UserData> userData=userDataService.getUserById(userId);
@@ -188,7 +188,7 @@ public class ProfileController {
         model.addAttribute("userId", userId);
         model.addAttribute("profilePicture", profilePicture);
         model.addAttribute("photos",photoService.getPhotos(userId));
-        return "/myprofile";
+        return "myprofile";
     }
 
 }

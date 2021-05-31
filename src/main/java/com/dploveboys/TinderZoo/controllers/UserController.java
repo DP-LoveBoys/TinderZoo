@@ -82,7 +82,7 @@ public class UserController {
         model.addAttribute("userId",userId);
         model.addAttribute("user", user);
 
-        return "/matches";
+        return "matches";
     }
 
     @PostMapping("/matches_processing")

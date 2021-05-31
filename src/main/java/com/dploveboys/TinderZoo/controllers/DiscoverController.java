@@ -96,12 +96,12 @@ public class DiscoverController {
     public String addMatch(@ModelAttribute("userID") Long userID,@RequestParam("userId") long userId)
     {
 
-        return "redirect:/home_page/" + userId;
+        return "redirect:home_page/" + userId;
     }
 
     @RequestMapping("/discover_nomatch")
     public String deleteUnmatch(@ModelAttribute("targetID") UserData target,@RequestParam("userId") long userId){
 
-        return "redirect:/home_page/"+userId;
+        return "redirect:home_page/"+userId;
     }
 }
