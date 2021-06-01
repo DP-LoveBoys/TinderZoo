@@ -18,19 +18,21 @@ GRANT ALTER ON tinderzoo_dev.* to 'tinderzoo_dev_user'@'%';
 
 
 CREATE TABLE `user_data` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `specie` varchar(50) NOT NULL,
-  `breed` varchar(50) NOT NULL,
-  `age` int NOT NULL,
-  `country` varchar(50) NOT NULL,
-  `city` varchar(50) NOT NULL,
-  `height` int NOT NULL,
-  `gender` VARCHAR(1) NOT NULL,
-  `eye_color` VARCHAR(10) NOT NULL,
-  `description` VARCHAR(1000) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+                             `id` int NOT NULL AUTO_INCREMENT,
+                             `specie` varchar(50) NOT NULL,
+                             `breed` varchar(50) NOT NULL,
+                             `age` int NOT NULL,
+                             `country` varchar(50) NOT NULL,
+                             `city` varchar(50) NOT NULL,
+                             `height` int NOT NULL,
+                             `gender` varchar(1) NOT NULL,
+                             `eye_color` varchar(10) NOT NULL,
+                             `description` varchar(1000) NOT NULL,
+                             `address` varchar(100) NOT NULL,
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 CREATE TABLE `photos` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -92,7 +94,7 @@ CREATE TABLE `tinderzoo_dev`.`notifications` (
 
 create table roles (id int not null auto_increment, name varchar(255), primary key (id)) engine=InnoDB;
 
-create table users_roles (user_id int not null, role_id bigint not null, primary key (user_id, role_id)) engine=InnoDB;
+create table users_roles (user_id int not null, role_id int not null, primary key (user_id, role_id)) engine=InnoDB;
 
 alter table users_roles add constraint foreign key (user_id) references credentials (id);
 

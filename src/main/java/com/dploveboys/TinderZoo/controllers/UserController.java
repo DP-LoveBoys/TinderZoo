@@ -3,14 +3,18 @@ package com.dploveboys.TinderZoo.controllers;
 import com.dploveboys.TinderZoo.model.*;
 
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
+import com.dploveboys.TinderZoo.service.Geocoder;
+import com.dploveboys.TinderZoo.service.LocationService;
 import com.dploveboys.TinderZoo.service.PhotoService;
 import com.dploveboys.TinderZoo.service.UserDataService;
+import com.google.maps.errors.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -28,6 +32,9 @@ public class UserController {
     @Autowired
     private UserCredentialRepository userCredentialRepository;
 
+    @Autowired
+    private LocationService locationService;
+
     @RequestMapping("/profile_configuration/{userId}")
     public String getProfileConfiguration(@PathVariable("userId") Long userId, Model model){
         UserData user = new UserData();
@@ -41,7 +48,7 @@ public class UserController {
             @RequestParam("profile_picture")MultipartFile photo,
             @RequestParam("userId") Long userId,
             @ModelAttribute("user") UserData userData
-            ){
+            ) throws InterruptedException, ApiException, IOException {
 
         // CKeditor adds paragraph tags around description and must be deleted
         String truncDesc=userData.getDescription();
@@ -50,6 +57,15 @@ public class UserController {
 
         userData.setId(userId);
         String description=userData.getDescription();
+        String address = userData.getAddress();
+        String country = userData.getCountry();
+        String city = userData.getCity();
+
+        Geocoder geocoder = Geocoder.getInstance();
+        Location location = geocoder.GeocodeSync(address + ", " + country + ", " + city);
+
+        locationService.saveUserLocation(userId, location.getLatitude(), location.getLongitude());
+
         userDataService.addUserData(userData);
         photoService.savePhoto(photo,userId,true);
 

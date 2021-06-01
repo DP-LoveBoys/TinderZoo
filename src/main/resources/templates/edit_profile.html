@@ -72,6 +72,12 @@
                         <input type="text" th:field="*{city}" name="city" class="form-control" id="InputCity" th:placeholder="${userData.city}" minlength="2" maxlength="25" required>
                     </div>
                 </div>
+                <div class="form-group row" style="margin-bottom: 20px;">
+                    <label  for="InputAddress" class="col-form-label col-4">Address:</label>
+                    <div class="col-8">
+                        <input type="text" th:field="*{address}" name="address" class="form-control" id="InputAddress" placeholder="Enter address" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label style="margin-bottom: 20px;" for="InputHeight" class="col-form-label col-4">Height:</label>
                     <div class="col-8">
@@ -106,6 +112,7 @@
             let age = /*[[${userData.age}]]*/ 'default';
             let country = /*[[${userData.country}]]*/ 'default';
             let city = /*[[${userData.city}]]*/ 'default';
+            let address=/*[[${userData.address}]]*/ 'default';
             let height=/*[[${userData.height}]]*/ 'default';
             let gender=/*[[${userData.gender}]]*/ 'default';
             let eyeColor = /*[[${userData.eyeColor}]]*/ 'default';
@@ -118,7 +125,7 @@
             document.getElementById("InputHeight").value=height;
             document.getElementById("InputGender").value=gender;
             document.getElementById("InputEyeColor").value=eyeColor;
-
+            document.getElementById("InputAddress").value=address;
         /*]]>*/
 </script>
 

@@ -51,11 +51,3 @@ img3.addEventListener("click",function(){
     console.log("Click 3");
 });
 
-
-if('geolocation' in navigator){
-    console.log("Geolocation available");
-    console.log(navigator.geolocation.getCurrentPosition());
-}
-else{
-    console.log("No geolocation");
-}

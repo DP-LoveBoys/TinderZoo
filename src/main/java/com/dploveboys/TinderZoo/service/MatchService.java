@@ -1,14 +1,14 @@
 package com.dploveboys.TinderZoo.service;
 
 import com.dploveboys.TinderZoo.model.Interest;
+import com.dploveboys.TinderZoo.model.Location;
 import com.dploveboys.TinderZoo.model.Match;
 import com.dploveboys.TinderZoo.model.MatchResponseProvider;
-import com.dploveboys.TinderZoo.model.Notification;
 import com.dploveboys.TinderZoo.repositories.MatchRepository;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,43 +23,45 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
 
     @Autowired
     private UserCredentialService userCredentialService;
+
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private LocationService locationService;
 
 
-    public ArrayList<Long> getMatches(Long ourId)//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
+    public ArrayList<Long> getMatches(Long ourId, Double preferedDistance, Location locationOfUser) throws IOException//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
     {
+        List <Long> usersCloseToUs = locationService.getNearbyUsers(locationOfUser, preferedDistance);
+
         List <Interest> interests = interestService.getInterests(ourId);
 
         HashMap<Long, Integer> matches_map = new HashMap<>();
-        int totalScore = 0;
         int value = 1;
+        int bonus_for_distance = 0;
         for(Interest interest : interests) //go through each of our own interests
         {
-            //System.out.println("At interest " + interest);
-
             List <Long> users_with_common_interests;
             users_with_common_interests = interestService.getUsersExceptThisId(interest.getInterest_tag(), ourId); //get users with same interests as us
             for(Long userId : users_with_common_interests) //for each of these users, map their id and a score based on how frequent the overlapping interests are
             {
-                //System.out.println("At user " + userId);
 
-                if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
+                if(usersCloseToUs.contains(userId))
                 {
-                    int temp_value = matches_map.get(userId);
-                    //System.out.println("Current score for user " + userId + " is " + temp_value);
-                    temp_value++;
-                    matches_map.put(userId, temp_value);
-                    //System.out.println("Score incremented: " + temp_value);
-                }
-                else
-                {
-                    //System.out.println("Never seen user " + userId + " before, initialize score with " + value);
-                    matches_map.put(userId, value);
+                    if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
+                    {
+                        int temp_value = matches_map.get(userId);
+                        temp_value++;
+                        temp_value += bonus_for_distance;
+                        matches_map.put(userId, temp_value);
+                    }
+                    else
+                    {
+                        matches_map.put(userId, (value + bonus_for_distance));
+                    }
                 }
             }
-            totalScore++; //this is used to see how many interests we have and the total percentage of compatibility each user has with us (sort of)
         }
         //System.out.println("Matches before sort:" + matches_map);
 
@@ -67,6 +69,9 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         System.out.println("Matches after sort:" + matches_map);
         //the non-matches should be stored at the end of the queue in no particular order
         ArrayList<Long> matches_with_priority = new ArrayList<> (matches_map.keySet());
+
+        /* Remnant of the previous match recommendation system (before we also added the users that didn't have any interests similar to ours
+
         List<Long> all_users = userCredentialService.getAllUsersExcept(ourId);
         System.out.println("Matches with priority is:" + matches_with_priority);
         System.out.println("All users is:" + all_users);
@@ -75,7 +80,7 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
             if(!matches_with_priority.contains(userId))
                 matches_with_priority.add(userId);
         }
-
+        */
         System.out.println("Just before exit: " + matches_with_priority);
         return matches_with_priority;
     }
@@ -110,20 +115,6 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         return (List<Long>) matchRepository.getConfirmedMatchesID(our_id, response);
     }
 
-    /*
-    public List<Long> getMatchesByUserId(Long userId) throws NotFoundException {
-        List<Long> matchesIDs = matchRepository.getMatchIDsByUserId(userId);
-
-        return matchesIDs;
-    }
-    public List<Long> getUserIDsByMatchId(Long matchId) throws NotFoundException {
-        List<Long> userIDs = matchRepository.getUserIDsByMatchId(matchId);
-
-        return userIDs;
-    }
-
-     */
-
     public List<Long> getConfirmedMatchesIds(Long our_id, String response)
     {
          List<Long> matches1 = matchRepository.getConfirmedMatchesIdFromMatchId(our_id, response);
@@ -138,8 +129,13 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         String role;
         Match match = matchRepository.getPair(userId,matchId);
         if(match==null){
-            role="match";
             match=matchRepository.getPair(matchId,userId);
+            if(match!=null){
+                role="match";
+            }
+            else{
+                role="user";
+            }
         }
         else{
             role="user";
@@ -174,6 +170,7 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         }
 
         if(match==null){
+            role="user";
             match=new Match();
             match.setUser_id(userId);
             match.setMatch_id(matchId);
@@ -211,4 +208,18 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         return match;
     }
 
+    public boolean alreadyMatchedOrNotInterested(Long userId, Long anotherId)
+    {
+        List <String> responses = matchRepository.getResponses(userId, anotherId);
+        if(!responses.isEmpty()){
+            System.out.println("Responses: "+responses.size());
+            if(responses.size()==2) {
+                if (responses.get(0).equals(responses.get(1)) && responses.get(0).equals("MATCH")){
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
 }

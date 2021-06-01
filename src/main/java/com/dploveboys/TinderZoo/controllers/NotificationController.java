@@ -81,7 +81,7 @@ public class NotificationController {
         model.addAttribute("notifications",notifications);
         model.addAttribute("index",index);
 
-        return "notifications";
+        return "/notifications";
     }
 
     @PostMapping("/deleteNotification")

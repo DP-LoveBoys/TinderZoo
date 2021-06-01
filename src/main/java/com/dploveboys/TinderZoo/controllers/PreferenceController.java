@@ -39,6 +39,6 @@ public class PreferenceController {
         }
         model.addAttribute("preferences",preferences);
         model.addAttribute("userId", userId);
-        return "preferences_selection";
+        return "/preferences_selection";
     }
 }
