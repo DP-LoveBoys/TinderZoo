@@ -28,13 +28,17 @@ public class DiscoverController {
     @Autowired
     PhotoService photoService;
 
-    @RequestMapping("/discover_page/{userId}")
-    public String getDiscoverPage(@PathVariable("userId") Long userId, Model model){
+    @Autowired
+    LocationService locationService;
+
+    @RequestMapping("/discover_page/{userId}/{preferedDistance}")
+    public String getDiscoverPage(@PathVariable("userId") Long userId, Double preferedDistance, Model model){
 
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
         UserData userData = userDataService.getUserByIdAsUserDataType(userId);
 
-        ArrayList <Long> actualMatches =  matchService.getMatches(userId);
+        ArrayList <Long> actualMatches =  matchService.getMatches(userId, preferedDistance);
+
         ArrayList <Integer> indexes = new ArrayList<>();
         ArrayList <UserData> users_data = new ArrayList<>();
         ArrayList <String> usernames = new ArrayList<>();
@@ -118,31 +122,33 @@ public class DiscoverController {
     @PostMapping("/distancePreference")
     public String setDistanceParams(@RequestParam("userId") Long userId,
                                     @RequestParam("location")String location,
-                                    @RequestParam("address") String address
+                                    @RequestParam("address") String address,
+                                    @RequestParam("preferedDistance") Double preferedDistance
                                     ){
 
         System.out.println("Address: "+address);
         System.out.println("Location is " + location);
-        String[] locationString = location.split("[,]+", 2); //[0-9.]
+        String[] splitString = location.split(","); //[0-9.]
         int i = 0;
-        String [] latitude;
-        String [] longitude;
-        for(String s : locationString){
+        String latitude = null;
+        String longitude = null;
+        System.out.println("Split string is ");
+        for(String s : splitString){
+            System.out.println(s);
             if(i == 0)
-            {
-                latitude = s.split("[0-9\\.]+", 1);
-                for(String s2: latitude)
-                    System.out.println("latitude is " + s2);
-            }
-            else{
-                longitude = s.split("[0-9\\.]+", 1);
-                for(String s3: longitude)
-                    System.out.println("longitude is " + s3);
-            }
+                latitude = s.substring(1);
+            else
+                longitude = s.substring(0, 18);
             i++;
         }
+        System.out.println("latitude string is " + latitude);
+        System.out.println("longitude string is " + longitude);
 
-        return "redirect:/discover_page/"+userId;
+
+        //locationService.saveUserLocation(userId, Double.valueOf(latitude), Double.valueOf(longitude));
+
+
+        return "redirect:/discover_page/"+userId + "/" + preferedDistance;
     }
 
 }

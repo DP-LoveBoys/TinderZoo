@@ -1,11 +1,10 @@
 package com.dploveboys.TinderZoo.service;
 
 import com.dploveboys.TinderZoo.model.Interest;
+import com.dploveboys.TinderZoo.model.Location;
 import com.dploveboys.TinderZoo.model.Match;
 import com.dploveboys.TinderZoo.model.MatchResponseProvider;
-import com.dploveboys.TinderZoo.model.Notification;
 import com.dploveboys.TinderZoo.repositories.MatchRepository;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,40 +22,46 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
 
     @Autowired
     private UserCredentialService userCredentialService;
+
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private LocationService locationService;
 
 
-    public ArrayList<Long> getMatches(Long ourId)//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
+    public ArrayList<Long> getMatches(Long ourId, Double preferedDistance)//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
     {
         List <Interest> interests = interestService.getInterests(ourId);
 
         HashMap<Long, Integer> matches_map = new HashMap<>();
         int totalScore = 0;
         int value = 1;
+        int bonus_for_distance = 0;
         for(Interest interest : interests) //go through each of our own interests
         {
-            //System.out.println("At interest " + interest);
-
             List <Long> users_with_common_interests;
             users_with_common_interests = interestService.getUsersExceptThisId(interest.getInterest_tag(), ourId); //get users with same interests as us
             for(Long userId : users_with_common_interests) //for each of these users, map their id and a score based on how frequent the overlapping interests are
             {
-                //System.out.println("At user " + userId);
+                //if location to userId is <= prefered distance, add extra points to this user's score
+                //Location userLocation = locationService.getLocation(userId);
 
+                bonus_for_distance = 0;
+                if(locationService.getDistance(ourId, userId) <= preferedDistance)
+                {
+                    bonus_for_distance = 1;
+                }
                 if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
                 {
                     int temp_value = matches_map.get(userId);
-                    //System.out.println("Current score for user " + userId + " is " + temp_value);
                     temp_value++;
+                    temp_value += bonus_for_distance;
                     matches_map.put(userId, temp_value);
-                    //System.out.println("Score incremented: " + temp_value);
                 }
                 else
                 {
-                    //System.out.println("Never seen user " + userId + " before, initialize score with " + value);
-                    matches_map.put(userId, value);
+                    matches_map.put(userId, (value + bonus_for_distance));
                 }
             }
             totalScore++; //this is used to see how many interests we have and the total percentage of compatibility each user has with us (sort of)
