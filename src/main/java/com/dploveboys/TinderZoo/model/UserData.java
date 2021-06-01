@@ -22,6 +22,8 @@ public class UserData {
     private String eyeColor;
     private String description;
 
+    private String address;
+
     @Transient
     private List<Long> matches_list; //this list of user_ids that matched this user should update periodically
 
@@ -29,7 +31,7 @@ public class UserData {
     }
 
 
-    public UserData(Long id, String specie, String breed, int age, String country, String city, int height, char gender,String eyeColor,String description) {
+    public UserData(Long id, String specie, String breed, int age, String country, String city, int height, char gender,String eyeColor,String description, String address) {
         this.id=id;
         this.specie = specie;
         this.breed = breed;
@@ -40,6 +42,7 @@ public class UserData {
         this.gender = gender;
         this.eyeColor=eyeColor;
         this.description=description;
+        this.address = address;
     }
 
     public UserData(Optional<UserData> temp_user) {
@@ -53,6 +56,7 @@ public class UserData {
         this.gender = temp_user.get().gender;
         this.eyeColor=temp_user.get().eyeColor;
         this.description=temp_user.get().description;
+        this.address = temp_user.get().address;
 
     }
 
@@ -186,6 +190,14 @@ public class UserData {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 

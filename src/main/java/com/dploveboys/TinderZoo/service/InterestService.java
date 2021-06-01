@@ -23,11 +23,11 @@ public class InterestService {
 
     public List<Interest> getInterests(Long userId){
 
-        System.out.println(interestRepository.findById(userId));
+        //System.out.println(interestRepository.findById(userId));
         List<Interest> temp = interestRepository.getInterestsByUserId(userId);
 
-        for(Interest i : temp)
-            System.out.println(i);
+        //for(Interest i : temp)
+        //    System.out.println(i);
 
         return temp;
     }

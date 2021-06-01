@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -40,8 +41,11 @@ public class MatchController {
 
 
 
-    @RequestMapping("/pending_matches/{userId}")
-    public String getPendingMatchesPage(@PathVariable("userId") Long userId, Model model){
+    @RequestMapping("/pending_matches/{userId}/{preferedDistance}/{locationOfUser}")
+    public String getPendingMatchesPage(@PathVariable("userId") Long userId,
+                                        @PathVariable("preferedDistance") Double preferedDistance,
+                                        @PathVariable("locationOfUser") Location locationOfUser,
+                                        Model model) throws IOException {
         Optional<UserData> userData=userDataService.getUserById(userId);
         UserData user = new UserData();
         Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
@@ -57,7 +61,7 @@ public class MatchController {
         model.addAttribute("user", user);
 
         List<Interest> our_interests = interestService.getInterests(userId);
-        List <Long> people_that_we_like = matchService.getMatches(userId);//, our_interests); //see which people said MATCH for this userId
+        List <Long> people_that_we_like = matchService.getMatches(userId, preferedDistance, locationOfUser);//, our_interests); //see which people said MATCH for this userId
         model.addAttribute("people_that_we_like", people_that_we_like);
         System.out.println("We have people_that_we_like: " + people_that_we_like);
 
@@ -80,34 +84,6 @@ public class MatchController {
                 matchRepository.save(temp_match);
             }
         }
-        return "/pending_matches";
-    }
-
-    @PostMapping
-    public String sendResponseToMatchesPage(@PathVariable("userId") Long userId, Model model){
-        Optional<UserData> userData=userDataService.getUserById(userId);
-        UserData user = new UserData();
-        Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
-
-        try {
-            model.addAttribute("userData",userData.get());
-            model.addAttribute("username",userCredential.get().getName());
-        }catch(NoSuchElementException e){
-            e.printStackTrace();
-        }
-
-        model.addAttribute("userId",userId);
-        model.addAttribute("user", user);
-
-        List<Interest> our_interests = interestService.getInterests(userId);
-
-        List<Long> people_that_we_like = matchService.getMatches(userId);//, our_interests); //see which people said MATCH for this userId
-        model.addAttribute("people_that_we_like", people_that_we_like);
-
-        List<Long> people_that_like_us = matchService.getUsersByMatchId(userId, "MATCH"); //see which people said MATCH for this userId
-        model.addAttribute("people_that_like_us", people_that_like_us);
-
-        System.out.println("We have these users pending approval: " + people_that_like_us);
         return "/pending_matches";
     }
 

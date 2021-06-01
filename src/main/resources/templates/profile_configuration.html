@@ -34,7 +34,7 @@
         <h1 style="margin-bottom: 60px;">Profile Configuration</h1>
     </div>
     <div>
-        <h2 style="font-size:28px; margin-bottom: 50px;"><b>The following information is essential for anyone that visits you profile.</br> Make sure you give accurate info:</b></h2>
+        <h2 style="font-size:28px; margin-bottom: 50px;"><br>The following information is essential for anyone that visits you profile.</br> Make sure you give accurate info.</br>Your address will only be used for recommendation purposes.</b></h2>
     </div>
     <form th:action="@{/process_profile_data}"  method="post" style="max-width: 600px; margin: 0 auto;" th:object="${user}" enctype="multipart/form-data"> <!-- userCredentials sent by registrationController -->
         <fieldset>
@@ -68,6 +68,12 @@
                     <label  for="InputCity" class="col-form-label col-4">City:</label>
                     <div class="col-8">
                         <input type="text" th:field="*{city}" name="city" class="form-control" id="InputCity" placeholder="Enter city" minlength="2" maxlength="25" required>
+                    </div>
+                </div>
+                <div class="form-group row" style="margin-bottom: 20px;">
+                    <label  for="InputAddress" class="col-form-label col-4">Address:</label>
+                    <div class="col-8">
+                        <input type="text" th:field="*{address}" name="address" class="form-control" id="InputAddress" placeholder="Enter address" minlength="2" maxlength="25" required>
                     </div>
                 </div>
                 <div class="form-group row" style="margin-bottom: 20px;">
