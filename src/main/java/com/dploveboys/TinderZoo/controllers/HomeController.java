@@ -46,7 +46,7 @@ public class HomeController {
 
         if(!userData.isPresent()){
             System.out.println("Hei");
-            return "redirect:/profile_configuration/"+userId;
+            return "redirect:profile_configuration/"+userId;
         }
 
         model.addAttribute("profilePicture",profilePicture);

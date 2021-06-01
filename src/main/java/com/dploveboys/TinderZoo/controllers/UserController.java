@@ -69,7 +69,7 @@ public class UserController {
         userDataService.addUserData(userData);
         photoService.savePhoto(photo,userId,true);
 
-        return "redirect:/login";
+        return "redirect:login";
     }
 
     @RequestMapping("/matches/{userId}")

@@ -106,7 +106,7 @@ public class DiscoverController {
         model.addAttribute("pictures", pictures);
         model.addAttribute("indexes", indexes);
 
-        return "/discover";      //"no_more_people_on_this_site";
+        return "discover";      //"no_more_people_on_this_site";
     }
 
     @RequestMapping("/discover_match")
@@ -132,7 +132,7 @@ public class DiscoverController {
         model.addAttribute("userData",userData);
         model.addAttribute("userId",userId);
 
-        return "/configure_distance";
+        return "configure_distance";
     }
 
     @PostMapping("/distancePreference")
@@ -179,7 +179,7 @@ public class DiscoverController {
             locationOfUser.setUserId(userId);
         }
 
-        return "redirect:/discover_page/"+userId + "/" + preferedDistance+"/"+locationOfUser.getLatitude()+"/"+locationOfUser.getLongitude();
+        return "redirect:discover_page/"+userId + "/" + preferedDistance+"/"+locationOfUser.getLatitude()+"/"+locationOfUser.getLongitude();
     }
 
 }

@@ -84,7 +84,7 @@ public class MatchController {
                 matchRepository.save(temp_match);
             }
         }
-        return "/pending_matches";
+        return "pending_matches";
     }
 
     @RequestMapping("/matches_page/{userId}")
