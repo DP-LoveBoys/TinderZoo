@@ -49,7 +49,7 @@ public class PhotoController {
 
     @PostMapping("/myphotos")
     public String goToPhotos(@RequestParam("userId") Long userId){
-        return "redirect:/myphotos/"+userId;
+        return "redirect:myphotos/"+userId;
     }
 
     @PostMapping("/addPhotos")

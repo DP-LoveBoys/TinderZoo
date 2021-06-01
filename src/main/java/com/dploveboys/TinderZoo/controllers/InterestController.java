@@ -23,7 +23,7 @@ public class InterestController {
         model.addAttribute("interests",interests);
         model.addAttribute("userId", userId);
         model.addAttribute("interest", interest);
-        return "interests_selection";
+        return "/interests_selection";
     }
 
     @PostMapping("/interests_selection_processing")

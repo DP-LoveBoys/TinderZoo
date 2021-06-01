@@ -6,7 +6,7 @@ import com.dploveboys.TinderZoo.repositories.MatchRepository;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.repositories.UserDataRepository;
 import com.dploveboys.TinderZoo.service.InterestService;
-import com.dploveboys.TinderZoo.service.LoveRadarService;
+//import com.dploveboys.TinderZoo.service.LoveRadarService;
 import com.dploveboys.TinderZoo.service.MatchService;
 import com.dploveboys.TinderZoo.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class DataInitializer implements CommandLineRunner {
         UserCredential temp_cred = new UserCredential("joe@joe.com", "john", "password");
         UserData temp_user = new UserData(userId, "dog", "joe", 7, "romania", "oravita", 500, 'F', "brown","meow");
 
-        LoveRadarService loveRadar = new LoveRadarService(temp_user);
+        //LoveRadarService loveRadar = new LoveRadarService(temp_user);
         //loveRadar.giveMatchResponse();
         //------------------------------------------------
 

@@ -138,8 +138,13 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         String role;
         Match match = matchRepository.getPair(userId,matchId);
         if(match==null){
-            role="match";
             match=matchRepository.getPair(matchId,userId);
+            if(match!=null){
+                role="match";
+            }
+            else{
+                role="user";
+            }
         }
         else{
             role="user";
@@ -174,6 +179,7 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         }
 
         if(match==null){
+            role="user";
             match=new Match();
             match.setUser_id(userId);
             match.setMatch_id(matchId);
