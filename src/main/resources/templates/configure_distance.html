@@ -34,21 +34,22 @@
 
 <div class="container text-center">
     <div>
-        <h1 class="display-3" style="margin-bottom: 60px; display-4">Distance preference</h1>
-        <div class="row" style="margin-bottom: 60px;">
-            <div class="col-2">
-            </div>
-            <div class="col-8" style="margin-bottom: 20px;">
-                <h2>Enter a maximum number of km </br>between you and a possible partner: </h2>
-            </div>
-            <div class="col-10">
-                <input type="number" name="preferedDistance" id="InputPreferedDistance" placeholder="KM"  required style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);"/>
-            </div>
-        </div>
-        <h2 style="margin-bottom: 40px; font-weight: bold;">Choose a method for specifying your location:</h2>
+        <h1 class="display-3" style="margin-bottom: 60px;">Distance preference</h1>
+
     </div>
     <div>
         <form th:action="@{/distancePreference}" method="post" id="form1">
+            <div class="row" style="margin-bottom: 60px;">
+                <div class="col-2">
+                </div>
+                <div class="col-8" style="margin-bottom: 20px;">
+                    <h2>Enter a maximum number of km </br>between you and a possible partner: </h2>
+                </div>
+                <div class="col-10">
+                    <input type="number" name="preferedDistance" id="InputPreferedDistance" placeholder="KM"  style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);" required/>
+                </div>
+            </div>
+            <h2 style="margin-bottom: 40px; font-weight: bold;">Choose a method for specifying your location:</h2>
             <fieldset>
                 <div class="m-3" >
                     <div class="row" style="margin-bottom: 40px;">

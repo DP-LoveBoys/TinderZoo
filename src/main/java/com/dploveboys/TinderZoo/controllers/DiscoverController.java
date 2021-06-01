@@ -132,7 +132,7 @@ public class DiscoverController {
         model.addAttribute("userData",userData);
         model.addAttribute("userId",userId);
 
-        return "configure_distance";
+        return "/configure_distance";
     }
 
     @PostMapping("/distancePreference")
