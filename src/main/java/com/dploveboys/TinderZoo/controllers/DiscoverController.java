@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -32,7 +33,7 @@ public class DiscoverController {
     LocationService locationService;
 
     @RequestMapping("/discover_page/{userId}/{preferedDistance}")
-    public String getDiscoverPage(@PathVariable("userId") Long userId, Double preferedDistance, Model model){
+    public String getDiscoverPage(@PathVariable("userId") Long userId, Double preferedDistance, Model model) throws IOException {
 
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
         UserData userData = userDataService.getUserByIdAsUserDataType(userId);
@@ -41,7 +42,7 @@ public class DiscoverController {
 
         for(Long user : actualMatches)
         {
-            if(matchService.alreadyMatched(userId, user)) //sau i-a dat not interested de adaugat
+            if(matchService.alreadyMatchedOrNotInterested(userId, user)) //sau i-a dat not interested de adaugat
             {
                 actualMatches.remove(user);
             }

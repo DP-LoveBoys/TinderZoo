@@ -8,6 +8,7 @@ import com.dploveboys.TinderZoo.repositories.MatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
     private LocationService locationService;
 
 
-    public ArrayList<Long> getMatches(Long ourId, Double preferedDistance)//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
+    public ArrayList<Long> getMatches(Long ourId, Double preferedDistance) throws IOException//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
     {
         List <Long> usersCloseToUs = locationService.getNearbyUsers(ourId, preferedDistance);
 
@@ -51,7 +52,7 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
                 //bonus_for_distance = 0;
 
                 //call the API here to get the distance between our user and the current user
-                if(locationService.getDistance(ourId, userId) <= preferedDistance)
+                if(usersCloseToUs.contains(userId))
                 {
                     //bonus_for_distance = 1;
                     if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
@@ -207,10 +208,11 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         return match;
     }
 
-    public boolean alreadyMatched(Long userId, Long anotherId)
+    public boolean alreadyMatchedOrNotInterested(Long userId, Long anotherId)
     {
         List <String> responses = matchRepository.getResponses(userId, anotherId);
-        if(responses.get(0).equals(responses.equals(1)) && responses.get(0).equals("MATCH"))
+        if((responses.get(0).equals(responses.equals(1)) && responses.get(0).equals("MATCH")) ||
+                (responses.get(0).equals(responses.equals(1)) && responses.get(0).equals("NOT_INTERESTED")))
             return true;
         return false;
     }

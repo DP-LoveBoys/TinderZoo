@@ -7,6 +7,8 @@ import com.dploveboys.TinderZoo.repositories.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 
 @Service("locationService")
@@ -60,18 +62,28 @@ public class LocationService {
         return 0.0;
     }
 
-    public List <Long> getNearbyUsers(Long ourId, Double preferedDistance)
-    {
+    public List <Long> getNearbyUsers(Long ourId, Double preferedDistance) throws IOException {
         Iterable<Location> allUsers = locationRepository.findAll();
-        /*
+
+        List<Double> ourCoords = locationRepository.getUserLocation(ourId);
+        String ourLat = String.valueOf(ourCoords.get(0));
+        String ourLng = String.valueOf(ourCoords.get(1));
+
+        String theirLat, theirLng;
+        Geocoder geocoder = Geocoder.getInstance();
+
+        List <Long> preferedUsers = null;
         for(Location location : allUsers)
         {
+            theirLat = String.valueOf(location.getLatitude());
+            theirLng = String.valueOf(location.getLongitude());
 
+            Double distance  = Double.valueOf(geocoder.calculateUsingCoords(ourLat, ourLng, theirLat, theirLng));
+            if(distance <= preferedDistance)
+                preferedUsers.add(location.getUserId());
         }
 
-
-         */
-        return null;
+        return preferedUsers;
     }
 
 }

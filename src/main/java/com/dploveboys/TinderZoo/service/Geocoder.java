@@ -78,11 +78,48 @@ public class Geocoder{
         return time_and_distance;
     }
 
+    public String calculateUsingCoords(String sourceLat , String sourceLng, String destLat , String destLng) throws IOException, IllegalStateException {
+
+        //String source = "[{lat:" + sourceLat + ", lng:" + sourceLng +"}]";
+        String source = sourceLat + ", " + sourceLng;
+        //String destination = "[{lat:" + destLat + ", lng:" + destLng +"}]";
+        String destination = destLat + ", " + destLng;
+        String url="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+source+"&destinations="+destination+"&key="+ API_KEY;
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        String jsonString = gson.toJson(response.body().string());
+        System.out.println(jsonString);
+
+        String[] substrings = jsonString.split("\\[");
+        String whatWeWant = substrings[substrings.length - 1];
+        substrings = whatWeWant.split("\\\\");
+
+        String distance = substrings[8];
+        String time = substrings[20];
+
+        distance = distance.substring(1);
+        String[] substringsDistance = distance.split(" ");
+
+        time = time.substring(1);
+        String[] substringsTime = time.split(" ");
+
+        String[] time_and_distance = {substringsDistance[0], substringsDistance[1], substringsTime[0], substringsTime[1]};
+
+        return substringsDistance[0];
+    }
+
     public static void main(String[] args) throws InterruptedException, ApiException, IOException, IllegalStateException {
         Geocoder geo = new Geocoder();
         geo.GeocodeSync("74 Calea Sagului, Timisoara, Romania, 300515");
 
-        System.out.println(geo.calculate("Timsoara Calea Sagului 74", "Timisoara Vasile Parvan"));
+        //System.out.println(geo.calculate("Timsoara Calea Sagului 74", "Timisoara Vasile Parvan"));
+        System.out.println(geo.calculateUsingCoords("45.755013485582715", "21.21987351318358", "45.75235109970529", "21.216356631823803"));
     }
 
 }

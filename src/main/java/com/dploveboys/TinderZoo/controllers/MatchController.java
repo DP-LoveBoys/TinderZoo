@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -41,7 +42,7 @@ public class MatchController {
 
 
     @RequestMapping("/pending_matches/{userId}/{preferedDistance}")
-    public String getPendingMatchesPage(@PathVariable("userId") Long userId, Double preferedDistance, Model model){
+    public String getPendingMatchesPage(@PathVariable("userId") Long userId, Double preferedDistance, Model model) throws IOException {
         Optional<UserData> userData=userDataService.getUserById(userId);
         UserData user = new UserData();
         Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
