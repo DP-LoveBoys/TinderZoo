@@ -106,7 +106,7 @@ public class DiscoverController {
         model.addAttribute("pictures", pictures);
         model.addAttribute("indexes", indexes);
 
-        return "discover";      //"no_more_people_on_this_site";
+        return "/discover";      //"no_more_people_on_this_site";
     }
 
     @RequestMapping("/discover_match")

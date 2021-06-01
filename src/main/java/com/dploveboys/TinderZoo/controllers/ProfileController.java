@@ -48,7 +48,7 @@ public class ProfileController {
         return "redirect:profile/"+myId+"/"+userId;
     }
 
-    @RequestMapping("profile/{userId}/{otherId}")
+    @RequestMapping("/profile/{userId}/{otherId}")
     public String getUserProfile(@PathVariable("userId") Long userId,@PathVariable("otherId") Long otherId, Model model){
 
         Optional<UserData> userData=userDataService.getUserById(otherId);
@@ -78,7 +78,7 @@ public class ProfileController {
         }
         else
         {
-            if(match.getMatchResponseProvider().equals(MatchResponseProvider.MATCH) && match.getUserResponseProvider().equals(MatchResponseProvider.MATCH)){
+            if((match.getMatchResponseProvider()==MatchResponseProvider.MATCH) && (match.getUserResponseProvider()==MatchResponseProvider.MATCH)){
                 matched=true;
             }
             else{
@@ -173,7 +173,7 @@ public class ProfileController {
         return "redirect:myprofile/"+userId;
     }
 
-    @RequestMapping("myprofile/{userId}")
+    @RequestMapping("/myprofile/{userId}")
     public String getMyProfile(@PathVariable("userId") Long userId, Model model){
 
         Optional<UserData> userData=userDataService.getUserById(userId);

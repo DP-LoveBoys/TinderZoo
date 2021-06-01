@@ -32,7 +32,7 @@ public class HomeController {
     @Autowired
     NotificationService notificationService;
 
-    @RequestMapping("home_page/{userId}") //id/
+    @RequestMapping("/home_page/{userId}") //id/
     public String getHomePage(@PathVariable("userId") Long userId,Model model){
 
         int notifications=notificationService.getNotificationCount(userId);
