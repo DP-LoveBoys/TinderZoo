@@ -30,7 +30,8 @@ function initMap() {
                     infoWindow.setContent("Location found.");
                     infoWindow.open(map);
                     map.setCenter(pos);
-                    positionMarker=pos;
+                    console.log(pos);
+                    positionMarker.position=`(${pos.lat},${pos.lng})`;
                     document.getElementById("locationInput").value=positionMarker.position;
                 },
                 () => {

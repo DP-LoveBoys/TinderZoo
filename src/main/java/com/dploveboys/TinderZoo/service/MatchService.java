@@ -205,9 +205,15 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
     public boolean alreadyMatchedOrNotInterested(Long userId, Long anotherId)
     {
         List <String> responses = matchRepository.getResponses(userId, anotherId);
-        if((responses.get(0).equals(responses.equals(1)) && responses.get(0).equals("MATCH")) ||
-                (responses.get(0).equals(responses.equals(1)) && responses.get(0).equals("NOT_INTERESTED")))
-            return true;
+        if(!responses.isEmpty()){
+            System.out.println("Responses: "+responses.size());
+            if(responses.size()==2) {
+                if (responses.get(0).equals(responses.get(1)) && responses.get(0).equals("MATCH")){
+                    return true;
+                }
+            }
+
+        }
         return false;
     }
 }

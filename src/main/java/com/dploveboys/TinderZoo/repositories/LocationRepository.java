@@ -22,4 +22,6 @@ public interface LocationRepository extends CrudRepository<Location,Long> {
             nativeQuery = true)
     void updateLocation(Long userId, Double latitude, Double longitude);
 
+    Location findByUserId(Long userId);
+
 }

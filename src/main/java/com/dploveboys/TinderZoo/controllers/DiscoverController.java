@@ -33,12 +33,15 @@ public class DiscoverController {
     @Autowired
     LocationService locationService;
 
-    @RequestMapping("/discover_page/{userId}/{preferedDistance}/{locationOfUser}")
+    @RequestMapping("/discover_page/{userId}/{preferedDistance}/{latitude}/{longitude}")
     public String getDiscoverPage(@PathVariable("userId") Long userId,
                                   @PathVariable("preferedDistance") Double preferedDistance,
-                                  @PathVariable("locationOfUser") Location locationOfUser,
+                                  @PathVariable("latitude") Double latitude,
+                                  @PathVariable("longitude") Double longitude,
                                   Model model) throws IOException {
 
+        System.out.println("latitude="+latitude+". longitude="+longitude);
+        Location locationOfUser=new Location(userId,latitude,longitude);
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
         UserData userData = userDataService.getUserByIdAsUserDataType(userId);
 
@@ -129,28 +132,28 @@ public class DiscoverController {
         model.addAttribute("userData",userData);
         model.addAttribute("userId",userId);
 
-        return "/configure_distance";
+        return "configure_distance";
     }
 
     @PostMapping("/distancePreference")
     public String setDistanceParams(@RequestParam("userId") Long userId,
                                     @RequestParam("location")String location,
                                     @RequestParam("address") String address,
-                                    @RequestParam("preferedDistance") Double preferedDistance
+                                    @RequestParam("preferedDistance") Double preferedDistance,
+                                    Model model
                                     ) throws InterruptedException, ApiException, IOException {
 
         String latitude = null;
         String longitude = null;
 
         Location locationOfUser = new Location();
-        if(address == null)
+        if(address.isEmpty())
         {
-            if(location == null)
+            if(location.isEmpty())
             {
-                locationOfUser = locationService.getLocation(userId);
+                locationOfUser = locationService.getLocationTimi(userId);
             }
             else{
-
                 String[] splitString = location.split(","); //[0-9.]
                 int i = 0;
 
@@ -176,7 +179,7 @@ public class DiscoverController {
             locationOfUser.setUserId(userId);
         }
 
-        return "redirect:/discover_page/"+userId + "/" + preferedDistance + "/" + locationOfUser;
+        return "redirect:/discover_page/"+userId + "/" + preferedDistance+"/"+locationOfUser.getLatitude()+"/"+locationOfUser.getLongitude();
     }
 
 }

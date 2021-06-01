@@ -1,8 +1,6 @@
 package com.dploveboys.TinderZoo.model;
 
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -10,30 +8,9 @@ import java.util.Objects;
 @Table(name="user_location")
 public class Location {
     @Id
-    @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
-    )
-    @GenericGenerator(
-            name = "native",
-            strategy = "native"
-    )
-
-    @Column(name = "user_id")
     private Long userId;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    @Column(name = "latitude")
     private Double latitude;
-
-    @Column(name = "longitude")
     private Double longitude;
 
     public Location() {
@@ -55,7 +32,7 @@ public class Location {
     public String toString() {
         return "Location{" +
                 "userId=" + userId +
-                "latitude=" + latitude +
+                ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';
     }
@@ -71,6 +48,14 @@ public class Location {
     @Override
     public int hashCode() {
         return Objects.hash(userId, latitude, longitude);
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Double getLatitude() {

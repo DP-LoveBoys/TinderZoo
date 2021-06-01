@@ -100,6 +100,10 @@ public class Geocoder{
         String whatWeWant = substrings[substrings.length - 1];
         substrings = whatWeWant.split("\\\\");
 
+        for(String s : substrings) {
+            System.out.println("Substrings=" + s);
+        }
+
         String distance = substrings[8];
         String time = substrings[20];
 

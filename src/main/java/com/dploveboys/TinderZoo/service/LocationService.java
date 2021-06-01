@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -30,6 +31,10 @@ public class LocationService {
         {
             locationRepository.updateLocation(userId, latitude, longitude);
         }
+    }
+
+    public Location getLocationTimi(Long userId){
+        return locationRepository.findByUserId(userId);
     }
 
     public Location getLocation(Long userId){
@@ -71,17 +76,22 @@ public class LocationService {
         String theirLat, theirLng;
         Geocoder geocoder = Geocoder.getInstance();
 
-        List <Long> preferedUsers = null;
+        List <Long> preferedUsers = new ArrayList<>();
         for(Location location : allUsers)
         {
-            theirLat = String.valueOf(location.getLatitude());
-            theirLng = String.valueOf(location.getLongitude());
+            if(location.getUserId()!=locationOfUser.getUserId()) {
+                theirLat = String.valueOf(location.getLatitude());
+                theirLng = String.valueOf(location.getLongitude());
 
-            Double distance  = Double.valueOf(geocoder.calculateUsingCoords(ourLat, ourLng, theirLat, theirLng));
-            if(distance <= preferedDistance)
-                preferedUsers.add(location.getUserId());
+                System.out.println(ourLat + " " + ourLng + " " + theirLat + " " + theirLng);
+
+                Double distance = Double.valueOf(geocoder.calculateUsingCoords(ourLat, ourLng, theirLat, theirLng));
+                if (distance <= preferedDistance) {
+                    preferedUsers.add(location.getUserId());
+                }
+            }
         }
-
+        System.out.println(preferedUsers);
         return preferedUsers;
     }
 
