@@ -62,12 +62,11 @@ public class LocationService {
         return 0.0;
     }
 
-    public List <Long> getNearbyUsers(Long ourId, Double preferedDistance) throws IOException {
+    public List <Long> getNearbyUsers(Location locationOfUser, Double preferedDistance) throws IOException {
         Iterable<Location> allUsers = locationRepository.findAll();
 
-        List<Double> ourCoords = locationRepository.getUserLocation(ourId);
-        String ourLat = String.valueOf(ourCoords.get(0));
-        String ourLng = String.valueOf(ourCoords.get(1));
+        String ourLat = String.valueOf(locationOfUser.getLatitude());
+        String ourLng = String.valueOf(locationOfUser.getLongitude());
 
         String theirLat, theirLng;
         Geocoder geocoder = Geocoder.getInstance();

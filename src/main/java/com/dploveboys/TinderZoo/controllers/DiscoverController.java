@@ -4,6 +4,7 @@ package com.dploveboys.TinderZoo.controllers;
 import com.dploveboys.TinderZoo.model.*;
 
 import com.dploveboys.TinderZoo.service.*;
+import com.google.maps.errors.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +33,16 @@ public class DiscoverController {
     @Autowired
     LocationService locationService;
 
-    @RequestMapping("/discover_page/{userId}/{preferedDistance}")
-    public String getDiscoverPage(@PathVariable("userId") Long userId, Double preferedDistance, Model model) throws IOException {
+    @RequestMapping("/discover_page/{userId}/{preferedDistance}/{locationOfUser}")
+    public String getDiscoverPage(@PathVariable("userId") Long userId,
+                                  @PathVariable("preferedDistance") Double preferedDistance,
+                                  @PathVariable("locationOfUser") Location locationOfUser,
+                                  Model model) throws IOException {
 
         Optional<UserCredential> userCredential = userCredentialService.getUserById(userId);
         UserData userData = userDataService.getUserByIdAsUserDataType(userId);
 
-        ArrayList <Long> actualMatches =  matchService.getMatches(userId, preferedDistance);
+        ArrayList <Long> actualMatches =  matchService.getMatches(userId, preferedDistance, locationOfUser);
 
         for(Long user : actualMatches)
         {
@@ -133,31 +137,46 @@ public class DiscoverController {
                                     @RequestParam("location")String location,
                                     @RequestParam("address") String address,
                                     @RequestParam("preferedDistance") Double preferedDistance
-                                    ){
+                                    ) throws InterruptedException, ApiException, IOException {
 
-        System.out.println("Address: "+address);
-        System.out.println("Location is " + location);
-        String[] splitString = location.split(","); //[0-9.]
-        int i = 0;
         String latitude = null;
         String longitude = null;
-        System.out.println("Split string is ");
-        for(String s : splitString){
-            System.out.println(s);
-            if(i == 0)
-                latitude = s.substring(1);
-            else
-                longitude = s.substring(0, 18);
-            i++;
+
+        Location locationOfUser = new Location();
+        if(address == null)
+        {
+            if(location == null)
+            {
+                locationOfUser = locationService.getLocation(userId);
+            }
+            else{
+
+                String[] splitString = location.split(","); //[0-9.]
+                int i = 0;
+
+                System.out.println("Split string is ");
+                for(String s : splitString){
+                    System.out.println(s);
+                    if(i == 0)
+                        latitude = s.substring(1);
+                    else
+                        longitude = s.substring(0, 18);
+                    i++;
+                }
+
+                locationOfUser.setLatitude(Double.valueOf(latitude));
+                locationOfUser.setLongitude(Double.valueOf(longitude));
+
+            }
         }
-        System.out.println("latitude string is " + latitude);
-        System.out.println("longitude string is " + longitude);
+        else
+        {
+            Geocoder geo = Geocoder.getInstance();
+            locationOfUser = geo.GeocodeSync(address);
+            locationOfUser.setUserId(userId);
+        }
 
-
-        //locationService.saveUserLocation(userId, Double.valueOf(latitude), Double.valueOf(longitude));
-
-
-        return "redirect:/discover_page/"+userId + "/" + preferedDistance;
+        return "redirect:/discover_page/"+userId + "/" + preferedDistance + "/" + locationOfUser;
     }
 
 }

@@ -41,8 +41,11 @@ public class MatchController {
 
 
 
-    @RequestMapping("/pending_matches/{userId}/{preferedDistance}")
-    public String getPendingMatchesPage(@PathVariable("userId") Long userId, Double preferedDistance, Model model) throws IOException {
+    @RequestMapping("/pending_matches/{userId}/{preferedDistance}/{locationOfUser}")
+    public String getPendingMatchesPage(@PathVariable("userId") Long userId,
+                                        @PathVariable("preferedDistance") Double preferedDistance,
+                                        @PathVariable("locationOfUser") Location locationOfUser,
+                                        Model model) throws IOException {
         Optional<UserData> userData=userDataService.getUserById(userId);
         UserData user = new UserData();
         Optional<UserCredential> userCredential = userCredentialRepository.findById(userId);
@@ -58,7 +61,7 @@ public class MatchController {
         model.addAttribute("user", user);
 
         List<Interest> our_interests = interestService.getInterests(userId);
-        List <Long> people_that_we_like = matchService.getMatches(userId, preferedDistance);//, our_interests); //see which people said MATCH for this userId
+        List <Long> people_that_we_like = matchService.getMatches(userId, preferedDistance, locationOfUser);//, our_interests); //see which people said MATCH for this userId
         model.addAttribute("people_that_we_like", people_that_we_like);
         System.out.println("We have people_that_we_like: " + people_that_we_like);
 

@@ -31,9 +31,9 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
     private LocationService locationService;
 
 
-    public ArrayList<Long> getMatches(Long ourId, Double preferedDistance) throws IOException//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
+    public ArrayList<Long> getMatches(Long ourId, Double preferedDistance, Location locationOfUser) throws IOException//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
     {
-        List <Long> usersCloseToUs = locationService.getNearbyUsers(ourId, preferedDistance);
+        List <Long> usersCloseToUs = locationService.getNearbyUsers(locationOfUser, preferedDistance);
 
         List <Interest> interests = interestService.getInterests(ourId);
 
@@ -46,15 +46,9 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
             users_with_common_interests = interestService.getUsersExceptThisId(interest.getInterest_tag(), ourId); //get users with same interests as us
             for(Long userId : users_with_common_interests) //for each of these users, map their id and a score based on how frequent the overlapping interests are
             {
-                //if location to userId is <= prefered distance, add extra points to this user's score
-                //Location userLocation = locationService.getLocation(userId);
 
-                //bonus_for_distance = 0;
-
-                //call the API here to get the distance between our user and the current user
                 if(usersCloseToUs.contains(userId))
                 {
-                    //bonus_for_distance = 1;
                     if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
                     {
                         int temp_value = matches_map.get(userId);
