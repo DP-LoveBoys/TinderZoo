@@ -32,10 +32,11 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
 
     public ArrayList<Long> getMatches(Long ourId, Double preferedDistance)//, List <Interest> interests) //this should return a list of matches IDs, based on our interests
     {
+        List <Long> usersCloseToUs = locationService.getNearbyUsers(ourId, preferedDistance);
+
         List <Interest> interests = interestService.getInterests(ourId);
 
         HashMap<Long, Integer> matches_map = new HashMap<>();
-        int totalScore = 0;
         int value = 1;
         int bonus_for_distance = 0;
         for(Interest interest : interests) //go through each of our own interests
@@ -47,24 +48,25 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
                 //if location to userId is <= prefered distance, add extra points to this user's score
                 //Location userLocation = locationService.getLocation(userId);
 
-                bonus_for_distance = 0;
+                //bonus_for_distance = 0;
+
+                //call the API here to get the distance between our user and the current user
                 if(locationService.getDistance(ourId, userId) <= preferedDistance)
                 {
-                    bonus_for_distance = 1;
-                }
-                if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
-                {
-                    int temp_value = matches_map.get(userId);
-                    temp_value++;
-                    temp_value += bonus_for_distance;
-                    matches_map.put(userId, temp_value);
-                }
-                else
-                {
-                    matches_map.put(userId, (value + bonus_for_distance));
+                    //bonus_for_distance = 1;
+                    if(matches_map.containsKey(userId)) //if the user id is already mapped, increment the stored value
+                    {
+                        int temp_value = matches_map.get(userId);
+                        temp_value++;
+                        temp_value += bonus_for_distance;
+                        matches_map.put(userId, temp_value);
+                    }
+                    else
+                    {
+                        matches_map.put(userId, (value + bonus_for_distance));
+                    }
                 }
             }
-            totalScore++; //this is used to see how many interests we have and the total percentage of compatibility each user has with us (sort of)
         }
         //System.out.println("Matches before sort:" + matches_map);
 
@@ -72,6 +74,9 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         System.out.println("Matches after sort:" + matches_map);
         //the non-matches should be stored at the end of the queue in no particular order
         ArrayList<Long> matches_with_priority = new ArrayList<> (matches_map.keySet());
+
+        /* Remnant of the previous match recommendation system (before we also added the users that didn't have any interests similar to ours
+
         List<Long> all_users = userCredentialService.getAllUsersExcept(ourId);
         System.out.println("Matches with priority is:" + matches_with_priority);
         System.out.println("All users is:" + all_users);
@@ -80,7 +85,7 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
             if(!matches_with_priority.contains(userId))
                 matches_with_priority.add(userId);
         }
-
+        */
         System.out.println("Just before exit: " + matches_with_priority);
         return matches_with_priority;
     }
@@ -114,20 +119,6 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
     {
         return (List<Long>) matchRepository.getConfirmedMatchesID(our_id, response);
     }
-
-    /*
-    public List<Long> getMatchesByUserId(Long userId) throws NotFoundException {
-        List<Long> matchesIDs = matchRepository.getMatchIDsByUserId(userId);
-
-        return matchesIDs;
-    }
-    public List<Long> getUserIDsByMatchId(Long matchId) throws NotFoundException {
-        List<Long> userIDs = matchRepository.getUserIDsByMatchId(matchId);
-
-        return userIDs;
-    }
-
-     */
 
     public List<Long> getConfirmedMatchesIds(Long our_id, String response)
     {
@@ -216,4 +207,11 @@ public class MatchService { //o clasa mai struto - camila, lucreaza si pe tabelu
         return match;
     }
 
+    public boolean alreadyMatched(Long userId, Long anotherId)
+    {
+        List <String> responses = matchRepository.getResponses(userId, anotherId);
+        if(responses.get(0).equals(responses.equals(1)) && responses.get(0).equals("MATCH"))
+            return true;
+        return false;
+    }
 }

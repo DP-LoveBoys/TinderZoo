@@ -1,6 +1,7 @@
 package com.dploveboys.TinderZoo.service;
 
 
+import com.dploveboys.TinderZoo.model.Location;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.maps.*;
@@ -14,10 +15,26 @@ import java.io.IOException;
 
 //https://github.com/googlemaps/google-maps-services-java/blob/main/README.md
 public class Geocoder{
+
+    private static Geocoder geocoder_instance = null;
+
+    private Geocoder()
+    {
+
+    }
+
+    public static Geocoder getInstance()
+    {
+        if (geocoder_instance == null)
+            geocoder_instance = new Geocoder();
+
+        return geocoder_instance;
+    }
+
     private static final String API_KEY="AIzaSyDga_7-7HVr7Yk0j5E7Mtl2xwEBYgoeOGs";
     OkHttpClient client = new OkHttpClient();
 
-    public void GeocodeSync(String address) throws IOException, InterruptedException, ApiException {
+    public Location GeocodeSync(String address) throws IOException, InterruptedException, ApiException {
 
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(API_KEY)
@@ -26,8 +43,13 @@ public class Geocoder{
                 ).await();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        System.out.println(gson.toJson(results[0].geometry.location.lat));
-        System.out.println(gson.toJson(results[0].geometry.location.lng));
+
+        Double lat = Double.valueOf(gson.toJson(results[0].geometry.location.lat));
+        Double lng = Double.valueOf(gson.toJson(results[0].geometry.location.lng));
+
+        Location location = new Location(lat, lng);
+
+        return location;
     }
 
     public String[] calculate(String source , String destination) throws IOException, IllegalStateException {

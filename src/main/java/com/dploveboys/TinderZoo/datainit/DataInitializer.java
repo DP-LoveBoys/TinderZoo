@@ -41,8 +41,8 @@ public class DataInitializer implements CommandLineRunner {
 
         Long userId = 1L;
 
-        UserCredential temp_cred = new UserCredential("joe@joe.com", "john", "password");
-        UserData temp_user = new UserData(userId, "dog", "joe", 7, "romania", "oravita", 500, 'F', "brown","meow");
+        //UserCredential temp_cred = new UserCredential("joe@joe.com", "john", "password");
+        //UserData temp_user = new UserData(userId, "dog", "joe", 7, "romania", "oravita", 500, 'F', "brown","meow");
 
 
     }

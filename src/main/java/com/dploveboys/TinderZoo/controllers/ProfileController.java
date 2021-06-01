@@ -4,6 +4,7 @@ import com.dploveboys.TinderZoo.model.*;
 import com.dploveboys.TinderZoo.repositories.PreferenceRepository;
 import com.dploveboys.TinderZoo.repositories.UserCredentialRepository;
 import com.dploveboys.TinderZoo.service.*;
+import com.google.maps.errors.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.UsesJava8;
 import org.springframework.security.core.parameters.P;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,6 +40,8 @@ public class ProfileController {
     @Autowired
     private MatchService matchService;
 
+    @Autowired
+    private LocationService locationService;
 
     @PostMapping("/view_profile")
     public String sendToProfile(@RequestParam("userId") Long userId,@RequestParam("myId") Long myId){
@@ -148,9 +152,18 @@ public class ProfileController {
     }
 
     @PostMapping("/process_edit_profile_data")
-    public String editUserData(@RequestParam("userId") Long userId,@ModelAttribute("user") UserData newUserData){
+    public String editUserData(@RequestParam("userId") Long userId,@ModelAttribute("user") UserData newUserData) throws InterruptedException, ApiException, IOException {
         newUserData.setId(userId);
         userDataService.updateUserData(userId,newUserData);
+
+        String address = newUserData.getAddress();
+        String country = newUserData.getCountry();
+        String city = newUserData.getCity();
+
+        Geocoder geocoder = Geocoder.getInstance();
+        Location location = geocoder.GeocodeSync(address + ", " + country + ", " + city);
+
+        locationService.saveUserLocation(userId, location.getLatitude(), location.getLongitude());
         return "redirect:myprofile/"+userId;
     }
 

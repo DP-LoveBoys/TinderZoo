@@ -39,6 +39,14 @@ public class DiscoverController {
 
         ArrayList <Long> actualMatches =  matchService.getMatches(userId, preferedDistance);
 
+        for(Long user : actualMatches)
+        {
+            if(matchService.alreadyMatched(userId, user)) //sau i-a dat not interested de adaugat
+            {
+                actualMatches.remove(user);
+            }
+        }
+
         ArrayList <Integer> indexes = new ArrayList<>();
         ArrayList <UserData> users_data = new ArrayList<>();
         ArrayList <String> usernames = new ArrayList<>();

@@ -60,4 +60,18 @@ public class LocationService {
         return 0.0;
     }
 
+    public List <Long> getNearbyUsers(Long ourId, Double preferedDistance)
+    {
+        Iterable<Location> allUsers = locationRepository.findAll();
+        /*
+        for(Location location : allUsers)
+        {
+
+        }
+
+
+         */
+        return null;
+    }
+
 }
