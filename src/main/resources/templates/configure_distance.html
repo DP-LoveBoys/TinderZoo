@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>This is the profile page</title>
+    <title>Distance preference - TinderZoo</title>
     <link rel = "stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-qF/QmIAj5ZaYFAeQcrQ6bfVMAh4zZlrGwTPY7T/M+iTTLJqJBJjwwnsE5Y0mV7QK" crossorigin="anonymous" />
     <link rel="stylesheet" th:href="@{/css/styles_profile_page.css}">
     <link rel="stylesheet" th:href="@{/css/map.css}">
@@ -34,30 +34,49 @@
 
 <div class="container text-center">
     <div>
-        <h1 style="margin-bottom: 60px;">Distance preference</h1>
-        <h2>Choose a method for specifying your location:</h2>
+        <h1 class="display-3" style="margin-bottom: 60px; display-4">Distance preference</h1>
+        <div class="row" style="margin-bottom: 60px;">
+            <div class="col-2">
+            </div>
+            <div class="col-8" style="margin-bottom: 20px;">
+                <h2>Enter a maximum number of km </br>between you and a possible partner: </h2>
+            </div>
+            <div class="col-10">
+                <input type="number" name="preferedDistance" id="InputPreferedDistance" placeholder="KM"  required style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);"/>
+            </div>
+        </div>
+        <h2 style="margin-bottom: 40px; font-weight: bold;">Choose a method for specifying your location:</h2>
     </div>
     <div>
         <form th:action="@{/distancePreference}" method="post" id="form1">
             <fieldset>
-                <div class="m-3">
-                    <div class="form-group-row">
-                        <label style="margin-bottom: 20px;" for="InputLocation" class="col-form-label col-4">Type your address:</label>
-                        <div class="col-8">
+                <div class="m-3" >
+                    <div class="row" style="margin-bottom: 40px;">
+                        <div class="col-12">
+                            <label style="font-size: 30px; margin-bottom: 40px;" class="col-form-label" >&ensp;&ensp;&ensp;&ensp;1. Leave everything blank and we will take you default location</label>
+                        </div>
+                        <div class="col-7">
+                            <label style="font-size: 30px;" for="InputLocation" class="col-form-label" >2. Write your address:</label>
+                        </div>
+                        <div class="col-12" style="margin-bottom: 20px;"></div>
+                        <div class="col-4"></div>
+                        <div class="col-4">
                             <input type="hidden" th:value="${userId}" name="userId"/>
                             <input type="hidden" name="location" id="locationInput"/>
-                            <input type="text"  name="address" class="form-control" id="InputLocation" placeholder="Ex: str.Closca, nr.4, Timisoara, Timis, Romania" minlength="2" maxlength="50">
-                            <input type="number" name="preferedDistance" id="InputPreferedDistance" placeholder="KM"  required/>
+                            <input type="text"  name="address" class="form-control" id="InputLocation" placeholder="Ex: str.Closca, nr.4, Timisoara, Timis, Romania" minlength="2" maxlength="50" style="margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);">
                         </div>
                     </div>
                 </div>
             </fieldset>
         </form>
     </div>
-    <h3>Use map for picking your location:</h3>
-    <p> Click on 'Pan to current location' and let us locate you.
+    <div class="col-5">
+        <h3>&emsp;&emsp;3. Use map:</h3>
+    </div>
+    <p style="font-size: 22px;"> Click on 'Pan to current location' and let us locate you.
         If location is not accurate, mark the location yourself.</p>
     <!--The div element for the map -->
+
     <div id="map"></div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
@@ -66,9 +85,9 @@
             async
     ></script>
 
-    <div style="padding-bottom: 60px;">
+    <div style="padding-bottom: 100px; padding-top: 100px;">
       <h1>Select your location and submit!</h1>
-        <button type="submit" form="form1" style="margin-top: 30px; " class="btn btn-primary">Submit</button>
+        <button type="submit" form="form1" style="margin-top: 60px; " class="btn btn-primary">Submit</button>
     </div>
 
 </div>
